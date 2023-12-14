@@ -13,7 +13,6 @@ int main(){
 
 
 
-
     sf::RenderWindow window(sf::VideoMode(2048, 1080), "SFML testing");
 
 
