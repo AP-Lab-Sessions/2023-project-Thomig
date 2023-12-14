@@ -43,23 +43,18 @@ vector<shared_ptr<sf::Sprite>> Camera::spriteProjection(const shared_ptr<World> 
     return sprites;
 }
 
-shared_ptr<sf::Sprite> Camera::test() {
+shared_ptr<Sprite> Camera::test() {
     // load sprites
-    sf::Image Sprites;
-    if (!Sprites.loadFromFile("../Game Representation/Sprites.png")) {
+    auto sprite = std::make_shared<Sprite>();
+    if (!sprite->image.loadFromFile("../Game Representation/Sprites.png")) {
         // error
         cout << "Error" << endl;
     }
 
-    sf::IntRect rect(850, 50, 50, 50);
-    sf::Texture texture;
-    texture.loadFromImage(Sprites, rect);
+    sprite->texture.loadFromImage(sprite->image, sf::IntRect(850, 50, 50, 50));
+    sprite->sprite.setOrigin(25, 25);
+    sprite->sprite.setPosition(1000, 500);
+    sprite->sprite.setTexture(sprite->texture);
 
-    // Create sf::Sprite using the loaded texture
-    shared_ptr<sf::Sprite> pacman = make_shared<sf::Sprite>();
-    pacman->setOrigin(25, 25);
-    pacman->setPosition(1000, 500);
-    pacman->setTexture(texture);
-
-    return pacman;
+    return sprite;
 }

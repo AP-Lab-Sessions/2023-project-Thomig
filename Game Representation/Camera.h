@@ -9,6 +9,12 @@
 
 using namespace std;
 
+struct Sprite {
+    sf::Sprite sprite;
+    sf::Texture texture;
+    sf::Image image;
+};
+
 class Camera {
 public:
     Camera();
@@ -17,7 +23,7 @@ public:
 
     static vector<shared_ptr<sf::Sprite>> spriteProjection(const shared_ptr<World>& world);
 
-    static shared_ptr<sf::Sprite> test();
+    static shared_ptr<Sprite> test();
 };
 
 
