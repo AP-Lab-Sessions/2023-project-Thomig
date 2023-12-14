@@ -1,0 +1,7 @@
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/ProjectAP.dir
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/list_install_components.dir
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/install.dir
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/install/local.dir
+/home/thomas/Documents/Informatica 2023/Advanced Programming/CLion/2023-project-Thomig/cmake-build-debug/CMakeFiles/install/strip.dir
