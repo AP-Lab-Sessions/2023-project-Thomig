@@ -10,6 +10,10 @@
 class Fruit: public Entity{
 public:
     string getType() override;
+
+    explicit Fruit(const pair<float, float> &position);
+
+    vector<float> getHitbox() override;
 };
 
 

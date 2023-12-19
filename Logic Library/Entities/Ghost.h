@@ -9,12 +9,23 @@
 
 class Ghost: public Entity{
 public:
-    string color;
-    bool fear = false;
-
     string getType() override;
 
-    explicit Ghost(const pair<float, float> &position, const string &color);
+    Ghost(const pair<float, float> &position, const string &color);
+
+    [[nodiscard]] const string &getColor() const override;
+
+    bool isFear() const;
+
+    void setFear(bool Fear);
+
+    vector<float> getHitbox() override;
+
+    bool chaseMode = false;
+
+private:
+    string color;
+    bool fear = false;
 };
 
 

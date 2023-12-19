@@ -53,3 +53,5 @@ vector<int> Score::getScoreBoard() {
     inputFile.close();
     return scores;
 }
+
+Score::Score() {}

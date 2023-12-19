@@ -25,6 +25,8 @@ public:
     // gets all 5 scores from scoreboard
     static vector<int> getScoreBoard();
 
+    Score();
+
 private:
     int currentScore = 0;
 };

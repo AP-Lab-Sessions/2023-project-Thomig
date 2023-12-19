@@ -8,11 +8,10 @@ using namespace std;
 
 int main(){
     // create and start game
-    //Game game;
-    //game.start();
+    Game game;
+    game.start();
 
-
-
+    /*
     sf::RenderWindow window(sf::VideoMode(2048, 1080), "SFML testing");
 
 
@@ -38,7 +37,7 @@ int main(){
 
     // Deze code roept een functie aan Camera::test() met dezelfde code als hierboven om eem pacman sprite te genereren maar
     // deze texture werkt niet en er verschijnt een witte vierkant
-    shared_ptr<sf::Sprite> pacman2 = Camera::test();
+    shared_ptr<Sprite> pacman2 = Camera::test();
 
 
     // sfml window loop
@@ -52,9 +51,9 @@ int main(){
         }
         window.clear();
         window.draw(*pacman1);
-        window.draw(*pacman2);
+        window.draw(pacman2->sprite);
         window.display();
     }
-
+    */
     return 0;
 }

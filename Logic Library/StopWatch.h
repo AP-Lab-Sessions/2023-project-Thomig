@@ -15,7 +15,7 @@ public:
 
     void update();
 
-    const chrono::milliseconds &getDeltaTime() const;
+    [[nodiscard]] const chrono::milliseconds &getDeltaTime() const;
 
 private:
     StopWatch(){};

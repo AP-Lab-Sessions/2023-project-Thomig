@@ -5,8 +5,12 @@ void Game::start() {
     stateManager = make_shared<StateManager>(StateManager());
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
     stopWatch->start();
-    int stateCooldown = 100;
-    string movement = "Left";
+    int stateCooldown = 0;
+    string movement1 = "Left";
+    string movement2 = "Left";
+    string movement3;
+    string currentDirection = "Left";
+    int updateCount = 0;
 
     sf::Image spritesImage;
     if (!spritesImage.loadFromFile("../Game Representation/Sprites.png")) {
@@ -30,19 +34,18 @@ void Game::start() {
                 renderWindow->close();
         }
 
-        //cout << stateCooldown << endl;
-        stateCooldown += stopWatch->getDeltaTime().count();
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape) and stateCooldown >= 10){
-            stateCooldown = 0;
-            if(stateManager->getCurrentState()->getType() == "MenuState"){
-                renderWindow->close();
-            }
-            else {
+        stateCooldown++;
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)){
+           if(stateManager->getCurrentState()->getType() == "LevelState" and stateCooldown >= 30
+           or stateManager->getCurrentState()->getType() == "PausedState" and stateCooldown >= 1000) {
+                stateCooldown = 0;
                 stateManager->changeState(sf::Keyboard::Escape);
-            }
+           }
+           else if (stateManager->getCurrentState()->getType() == "MenuState") {
+                renderWindow->close();
+           }
         }
-        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter) and stateCooldown >= 10){
+        else if(stateCooldown >= 500 and sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)){
             stateCooldown = 0;
             stateManager->changeState(sf::Keyboard::Enter);
         }
@@ -63,20 +66,129 @@ void Game::start() {
 
         stopWatch->update();
 
+        updateCount++;
         if(stateManager->getCurrentState()->getType() == "LevelState"){
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)){
-                movement = "Up";
+            // update key pressed
+            if(updateCount >= 2) {
+                updateCount = 0;
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) or
+                    sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                    movement1 = "Up";
+                } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) or
+                           sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+                    movement1 = "Left";
+                } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) or
+                           sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                    movement1 = "Down";
+                } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) or
+                           sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+                    movement1 = "Right";
+                }
             }
-            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)){
-                movement = "Left";
+            // pacman movement
+            if(movement2 == "Left"){
+                if(movement1 == "Left"){
+                    stateManager->getCurrentState()->update("Left", false);
+                }
+                else if(movement1 == "Up"){
+                    if(!stateManager->getCurrentState()->update("Up", true)){
+                        stateManager->getCurrentState()->update("Left",false);
+                    }
+                    else{
+                        movement2 = "Up";
+                    }
+                }
+                else if(movement1 == "Down"){
+                    if(!stateManager->getCurrentState()->update("Down", true)){
+                        stateManager->getCurrentState()->update("Left", false);
+                    }
+                    else{
+                        movement2 = "Down";
+                    }
+                }
+                else{
+                    stateManager->getCurrentState()->update("Right",false);
+                    movement2 = "Right";
+                }
             }
-            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)){
-                movement = "Down";
+            else if(movement2 == "Up"){
+                if(movement1 == "Up"){
+                    stateManager->getCurrentState()->update("Up",false);
+                }
+                else if(movement1 == "Left"){
+                    if(!stateManager->getCurrentState()->update("Left",true)){
+                        stateManager->getCurrentState()->update("Up",false);
+                    }
+                    else{
+                        movement2 = "Left";
+                    }
+                }
+                else if(movement1 == "Right"){
+                    if(!stateManager->getCurrentState()->update("Right",true)){
+                        stateManager->getCurrentState()->update("Up",false);
+                    }
+                    else{
+                        movement2 = "Right";
+                    }
+                }
+                else{
+                    stateManager->getCurrentState()->update("Down",false);
+                    movement2 = "Down";
+                }
             }
-            else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) or sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
-                movement = "Right";
+            else if(movement2 == "Right"){
+                if(movement1 == "Right"){
+                    stateManager->getCurrentState()->update("Right",false);
+                }
+                else if(movement1 == "Up"){
+                    if(!stateManager->getCurrentState()->update("Up",true)){
+                        stateManager->getCurrentState()->update("Right",false);
+                    }
+                    else{
+                        movement2 = "Up";
+                    }
+                }
+                else if(movement1 == "Down"){
+                    if(!stateManager->getCurrentState()->update("Down",true)){
+                        stateManager->getCurrentState()->update("Right",false);
+                    }
+                    else{
+                        movement2 = "Down";
+                    }
+                }
+                else{
+                    stateManager->getCurrentState()->update("Left",false);
+                    movement2 = "Left";
+                }
             }
-            stateManager->getCurrentState()->update(movement);
+            else{
+                if(movement1 == "Down"){
+                    stateManager->getCurrentState()->update("Down",false);
+                }
+                else if(movement1 == "Left"){
+                    if(!stateManager->getCurrentState()->update("Left",true)){
+                        stateManager->getCurrentState()->update("Down",false);
+                    }
+                    else{
+                        movement2 = "Left";
+                    }
+                }
+                else if(movement1 == "Right"){
+                    if(!stateManager->getCurrentState()->update("Right",true)){
+                        stateManager->getCurrentState()->update("Down",false);
+                    }
+                    else{
+                        movement2 = "Right";
+                    }
+                }
+                else{
+                    stateManager->getCurrentState()->update("Up",false);
+                    movement2 = "Up";
+                }
+            }
+            if(stateManager->getCurrentState()->levelFinished()){
+                stateManager->toVictoryState();
+            }
         }
 
         // draw all shapes
@@ -85,32 +197,12 @@ void Game::start() {
         }
         // draw all texts
         for (const auto& i : stateManager->getCurrentState()->getTexts()) {
-            renderWindow->draw(*i);
+            renderWindow->draw(i->text);
         }
         // draw all sprites
         for (const auto& i : stateManager->getCurrentState()->getSprites()) {
-            sf::Texture texture;
-            if(i->getColor() == sf::Color::Cyan){
-                sf::IntRect rect(395, 445, 40, 40);
-                texture.loadFromImage(spritesImage, rect);
-            }
-            else if(i->getColor() == sf::Color::Yellow){
-                sf::IntRect rect(850, 50, 50, 50);
-                texture.loadFromImage(spritesImage, rect);
-            }
-            else if(i->getColor() == sf::Color::Red){
-                sf::IntRect rect(850, 50, 50, 50);
-                texture.loadFromImage(spritesImage, rect);
-            }
-            else if(i->getColor() == sf::Color::Magenta){
-                sf::IntRect rect(850, 50, 50, 50);
-                texture.loadFromImage(spritesImage, rect);
-            }
-            i->setTexture(texture);
-            renderWindow->draw(*i);
+            renderWindow->draw(i->sprite);
         }
-        Camera camera;
-        //renderWindow->draw(*camera.test());
 
         renderWindow->display();
     }

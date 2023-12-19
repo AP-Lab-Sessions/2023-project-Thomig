@@ -30,6 +30,10 @@ public:
     void toGameOver();
 
     void toVictoryState();
+
+private:
+    int lives;
+    int score;
 };
 
 

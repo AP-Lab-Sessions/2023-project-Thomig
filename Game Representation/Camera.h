@@ -9,15 +9,34 @@
 
 using namespace std;
 
+struct Text {
+    sf::Text text;
+    sf::Font font;
+};
+
+struct Sprite {
+    sf::Sprite sprite;
+    sf::Texture texture;
+    sf::Image image;
+};
+
 class Camera {
 public:
     Camera();
 
     static vector<shared_ptr<sf::Shape>> shapeProjection(const shared_ptr<World>& world);
 
-    static vector<shared_ptr<sf::Sprite>> spriteProjection(const shared_ptr<World>& world);
+    static vector<shared_ptr<Text>> textProjection(const shared_ptr<World>& world);
 
-    static shared_ptr<sf::Sprite> test();
+    vector<shared_ptr<Sprite>> spriteProjection(const shared_ptr<World>& world);
+
+    static shared_ptr<Sprite> test();
+private:
+    // all sprites textures
+    shared_ptr<Sprite> coin;
+    shared_ptr<Sprite> fruit;
+    vector<shared_ptr<Sprite>> pacman;
+    vector<shared_ptr<Sprite>> ghost;
 };
 
 

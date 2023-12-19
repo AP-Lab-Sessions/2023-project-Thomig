@@ -8,24 +8,22 @@ string LevelState::getType() {
     return "LevelState";
 }
 
-const vector<shared_ptr<sf::Shape>> &LevelState::getShapes() const {
-    return shapes;
-}
-
-const vector<shared_ptr<sf::Text>> &LevelState::getTexts() const {
-    return texts;
-}
-
-const vector<shared_ptr<sf::Sprite>> &LevelState::getSprites() const {
-    return sprites;
-}
-
-LevelState::LevelState() {
+LevelState::LevelState(int lives, int score) {
     world = make_shared<World>(World());
+    world->setLives(lives);
+    shared_ptr<Score> score1 = make_shared<Score>();
+    score1->add(score);
+    world->setScore(score1);
     camera = make_shared<Camera>(Camera());
+    shapes = camera->shapeProjection(world);
 }
 
-void LevelState::update(const string& direction) {
-    shapes = camera->shapeProjection(world);
+bool LevelState::update(const string& direction, bool check) {
+    texts = camera->textProjection(world);
     sprites = camera->spriteProjection(world);
+    return world->update(direction, check);
+}
+
+bool LevelState::levelFinished() {
+    return world->levelFinished();
 }

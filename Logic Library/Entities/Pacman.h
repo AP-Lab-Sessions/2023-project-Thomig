@@ -10,6 +10,7 @@ public:
     explicit Pacman(const pair<float, float> &position);
 
     vector<float> getHitbox() override;
+
 };
 
 

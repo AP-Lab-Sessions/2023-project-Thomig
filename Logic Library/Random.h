@@ -8,12 +8,14 @@ using namespace std;
 
 // singleton class
 class Random {
-private:
-    Random(){};
 public:
     static shared_ptr<Random> getInstance();
 
+    // get random number between 0 and 1
     static double getRandomNumber();
+
+private:
+    Random(){};
 };
 
 

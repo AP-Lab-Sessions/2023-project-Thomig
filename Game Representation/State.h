@@ -9,8 +9,8 @@
 #include "memory"
 #include "../Logic Library/Score.h"
 #include "../Logic Library/World.h"
-#include "Camera.h"
 #include "../Logic Library/StopWatch.h"
+#include "Camera.h"
 #include <SFML/Graphics.hpp>
 
 using namespace std;
@@ -19,14 +19,19 @@ class State {
 public:
     virtual string getType() = 0;
 
-    virtual void update(const string& direction) = 0;
+    virtual bool update(const string& direction, bool check);
 
-    [[nodiscard]] virtual const vector<shared_ptr<sf::Shape>> &getShapes() const = 0;
+    [[nodiscard]] const vector<shared_ptr<sf::Shape>> &getShapes() const;
 
-    [[nodiscard]] virtual const vector<shared_ptr<sf::Text>> &getTexts() const = 0;
+    [[nodiscard]] const vector<shared_ptr<Text>> &getTexts() const;
 
-    [[nodiscard]] virtual const vector<shared_ptr<sf::Sprite>> &getSprites() const = 0;
+    [[nodiscard]] const vector<shared_ptr<Sprite>> &getSprites() const;
 
+    virtual bool levelFinished();
+
+    vector<shared_ptr<sf::Shape>> shapes;
+    vector<shared_ptr<Text>> texts;
+    vector<shared_ptr<Sprite>> sprites;
 };
 
 

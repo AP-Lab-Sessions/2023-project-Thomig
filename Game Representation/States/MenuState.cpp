@@ -8,18 +8,6 @@ string MenuState::getType() {
     return "MenuState";
 }
 
-const vector<shared_ptr<sf::Shape>> &MenuState::getShapes() const {
-    return shapes;
-}
-
-const vector<shared_ptr<sf::Text>> &MenuState::getTexts() const {
-    return texts;
-}
-
-const vector<shared_ptr<sf::Sprite>> &MenuState::getSprites() const {
-    return sprites;
-}
-
 MenuState::MenuState() {
     // get top 5 scores
     Score score;
@@ -32,83 +20,83 @@ MenuState::MenuState() {
         // return EXIT_FAILURE;
     }
 
-    shared_ptr<sf::Text> text1 = make_shared<sf::Text>();
-    text1->setFont(*font);
-    text1->setString("Pacman");
-    text1->setCharacterSize(160);
-    text1->setFillColor(sf::Color::Yellow);
-    text1->setPosition(650,40);
-    text1->setOutlineColor(sf::Color(255,165,0));
-    text1->setOutlineThickness(2);
+    shared_ptr<Text> text1 = make_shared<Text>();
+    text1->text.setFont(*font);
+    text1->text.setString("Pacman");
+    text1->text.setCharacterSize(160);
+    text1->text.setFillColor(sf::Color::Yellow);
+    text1->text.setPosition(650,40);
+    text1->text.setOutlineColor(sf::Color(255,165,0));
+    text1->text.setOutlineThickness(2);
     texts.push_back(text1);
 
-    shared_ptr<sf::Text> text2 = make_shared<sf::Text>();
-    text2->setFont(*font);
-    text2->setString("By Thomas Urkens");
-    text2->setCharacterSize(18);
-    text2->setFillColor(sf::Color::White);
-    text2->setPosition(60,935);
+    shared_ptr<Text> text2 = make_shared<Text>();
+    text2->text.setFont(*font);
+    text2->text.setString("By Thomas Urkens");
+    text2->text.setCharacterSize(18);
+    text2->text.setFillColor(sf::Color::White);
+    text2->text.setPosition(60,935);
     texts.push_back(text2);
 
-    shared_ptr<sf::Text> text3 = make_shared<sf::Text>();
-    text3->setFont(*font);
-    text3->setString("Scoreboard");
-    text3->setCharacterSize(50);
-    text3->setFillColor(sf::Color(255,165,0));
-    text3->setPosition(800,300);
+    shared_ptr<Text> text3 = make_shared<Text>();
+    text3->text.setFont(*font);
+    text3->text.setString("Scoreboard");
+    text3->text.setCharacterSize(50);
+    text3->text.setFillColor(sf::Color(255,165,0));
+    text3->text.setPosition(800,300);
     texts.push_back(text3);
 
-    shared_ptr<sf::Text> text4 = make_shared<sf::Text>();
-    text4->setFont(*font);
+    shared_ptr<Text> text4 = make_shared<Text>();
+    text4->text.setFont(*font);
     string s = "1: " + to_string(scores[0]);
-    text4->setString(s);
-    text4->setCharacterSize(32);
-    text4->setFillColor(sf::Color::Yellow);
-    text4->setPosition(880,370);
+    text4->text.setString(s);
+    text4->text.setCharacterSize(32);
+    text4->text.setFillColor(sf::Color::Yellow);
+    text4->text.setPosition(880,370);
     texts.push_back(text4);
 
-    shared_ptr<sf::Text> text5 = make_shared<sf::Text>();
-    text5->setFont(*font);
+    shared_ptr<Text> text5 = make_shared<Text>();
+    text5->text.setFont(*font);
     s = "2: " + to_string(scores[1]);
-    text5->setString(s);
-    text5->setCharacterSize(32);
-    text5->setFillColor(sf::Color::Yellow);
-    text5->setPosition(880,420);
+    text5->text.setString(s);
+    text5->text.setCharacterSize(32);
+    text5->text.setFillColor(sf::Color::Yellow);
+    text5->text.setPosition(880,420);
     texts.push_back(text5);
 
-    shared_ptr<sf::Text> text6 = make_shared<sf::Text>();
-    text6->setFont(*font);
+    shared_ptr<Text> text6 = make_shared<Text>();
+    text6->text.setFont(*font);
     s = "3: " + to_string(scores[2]);
-    text6->setString(s);
-    text6->setCharacterSize(32);
-    text6->setFillColor(sf::Color::Yellow);
-    text6->setPosition(880,470);
+    text6->text.setString(s);
+    text6->text.setCharacterSize(32);
+    text6->text.setFillColor(sf::Color::Yellow);
+    text6->text.setPosition(880,470);
     texts.push_back(text6);
 
-    shared_ptr<sf::Text> text7 = make_shared<sf::Text>();
-    text7->setFont(*font);
+    shared_ptr<Text> text7 = make_shared<Text>();
+    text7->text.setFont(*font);
     s = "4: " + to_string(scores[3]);
-    text7->setString(s);
-    text7->setCharacterSize(32);
-    text7->setFillColor(sf::Color::Yellow);
-    text7->setPosition(880,520);
+    text7->text.setString(s);
+    text7->text.setCharacterSize(32);
+    text7->text.setFillColor(sf::Color::Yellow);
+    text7->text.setPosition(880,520);
     texts.push_back(text7);
 
-    shared_ptr<sf::Text> text8 = make_shared<sf::Text>();
-    text8->setFont(*font);
+    shared_ptr<Text> text8 = make_shared<Text>();
+    text8->text.setFont(*font);
     s = "5: " + to_string(scores[4]);
-    text8->setString(s);
-    text8->setCharacterSize(32);
-    text8->setFillColor(sf::Color::Yellow);
-    text8->setPosition(880,570);
+    text8->text.setString(s);
+    text8->text.setCharacterSize(32);
+    text8->text.setFillColor(sf::Color::Yellow);
+    text8->text.setPosition(880,570);
     texts.push_back(text8);
 
-    shared_ptr<sf::Text> text9 = make_shared<sf::Text>();
-    text9->setFont(*font);
-    text9->setString("Play");
-    text9->setCharacterSize(50);
-    text9->setFillColor(sf::Color::Green);
-    text9->setPosition(878,738);
+    shared_ptr<Text> text9 = make_shared<Text>();
+    text9->text.setFont(*font);
+    text9->text.setString("Play");
+    text9->text.setCharacterSize(50);
+    text9->text.setFillColor(sf::Color::Green);
+    text9->text.setPosition(878,738);
     texts.push_back(text9);
 
     shared_ptr<sf::Shape> shape1 = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
@@ -132,5 +120,3 @@ MenuState::MenuState() {
     shape3->setOutlineThickness(10);
     shapes.push_back(shape3);
 }
-
-void MenuState::update(const string &direction) {}

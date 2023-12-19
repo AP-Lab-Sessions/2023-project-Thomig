@@ -11,6 +11,6 @@ string Coin::getType() {
 Coin::Coin(const pair<float, float> &position) : Entity(position) {}
 
 vector<float> Coin::getHitbox() {
-    float x = 0.01; // size of hitbox in every direction of position
+    float x = 0; // size of hitbox in every direction of position
     return {getPosition().first-x, getPosition().second+x, getPosition().first+x, getPosition().second-x};
 }

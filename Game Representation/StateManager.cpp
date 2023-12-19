@@ -42,7 +42,9 @@ void StateManager::changeState(sf::Keyboard::Key key) {
             stateStack.pop();
         }
         else if(getCurrentStateType() == "MenuState"){
-            shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState());
+            lives = 3;
+            score = 0;
+            shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState(lives, score));
             stateStack.push(levelState);
         }
         else if(getCurrentStateType() == "PausedState"){
@@ -50,7 +52,7 @@ void StateManager::changeState(sf::Keyboard::Key key) {
         }
         else if(getCurrentStateType() == "VictoryState"){
             stateStack.pop();
-            shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState());
+            shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState(lives, score));
             stateStack.push(levelState);
         }
     }
