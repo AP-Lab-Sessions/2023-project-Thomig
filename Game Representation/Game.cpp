@@ -189,6 +189,9 @@ void Game::start() {
             if(stateManager->getCurrentState()->levelFinished()){
                 stateManager->toVictoryState();
             }
+            else if(stateManager->getCurrentState()->levelDead()){
+                stateManager->toGameOver();
+            }
         }
 
         // draw all shapes

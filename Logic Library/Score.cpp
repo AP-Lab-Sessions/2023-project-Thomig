@@ -3,9 +3,17 @@
 void Score::add(int x) {
     currentScore += x;
 }
+
+void Score::dec() {
+    if(currentScore >= 1) {
+        currentScore -= 1;
+    }
+}
+
 int Score::getCurrentScore() const {
     return currentScore;
 }
+
 void Score::addToScoreBoard() {
     vector<int> scores = getScoreBoard();
     for(int i = 0; i < 5-scores.size(); i++){
@@ -35,6 +43,7 @@ void Score::addToScoreBoard() {
 
     myfile.close();
 }
+
 vector<int> Score::getScoreBoard() {
     vector<int> scores;
 

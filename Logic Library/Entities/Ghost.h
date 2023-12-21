@@ -15,17 +15,12 @@ public:
 
     [[nodiscard]] const string &getColor() const override;
 
-    bool isFear() const;
-
-    void setFear(bool Fear);
-
     vector<float> getHitbox() override;
 
     bool chaseMode = false;
 
 private:
     string color;
-    bool fear = false;
 };
 
 

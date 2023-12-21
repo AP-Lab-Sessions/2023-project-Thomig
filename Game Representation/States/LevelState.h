@@ -11,11 +11,13 @@ class LevelState: public State {
 public:
     string getType() override;
 
-    LevelState(int lives, int score);
+    LevelState();
 
     bool update(const string& direction, bool check) override;
 
     bool levelFinished() override;
+
+    bool levelDead() override;
 
 private:
     shared_ptr<World> world;

@@ -266,7 +266,7 @@ vector<shared_ptr<Sprite>> Camera::spriteProjection(const shared_ptr<World> &wor
             if(i->state/20 == 1){
                 s = 1;
             }
-            if(world->getFear()){
+            if(i->fear != 0){
                 sprite->sprite = ghost[32+s]->sprite;
                 sprite->texture = ghost[32+s]->texture;
             }

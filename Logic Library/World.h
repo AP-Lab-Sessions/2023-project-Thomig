@@ -50,6 +50,8 @@ public:
 
     bool levelFinished();
 
+    bool levelDead();
+
 private:
     void updateGhosts();
 
@@ -58,9 +60,9 @@ private:
     vector<shared_ptr<Entity>> entities;
     shared_ptr<Pacman> pacman;
     vector<shared_ptr<Ghost>> ghosts;
-    string lastDirection;
     int fear;
     int worldTime = 0;
+    float coinPickUpInterval = 1;
 };
 
 

@@ -16,6 +16,9 @@ public:
     // adds given number to current score
     void add(int x);
 
+    // decrement 1
+    void dec();
+
     // returns the current score
     int getCurrentScore() const;
 

@@ -9,7 +9,7 @@ string VictoryState::getType() {
 }
 
 VictoryState::VictoryState() {
-// set font
+    // set font
     shared_ptr<Text> text1 = make_shared<Text>();
     if (!text1->font.loadFromFile("../Arial.ttf")) {
         // Handle font loading error

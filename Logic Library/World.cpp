@@ -311,15 +311,16 @@ World::World() {
 bool World::update(string direction, bool Check) {
     // update world time (only for begin)
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
-    if(worldTime < 12000) {
-        worldTime += stopWatch->getDeltaTime().count();
+    worldTime += stopWatch->getDeltaTime().count();
+
+    // decrease score overtime
+    if(worldTime%50 == 0){
+        score->dec();
     }
+
     updateGhosts();
 
-    // update fear
-    if(fear > 0){
-        fear--;
-    }
+    coinPickUpInterval -= 0.002;
 
     for(auto i: ghosts){
         if(i->state == 36){
@@ -428,7 +429,8 @@ bool World::collisionCheck() {
                 }
                 // update entities
                 else if(i->getType() == "Coin" and !i->isEaten){
-                    score->add(10);
+                    score->add(lround(coinPickUpInterval*10));
+                    coinPickUpInterval = 1;
                     i->isEaten = true;
                     i->setPosition(make_pair(i->getPosition().first+5, i->getPosition().second));
                 }
@@ -436,7 +438,9 @@ bool World::collisionCheck() {
                     score->add(50);
                     i->isEaten = true;
                     i->setPosition(make_pair(i->getPosition().first+5, i->getPosition().second));
-                    fear = 500;
+                    for(auto i: ghosts){
+                        i->fear = 500;
+                    }
                 }
             }
         }
@@ -456,6 +460,21 @@ bool World::ghostCollision(int ghost) {
                 if(i->getType() == "Wall"){
                     return true;
                 }
+                else if(i->getType() == "Pacman"){
+                    if(ghosts[ghost]->fear != 0){
+                        ghosts[ghost]->spawn = 0;
+                        ghosts[ghost]->fear = 0;
+                        score->add(100);
+                    }
+                    else{
+                        lives--;
+                        pacman->setPosition(make_pair(0.00,0.20));
+                        ghosts[0]->setPosition(make_pair(-0.05,-0.05));
+                        ghosts[1]->setPosition(make_pair(-0.05,0.00));
+                        ghosts[2]->setPosition(make_pair(0.00,0.00));
+                        ghosts[3]->setPosition(make_pair(0.00,-0.05));
+                    }
+                }
             }
         }
     }
@@ -472,6 +491,10 @@ void World::updateGhosts() {
     }
     // ghost AI
     for(int i = 0; i < ghosts.size(); i++){
+        // update fear
+        if(ghosts[i]->fear != 0){
+            ghosts[i]->fear--;
+        }
         // help ghost out of cage if necessary
         if(ghosts[i]->getPosition().first < 0.05 and ghosts[i]->getPosition().first > 0.00 and
            ghosts[i]->getPosition().second < 0.05 and ghosts[i]->getPosition().second > 0.00){
@@ -598,13 +621,6 @@ float World::calculateManhattanDistance(int ghost, string direction) {
     }
 }
 
-bool World::getFear() const {
-    if(fear == 0){
-        return false;
-    }
-    return true;
-}
-
 void World::setLives(int lives) {
     World::lives = lives;
 }
@@ -622,21 +638,12 @@ bool World::levelFinished() {
             return false;
         }
     }
+    // bonus points for level finish
+    score->add(200);
     return true;
 }
 
-/*
-bool World::check(string direction) {
-    pair<float,float> currentPosition = pacman->getPosition();
-    string currentMoving = pacman->moving;
-    move(direction, 0.05);
-    if(!collisionCheck()) {
-        pacman->setPosition(currentPosition);
-        pacman->moving = currentMoving;
-        return false;
-    }
-    pacman->setPosition(currentPosition);
-    pacman->moving = currentMoving;
-    return true;
+bool World::levelDead() {
+    score->addToScoreBoard();
+    return lives == 0;
 }
- */

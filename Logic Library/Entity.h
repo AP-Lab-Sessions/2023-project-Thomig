@@ -32,6 +32,8 @@ public:
 
     bool isEaten = false;
 
+    int fear = 0;
+
 private:
     pair<float,float> position;
 };

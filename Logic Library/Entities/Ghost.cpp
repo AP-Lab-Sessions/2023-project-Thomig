@@ -14,14 +14,6 @@ const string &Ghost::getColor() const {
     return color;
 }
 
-bool Ghost::isFear() const {
-    return fear;
-}
-
-void Ghost::setFear(bool Fear) {
-    Ghost::fear = Fear;
-}
-
 vector<float> Ghost::getHitbox() {
     float x = 0.027;   // size of hitbox in every direction of position
     return {getPosition().first-x, getPosition().second+x, getPosition().first+x, getPosition().second-x};

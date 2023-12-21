@@ -29,6 +29,8 @@ public:
 
     virtual bool levelFinished();
 
+    virtual bool levelDead();
+
     vector<shared_ptr<sf::Shape>> shapes;
     vector<shared_ptr<Text>> texts;
     vector<shared_ptr<Sprite>> sprites;
