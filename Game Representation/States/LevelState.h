@@ -7,13 +7,13 @@
 
 #include "../State.h"
 
-class LevelState: public State {
+class LevelState : public State {
 public:
     string getType() override;
 
     LevelState();
 
-    bool update(const string& direction, bool check) override;
+    bool update(const string &direction, bool check) override;
 
     bool levelFinished() override;
 

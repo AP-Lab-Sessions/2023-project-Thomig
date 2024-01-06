@@ -40,6 +40,7 @@ public:
 
 private:
     LevelStats();
+
     int lives;
     shared_ptr<Score> score;
     int difficulty;    // per difficulty increase: fear duration -20% and ghost speed +5%

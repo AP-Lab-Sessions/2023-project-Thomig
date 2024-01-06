@@ -31,7 +31,7 @@ public:
     int fear = 0;   // fear timer (0 = no fear mode)
 
 private:
-    pair<float,float> position;
+    pair<float, float> position;
 };
 
 

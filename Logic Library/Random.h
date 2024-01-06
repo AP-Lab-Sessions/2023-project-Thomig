@@ -15,7 +15,7 @@ public:
     static double getRandomNumber();
 
 private:
-    Random(){};
+    Random() {};
 };
 
 

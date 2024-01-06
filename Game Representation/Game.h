@@ -14,6 +14,7 @@ using namespace std;
 class Game {
 public:
     void start();
+
 private:
     unique_ptr<sf::RenderWindow> renderWindow;
     shared_ptr<StateManager> stateManager;

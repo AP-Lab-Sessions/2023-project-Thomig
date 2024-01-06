@@ -7,7 +7,7 @@
 
 #include "../State.h"
 
-class VictoryState: public State {
+class VictoryState : public State {
 public:
     string getType() override;
 

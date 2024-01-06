@@ -1,3 +1,4 @@
+#include <fstream>
 #include "Score.h"
 
 void Score::add(int x) {

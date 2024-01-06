@@ -40,7 +40,7 @@ void LevelStats::decLives() {
 }
 
 bool LevelStats::dead() const {
-    if(lives == 0){
+    if (lives == 0) {
         return true;
     }
     return false;

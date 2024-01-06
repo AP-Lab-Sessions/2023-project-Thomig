@@ -1,7 +1,6 @@
 #ifndef ADVANCED_PROGRAMMING_GAME_SCORE_H
 #define ADVANCED_PROGRAMMING_GAME_SCORE_H
 
-#include <fstream>
 #include <vector>
 #include <sstream>
 #include "iostream"

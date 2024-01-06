@@ -14,7 +14,7 @@ LevelState::LevelState() {
     shapes = camera->shapeProjection(world);
 }
 
-bool LevelState::update(const string& direction, bool check) {
+bool LevelState::update(const string &direction, bool check) {
     texts = camera->textProjection(world);
     sprites = camera->spriteProjection(world);
     return world->update(direction, check);

@@ -20,7 +20,7 @@ void Game::start() {
             throw runtime_error("Sprites.png is not found or unable to open");
         }
     }
-    catch (const exception& e) {
+    catch (const exception &e) {
         cerr << "Error: " << e.what() << endl;
     }
 
@@ -33,7 +33,7 @@ void Game::start() {
             throw runtime_error("File Arial.ttf is not found or unable to open");
         }
     }
-    catch (const exception& e) {
+    catch (const exception &e) {
         cerr << "Error: " << e.what() << endl;
     }
 
@@ -48,24 +48,24 @@ void Game::start() {
         stateCooldown++;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
             if (stateManager->getCurrentState()->getType() == "LevelState" and stateCooldown >= 30
-                or stateManager->getCurrentState()->getType() == "PausedState" and stateCooldown >= 1000) {
+                                                                               or
+                                                                               stateManager->getCurrentState()->getType() ==
+                                                                               "PausedState" and
+                stateCooldown >= 1000) {
                 stateCooldown = 0;
                 stateManager->changeState(sf::Keyboard::Escape);
-            }
-            else if (stateManager->getCurrentState()->getType() == "MenuState" and stateCooldown > 500) {
+            } else if (stateManager->getCurrentState()->getType() == "MenuState" and stateCooldown > 500) {
                 renderWindow->close();
-            }
-            else if (stateCooldown > 500) {
+            } else if (stateCooldown > 500) {
                 stateManager->changeState(sf::Keyboard::Key::Escape);
                 stateCooldown = 0;
             }
-        }
-        else if (stateCooldown >= 500 and sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
+        } else if (stateCooldown >= 500 and sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Enter)) {
             stateCooldown = 0;
             stateManager->changeState(sf::Keyboard::Enter);
         }
 
-        // check if play button in menu is pressed and update state
+            // check if play button in menu is pressed and update state
         else if (stateManager->getCurrentState()->getType() == "MenuState") {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {

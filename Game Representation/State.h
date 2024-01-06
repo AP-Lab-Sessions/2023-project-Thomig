@@ -20,7 +20,7 @@ class State {
 public:
     virtual string getType() = 0;
 
-    virtual bool update(const string& direction, bool check);
+    virtual bool update(const string &direction, bool check);
 
     virtual void update();
 

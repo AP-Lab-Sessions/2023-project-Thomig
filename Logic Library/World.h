@@ -29,17 +29,17 @@ private:
     // helper functions
     void move(string direction, double multiplier);
 
-    void ghostMove(int ghost, const string& direction, double multiplier);
+    void ghostMove(int ghost, const string &direction, double multiplier);
 
-    void calculateMove(int ghost, const string& currentMoving);
+    void calculateMove(int ghost, const string &currentMoving);
 
-    vector<string> getPossibleMoves(int ghost, const string& currentMoving);
+    vector<string> getPossibleMoves(int ghost, const string &currentMoving);
 
     bool ghostPossibleMove(int ghost, string direction);
 
     float calculateManhattanDistance(int ghost, string direction);
 
-    static string reverseDirection(const string& direction);
+    static string reverseDirection(const string &direction);
 
     bool collisionCheck();
 

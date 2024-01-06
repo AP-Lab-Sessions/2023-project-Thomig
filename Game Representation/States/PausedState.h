@@ -7,7 +7,7 @@
 
 #include "../State.h"
 
-class PausedState: public State {
+class PausedState : public State {
 public:
     string getType() override;
 

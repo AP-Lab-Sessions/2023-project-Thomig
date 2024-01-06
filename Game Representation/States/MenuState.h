@@ -7,7 +7,7 @@
 
 #include "../State.h"
 
-class MenuState: public State {
+class MenuState : public State {
 public:
     string getType() override;
 

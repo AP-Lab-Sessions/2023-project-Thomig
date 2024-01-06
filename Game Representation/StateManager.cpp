@@ -1,7 +1,7 @@
 #include "StateManager.h"
 
 string StateManager::getCurrentStateType() {
-    if(stateStack.empty()){
+    if (stateStack.empty()) {
         return "None";
     }
     return stateStack.top()->getType();
@@ -20,30 +20,26 @@ StateManager::StateManager() {
 
 void StateManager::changeState(sf::Keyboard::Key key) {
     // when escape pressed
-    if(key == sf::Keyboard::Key::Escape){
-        if(getCurrentStateType() == "LevelState"){
+    if (key == sf::Keyboard::Key::Escape) {
+        if (getCurrentStateType() == "LevelState") {
             shared_ptr<PausedState> pausedState = make_shared<PausedState>(PausedState());
             stateStack.push(pausedState);
-        }
-        else{
+        } else {
             stateStack.pop();
         }
     }
-    // when enter pressed
-    else if(key == sf::Keyboard::Key::Enter){
-        if(getCurrentStateType() == "GameOverState"){
+        // when enter pressed
+    else if (key == sf::Keyboard::Key::Enter) {
+        if (getCurrentStateType() == "GameOverState") {
             stateStack.pop();
             shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState());
             stateStack.push(levelState);
-        }
-        else if(getCurrentStateType() == "MenuState"){
+        } else if (getCurrentStateType() == "MenuState") {
             shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState());
             stateStack.push(levelState);
-        }
-        else if(getCurrentStateType() == "PausedState"){
+        } else if (getCurrentStateType() == "PausedState") {
             stateStack.pop();
-        }
-        else if(getCurrentStateType() == "VictoryState"){
+        } else if (getCurrentStateType() == "VictoryState") {
             stateStack.pop();
             shared_ptr<LevelState> levelState = make_shared<LevelState>(LevelState());
             stateStack.push(levelState);
