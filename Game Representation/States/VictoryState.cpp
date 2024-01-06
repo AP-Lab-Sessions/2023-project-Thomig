@@ -11,10 +11,14 @@ string VictoryState::getType() {
 VictoryState::VictoryState() {
     // set font
     shared_ptr<Text> text1 = make_shared<Text>();
-    if (!text1->font.loadFromFile("../Arial.ttf")) {
-        // Handle font loading error
-        // return EXIT_FAILURE;
-        cout << "Error" << endl;
+    try {
+        // check if file is found
+        if (!text1->font.loadFromFile("../Arial.ttf")) {
+            throw runtime_error("File Arial.ttf is not found or unable to open");
+        }
+    }
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
     }
 
     text1->text.setFont(text1->font);

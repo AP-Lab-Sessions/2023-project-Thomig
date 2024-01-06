@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// singleton class
+// singleton class to keep the time
 class StopWatch {
 public:
     static shared_ptr<StopWatch> getInstance();
@@ -15,9 +15,7 @@ public:
 
     void update();
 
-    [[nodiscard]] const chrono::milliseconds &getDeltaTime() const;
-
-    int k;
+    [[nodiscard]] const chrono::milliseconds &getDeltaTime() const; // gives time past since last frame
 
 private:
     StopWatch(){};

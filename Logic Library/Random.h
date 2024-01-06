@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// singleton class
+// singleton class to generate random numbers
 class Random {
 public:
     static shared_ptr<Random> getInstance();

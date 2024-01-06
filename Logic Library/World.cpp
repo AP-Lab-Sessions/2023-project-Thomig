@@ -288,6 +288,7 @@ World::World() {
     entities.push_back(pacman1);
     pacman = pacman1;
 
+    // ghost initialisation
     shared_ptr<Ghost> ghost1 = make_unique<Ghost>(Ghost(make_pair(-0.05,-0.05),"Red"));
     ghost1->moving = "Up";
     entities.push_back(ghost1);
@@ -326,7 +327,10 @@ bool World::update(string direction, bool Check) {
         updateGhosts();
     }
 
-    coinPickUpInterval -= 0.002;
+    // less points from coins after time
+    if(coinPickUpInterval > 0) {
+        coinPickUpInterval -= 0.002;
+    }
 
     for(auto i: ghosts){
         if(i->state == 36){
@@ -400,6 +404,7 @@ void World::ghostMove(int ghost, const string& direction, double multiplier) {
         dsi *= 0.8;    // ghosts 20% slower in fear mode
     }
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
+    // move the ghost
     if(direction == "Up"){
         ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first, ghosts[ghost]->getPosition().second-multiplier*stopWatch->getDeltaTime().count()*dsi));
         ghosts[ghost]->moving = "Up";
@@ -462,7 +467,6 @@ bool World::ghostCollision(int ghost) {
                     ghosts[ghost]->getHitbox()[2] > i->getHitbox()[0] &&
                     ghosts[ghost]->getHitbox()[1] > i->getHitbox()[3] &&
                     ghosts[ghost]->getHitbox()[3] < i->getHitbox()[1]){
-                // wall collision
                 if(i->getType() == "Wall"){
                     return true;
                 }
@@ -472,20 +476,18 @@ bool World::ghostCollision(int ghost) {
                 ghosts[ghost]->getSmallHitbox()[2] > i->getHitbox()[0] &&
                 ghosts[ghost]->getSmallHitbox()[1] > i->getHitbox()[3] &&
                 ghosts[ghost]->getSmallHitbox()[3] < i->getHitbox()[1]){
-
                 if(i->getType() == "Pacman"){
+                    // eat ghost when fear
                     if(ghosts[ghost]->fear != 0){
                         ghosts[ghost]->spawn = 0;
-                        cout << "ghost " << ghost << " fear set to 0" << endl;
-                        cout << "ghost " << ghost << " lastdead: " << ghosts[ghost]->lastDead << endl;
                         ghosts[ghost]->fear = 0;
                         ghosts[ghost]->lastDead = 0;
                         levelStats->addScore(100);
                     }
+                    // pacman dies
                     else if(ghosts[ghost]->lastDead > 5
                      ){
                         levelStats->decLives();
-                        cout << "Dead by ghost " << ghost << endl << endl << endl;
                         pacman->setPosition(make_pair(0.00,0.20));
                         ghosts[0]->setPosition(make_pair(-0.05,-0.05));
                         ghosts[1]->setPosition(make_pair(-0.05,0.00));
@@ -502,6 +504,7 @@ bool World::ghostCollision(int ghost) {
 void World::updateGhosts() {
     shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     shared_ptr<Random> random = Random::getInstance();
+    // ghosts leave center at right time
     if(worldTime > 5000){
         ghosts[0]->chaseMode = true;
     }
@@ -511,8 +514,6 @@ void World::updateGhosts() {
     // ghost AI
     for(int i = 0; i < ghosts.size(); i++){
         ghosts[i]->lastDead++;
-        cout << "ghost " << i << " fear: " << ghosts[i]->fear << endl;
-        cout << "ghost " << i << " spawn: " << ghosts[i]->spawn << endl;
         // update fear
         if(ghosts[i]->fear != 0){
             if(ghosts[i]->fear == ceil(500 * pow(0.8, levelStats->getDifficulty()))){
@@ -574,6 +575,7 @@ void World::updateGhosts() {
 }
 
 void World::calculateMove(int ghost, const string& currentMoving) {
+    // calculates correct direction for ghost and moves it
     shared_ptr<Random> random = Random::getInstance();
     int i = ghost;
     vector<string> possibleMoves = getPossibleMoves(ghost, currentMoving);
@@ -628,7 +630,8 @@ vector<string> World::getPossibleMoves(int ghost, const string& currentMoving){
     return possibleMoves;
 }
 
-bool World::ghostPossibleMove(int ghost, string direction) {    // check if ghost can move in direction
+bool World::ghostPossibleMove(int ghost, string direction) {
+    // check if ghost can move in direction
     pair<float, float> currentPosition = ghosts[ghost]->getPosition();
     string currentMoving = ghosts[ghost]->moving;
     ghostMove(ghost, direction, 0.0003);
@@ -671,6 +674,7 @@ string World::reverseDirection(const string& direction) {
 
 bool World::levelFinished() {
     shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
+    // level finished when all coins and fruits eaten
     for(auto i: entities){
         if(i->getType() == "Coin" and !i->isEaten){
             return false;

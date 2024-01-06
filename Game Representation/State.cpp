@@ -24,6 +24,4 @@ bool State::levelFinished() {
     return false;
 }
 
-void State::update() {
-
-}
+void State::update() {}

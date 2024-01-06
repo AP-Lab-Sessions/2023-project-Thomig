@@ -12,6 +12,7 @@
 
 using namespace std;
 
+// keeps a stack with gamestates
 class StateManager {
 private:
     stack<shared_ptr<State>> stateStack;

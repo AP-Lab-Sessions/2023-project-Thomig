@@ -23,7 +23,7 @@ public:
 
     const vector<shared_ptr<Entity>> &getEntities() const;
 
-    bool levelFinished();
+    bool levelFinished();   // true when victory
 
 private:
     // helper functions
@@ -52,7 +52,6 @@ private:
     vector<shared_ptr<Ghost>> ghosts;
     int worldTime = 0;
     float coinPickUpInterval = 1;   // for calculating points from coins
-    bool ghostDead = false;
 };
 
 

@@ -10,6 +10,7 @@
 
 using namespace std;
 
+// structs for keeping data
 struct Text {
     sf::Text text;
     sf::Font font;
@@ -31,7 +32,6 @@ public:
 
     vector<shared_ptr<Sprite>> spriteProjection(const shared_ptr<World>& world);
 
-    static shared_ptr<Sprite> test();
 private:
     // all sprites textures
     shared_ptr<Sprite> coin;

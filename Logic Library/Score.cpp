@@ -33,32 +33,54 @@ void Score::addToScoreBoard() {
         scores[smallestValueLoc] = currentScore;
     }
 
-    sort(scores.begin(), scores.end(), std::greater<int>());
+    sort(scores.begin(), scores.end(), greater<int>());
 
     ofstream myfile;
 
-    myfile.open ("../Logic Library/ScoreBoard.txt");
-    myfile << scores[0] << ' ' << scores[1] << ' ' << scores[2] << ' ' << scores[3] << ' ' << scores[4];
+    try {
+        // check if file is found
+        myfile.open("../Logic Library/ScoreBoard.txt");
 
-    myfile.close();
+        if (!myfile.is_open()) {
+            throw runtime_error("File ScoreBoard.txt is not found or unable to open");
+        }
+        myfile << scores[0] << ' ' << scores[1] << ' ' << scores[2] << ' ' << scores[3] << ' ' << scores[4];
+
+        myfile.close();
+    }
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
+    }
 }
 
 vector<int> Score::getScoreBoard() {
     vector<int> scores;
+    const string filePath = "../Logic Library/ScoreBoard.txt";
 
-    ifstream inputFile("../Logic Library/ScoreBoard.txt");
+    try {
+        // check if file is opened
+        ifstream inputFile(filePath);
 
-    string line;
-    if (getline(inputFile, line)) {
-        istringstream iss(line);
-        int score;
-
-        while (iss >> score) {
-            scores.push_back(score);
+        if (!inputFile.is_open()) {
+            throw runtime_error("Error: Unable to open file ScoreBoard.txt");
         }
-    }
 
-    inputFile.close();
+        // read scores from file
+        string line;
+        if (getline(inputFile, line)) {
+            istringstream iss(line);
+            int score;
+
+            while (iss >> score) {
+                scores.push_back(score);
+            }
+        }
+
+        inputFile.close();
+    }
+    catch (const exception& e) {
+        cerr << e.what() << endl;
+    }
     return scores;
 }
 

@@ -21,6 +21,14 @@ public:
 
     bool chaseMode = false;
 
+    int lastSwitched = 0;   // cooldown for ghost direction switch to prevent being stuck in large spaces
+
+    int spawn = 0;  // to check if ghost is dead and make sure it leaves starting box
+
+    int lastDead = 0;
+
+    pair<float,float> positionSave;
+
 private:
     string color;
 };

@@ -32,6 +32,7 @@ public:
 
     virtual bool levelFinished();
 
+    // everything to draw on window
     vector<shared_ptr<sf::Shape>> shapes;
     vector<shared_ptr<Text>> texts;
     vector<shared_ptr<Sprite>> sprites;

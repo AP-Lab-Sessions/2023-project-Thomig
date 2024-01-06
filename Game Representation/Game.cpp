@@ -1,6 +1,7 @@
 #include "Game.h"
 
 void Game::start() {
+    // variables
     renderWindow = make_unique<sf::RenderWindow>(sf::VideoMode(1920, 1080), "Pacman");
     stateManager = make_shared<StateManager>(StateManager());
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
@@ -9,22 +10,31 @@ void Game::start() {
     int stateCooldown = 0;
     string movement1 = "Left";
     string movement2 = "Left";
-    string movement3;
-    string currentDirection = "Left";
     int updateCount = 0;
-    bool window = true;
 
+    // load files
     sf::Image spritesImage;
-    if (!spritesImage.loadFromFile("../Game Representation/Sprites.png")) {
-        // Handle error
-        cout << "Error loading sprites" << endl;
+    try {
+        // check if file is found
+        if (!spritesImage.loadFromFile("../Game Representation/Sprites.png")) {
+            throw runtime_error("Sprites.png is not found or unable to open");
+        }
+    }
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
     }
 
     // load font
     shared_ptr<sf::Font> font = make_shared<sf::Font>();
-    if (!font->loadFromFile("../Arial.ttf")) {
-        // Handle font loading error
-        // return EXIT_FAILURE;
+
+    try {
+        // check if file is found
+        if (!font->loadFromFile("../Arial.ttf")) {
+            throw runtime_error("File Arial.ttf is not found or unable to open");
+        }
+    }
+    catch (const exception& e) {
+        cerr << "Error: " << e.what() << endl;
     }
 
     while (renderWindow->isOpen()) {
@@ -34,9 +44,9 @@ void Game::start() {
                 renderWindow->close();
         }
 
+        // switch to paused state and back
         stateCooldown++;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape)) {
-            // switch to paused and back
             if (stateManager->getCurrentState()->getType() == "LevelState" and stateCooldown >= 30
                 or stateManager->getCurrentState()->getType() == "PausedState" and stateCooldown >= 1000) {
                 stateCooldown = 0;
@@ -55,7 +65,7 @@ void Game::start() {
             stateManager->changeState(sf::Keyboard::Enter);
         }
 
-            // check if play button in menu is pressed and update state
+        // check if play button in menu is pressed and update state
         else if (stateManager->getCurrentState()->getType() == "MenuState") {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
@@ -90,7 +100,7 @@ void Game::start() {
                     movement1 = "Right";
                 }
             }
-            // pacman movement
+            // update game with pacman movement direction using keys pressed
             if (movement2 == "Left") {
                 if (movement1 == "Left") {
                     stateManager->getCurrentState()->update("Left", false);
@@ -168,6 +178,8 @@ void Game::start() {
                     movement2 = "Up";
                 }
             }
+
+            // update statemanager
             if (stateManager->getCurrentState()->levelFinished()) {
                 stateManager->toVictoryState();
             } else if (levelStats->dead()) {

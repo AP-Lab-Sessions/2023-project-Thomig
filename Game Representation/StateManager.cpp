@@ -19,6 +19,7 @@ StateManager::StateManager() {
 }
 
 void StateManager::changeState(sf::Keyboard::Key key) {
+    // when escape pressed
     if(key == sf::Keyboard::Key::Escape){
         if(getCurrentStateType() == "LevelState"){
             shared_ptr<PausedState> pausedState = make_shared<PausedState>(PausedState());
@@ -28,6 +29,7 @@ void StateManager::changeState(sf::Keyboard::Key key) {
             stateStack.pop();
         }
     }
+    // when enter pressed
     else if(key == sf::Keyboard::Key::Enter){
         if(getCurrentStateType() == "GameOverState"){
             stateStack.pop();

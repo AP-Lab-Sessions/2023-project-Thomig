@@ -24,19 +24,11 @@ public:
 
     string moving = "Left";
 
-    int lastSwitched = 0;   // cooldown for ghost direction switch to prevent being stuck in large spaces
-
-    int spawn = 0;  // to check if ghost is dead and make sure it leaves starting box
-
     int state = 0;  // which sprite to use
 
     bool isEaten = false;
 
-    int fear = 0;
-
-    int lastDead = 0;
-
-    pair<float,float> positionSave;
+    int fear = 0;   // fear timer (0 = no fear mode)
 
 private:
     pair<float,float> position;
