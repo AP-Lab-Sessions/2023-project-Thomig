@@ -8,7 +8,8 @@ string GameOverState::getType() {
     return "GameOverState";
 }
 
-GameOverState::GameOverState(int score) {
+GameOverState::GameOverState() {
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     // set font
     shared_ptr<Text> text1 = make_shared<Text>();
     if (!text1->font.loadFromFile("../Arial.ttf")) {
@@ -16,6 +17,8 @@ GameOverState::GameOverState(int score) {
         // return EXIT_FAILURE;
         cout << "Error" << endl;
     }
+    shared_ptr<Text> text2 = make_shared<Text>();
+    text2->font.loadFromFile("../Arial.ttf");
 
     text1->text.setFont(text1->font);
     text1->text.setString("Dead!");
@@ -26,10 +29,21 @@ GameOverState::GameOverState(int score) {
     text1->text.setOutlineThickness(2);
     texts.push_back(text1);
 
+    text2->text.setFont(text2->font);
+    string s = "Your score was " + to_string(levelStats->getScore());
+    text2->text.setString(s);
+    text2->text.setCharacterSize(80);
+    text2->text.setFillColor(sf::Color::Yellow);
+    text2->text.setPosition(550,540);
+    texts.push_back(text2);
+
     shared_ptr<sf::Shape> shape1 = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
     shape1->setFillColor(sf::Color::Black);
     shape1->setPosition(50,50);
     shape1->setOutlineColor(sf::Color::Blue);
     shape1->setOutlineThickness(50);
     shapes.push_back(shape1);
+
+    levelStats->addToScoreboard();
+    levelStats->reset();
 }

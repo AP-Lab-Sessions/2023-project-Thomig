@@ -5,7 +5,7 @@
 #include "World.h"
 
 World::World() {
-    // setup the walls
+    // set up the walls
     vector<pair<double,double>> wallPositions;
 
     // outer rectangle
@@ -153,117 +153,124 @@ World::World() {
     }
 
     vector<pair<double,double>> coinPositions;
-
+    bool disableCoins = false;  // disable coins to complete level fast for testing
+    int x = 1;
+    if(disableCoins){
+        x = 20;
+    }
     // coins per layer placement
-    coinPositions.emplace_back(-0.40,-0.20);
-    coinPositions.emplace_back(-0.35,-0.20);
-    coinPositions.emplace_back(-0.30,-0.20);
-    coinPositions.emplace_back(-0.20,-0.20);
-    coinPositions.emplace_back(-0.15,-0.20);
-    coinPositions.emplace_back(-0.10,-0.20);
-    coinPositions.emplace_back(-0.05,-0.20);
-    coinPositions.emplace_back(-0.00,-0.20);
-    coinPositions.emplace_back(0.05,-0.20);
-    coinPositions.emplace_back(0.10,-0.20);
-    coinPositions.emplace_back(0.15,-0.20);
-    coinPositions.emplace_back(0.25,-0.20);
-    coinPositions.emplace_back(0.30,-0.20);
-    coinPositions.emplace_back(0.35,-0.20);
-    coinPositions.emplace_back(0.40,-0.20);
+    coinPositions.emplace_back(-0.40*x,-0.20);
+    coinPositions.emplace_back(-0.35*x,-0.20);
+    coinPositions.emplace_back(-0.30*x,-0.20);
+    coinPositions.emplace_back(-0.20*x,-0.20);
+    coinPositions.emplace_back(-0.15*x,-0.20);
+    coinPositions.emplace_back(-0.10*x,-0.20);
+    coinPositions.emplace_back(-0.05*x,-0.20);
+    coinPositions.emplace_back(-0.00*x,-0.20*x);
+    coinPositions.emplace_back(0.05*x,-0.20);
+    coinPositions.emplace_back(0.10*x,-0.20);
+    coinPositions.emplace_back(0.15*x,-0.20);
+    coinPositions.emplace_back(0.25*x,-0.20);
+    coinPositions.emplace_back(0.30*x,-0.20);
+    coinPositions.emplace_back(0.35*x,-0.20);
+    coinPositions.emplace_back(0.40*x,-0.20);
 
-    coinPositions.emplace_back(-0.45,-0.15);
-    coinPositions.emplace_back(-0.30,-0.15);
-    coinPositions.emplace_back(-0.20,-0.15);
-    coinPositions.emplace_back(0.15,-0.15);
-    coinPositions.emplace_back(0.25,-0.15);
-    coinPositions.emplace_back(0.40,-0.15);
+    coinPositions.emplace_back(-0.45*x,-0.15);
+    coinPositions.emplace_back(-0.30*x,-0.15);
+    coinPositions.emplace_back(-0.20*x,-0.15);
+    coinPositions.emplace_back(0.15*x,-0.15);
+    coinPositions.emplace_back(0.25*x,-0.15);
+    coinPositions.emplace_back(0.40*x,-0.15);
 
-    coinPositions.emplace_back(-0.45,-0.10);
-    coinPositions.emplace_back(-0.35,-0.10);
-    coinPositions.emplace_back(-0.30,-0.10);
-    coinPositions.emplace_back(-0.25,-0.10);
-    coinPositions.emplace_back(-0.20,-0.10);
-    coinPositions.emplace_back(-0.15,-0.10);
-    coinPositions.emplace_back(-0.10,-0.10);
-    coinPositions.emplace_back(-0.05,-0.10);
-    coinPositions.emplace_back(-0.00,-0.10);
-    coinPositions.emplace_back(0.05,-0.10);
-    coinPositions.emplace_back(0.10,-0.10);
-    coinPositions.emplace_back(0.15,-0.10);
-    coinPositions.emplace_back(0.20,-0.10);
-    coinPositions.emplace_back(0.25,-0.10);
-    coinPositions.emplace_back(0.30,-0.10);
-    coinPositions.emplace_back(0.40,-0.10);
+    coinPositions.emplace_back(-0.45*x,-0.10);
+    coinPositions.emplace_back(-0.35*x,-0.10);
+    coinPositions.emplace_back(-0.30*x,-0.10);
+    coinPositions.emplace_back(-0.25*x,-0.10);
+    coinPositions.emplace_back(-0.20*x,-0.10);
+    coinPositions.emplace_back(-0.15*x,-0.10);
+    coinPositions.emplace_back(-0.10*x,-0.10);
+    coinPositions.emplace_back(-0.05*x,-0.10);
+    coinPositions.emplace_back(-0.00,-0.10*x);
+    coinPositions.emplace_back(0.05*x,-0.10);
+    coinPositions.emplace_back(0.10*x,-0.10);
+    coinPositions.emplace_back(0.15*x,-0.10);
+    coinPositions.emplace_back(0.20*x,-0.10);
+    coinPositions.emplace_back(0.25*x,-0.10);
+    coinPositions.emplace_back(0.30*x,-0.10);
+    coinPositions.emplace_back(0.40*x,-0.10);
 
-    coinPositions.emplace_back(-0.45,-0.05);
-    coinPositions.emplace_back(-0.35,-0.05);
-    coinPositions.emplace_back(-0.20,-0.05);
-    coinPositions.emplace_back(0.15,-0.05);
-    coinPositions.emplace_back(0.30,-0.05);
-    coinPositions.emplace_back(0.40,-0.05);
+    coinPositions.emplace_back(-0.45*x,-0.05);
+    coinPositions.emplace_back(-0.35*x,-0.05);
+    coinPositions.emplace_back(-0.20*x,-0.05);
+    coinPositions.emplace_back(0.15*x,-0.05);
+    coinPositions.emplace_back(0.30*x,-0.05);
+    coinPositions.emplace_back(0.40*x,-0.05);
 
-    coinPositions.emplace_back(-0.45,0.00);
-    coinPositions.emplace_back(-0.40,0.00);
-    coinPositions.emplace_back(-0.35,0.00);
-    coinPositions.emplace_back(-0.30,0.00);
-    coinPositions.emplace_back(-0.25,0.00);
-    coinPositions.emplace_back(-0.20,0.00);
-    coinPositions.emplace_back(0.15,0.00);
-    coinPositions.emplace_back(0.20,0.00);
-    coinPositions.emplace_back(0.25,0.00);
-    coinPositions.emplace_back(0.30,0.00);
-    coinPositions.emplace_back(0.35,0.00);
-    coinPositions.emplace_back(0.40,0.00);
+    coinPositions.emplace_back(-0.45*x,0.00);
+    coinPositions.emplace_back(-0.40*x,0.00);
+    coinPositions.emplace_back(-0.35*x,0.00);
+    coinPositions.emplace_back(-0.30*x,0.00);
+    coinPositions.emplace_back(-0.25*x,0.00);
+    coinPositions.emplace_back(-0.20*x,0.00);
+    coinPositions.emplace_back(0.15*x,0.00);
+    coinPositions.emplace_back(0.20*x,0.00);
+    coinPositions.emplace_back(0.25*x,0.00);
+    coinPositions.emplace_back(0.30*x,0.00);
+    coinPositions.emplace_back(0.35*x,0.00);
+    coinPositions.emplace_back(0.40*x,0.00);
 
-    coinPositions.emplace_back(-0.45,0.05);
-    coinPositions.emplace_back(-0.35,0.05);
-    coinPositions.emplace_back(-0.20,0.05);
-    coinPositions.emplace_back(0.15,0.05);
-    coinPositions.emplace_back(0.30,0.05);
-    coinPositions.emplace_back(0.40,0.05);
+    coinPositions.emplace_back(-0.45*x,0.05);
+    coinPositions.emplace_back(-0.35*x,0.05);
+    coinPositions.emplace_back(-0.20*x,0.05);
+    coinPositions.emplace_back(0.15*x,0.05);
+    coinPositions.emplace_back(0.30*x,0.05);
+    coinPositions.emplace_back(0.40*x,0.05);
 
-    coinPositions.emplace_back(-0.45,0.10);
-    coinPositions.emplace_back(-0.35,0.10);
-    coinPositions.emplace_back(-0.30,0.10);
-    coinPositions.emplace_back(-0.25,0.10);
-    coinPositions.emplace_back(-0.20,0.10);
-    coinPositions.emplace_back(-0.15,0.10);
-    coinPositions.emplace_back(-0.10,0.10);
-    coinPositions.emplace_back(-0.05,0.10);
-    coinPositions.emplace_back(-0.00,0.10);
-    coinPositions.emplace_back(0.05,0.10);
-    coinPositions.emplace_back(0.10,0.10);
-    coinPositions.emplace_back(0.15,0.10);
-    coinPositions.emplace_back(0.20,0.10);
-    coinPositions.emplace_back(0.25,0.10);
-    coinPositions.emplace_back(0.30,0.10);
-    coinPositions.emplace_back(0.40,0.10);
+    coinPositions.emplace_back(-0.45*x,0.10);
+    coinPositions.emplace_back(-0.35*x,0.10);
+    coinPositions.emplace_back(-0.30*x,0.10);
+    coinPositions.emplace_back(-0.25*x,0.10);
+    coinPositions.emplace_back(-0.20*x,0.10);
+    coinPositions.emplace_back(-0.15*x,0.10);
+    coinPositions.emplace_back(-0.10*x,0.10);
+    coinPositions.emplace_back(-0.05*x,0.10);
+    coinPositions.emplace_back(-0.00*x,0.10*x);
+    coinPositions.emplace_back(0.05*x,0.10);
+    coinPositions.emplace_back(0.10*x,0.10);
+    coinPositions.emplace_back(0.15*x,0.10);
+    coinPositions.emplace_back(0.20*x,0.10);
+    coinPositions.emplace_back(0.25*x,0.10);
+    coinPositions.emplace_back(0.30*x,0.10);
+    coinPositions.emplace_back(0.40*x,0.10);
 
-    coinPositions.emplace_back(-0.45,0.15);
-    coinPositions.emplace_back(-0.30,0.15);
-    coinPositions.emplace_back(-0.20,0.15);
-    coinPositions.emplace_back(0.15,0.15);
-    coinPositions.emplace_back(0.25,0.15);
-    coinPositions.emplace_back(0.40,0.15);
+    coinPositions.emplace_back(-0.45*x,0.15);
+    coinPositions.emplace_back(-0.30*x,0.15);
+    coinPositions.emplace_back(-0.20*x,0.15);
+    coinPositions.emplace_back(0.15*x,0.15);
+    coinPositions.emplace_back(0.25*x,0.15);
+    coinPositions.emplace_back(0.40*x,0.15);
 
-    coinPositions.emplace_back(-0.45,0.20);
-    coinPositions.emplace_back(-0.40,0.20);
-    coinPositions.emplace_back(-0.35,0.20);
-    coinPositions.emplace_back(-0.30,0.20);
-    coinPositions.emplace_back(-0.20,0.20);
-    coinPositions.emplace_back(-0.15,0.20);
-    coinPositions.emplace_back(-0.10,0.20);
-    coinPositions.emplace_back(-0.05,0.20);
-    coinPositions.emplace_back(-0.00,0.20);
-    coinPositions.emplace_back(0.05,0.20);
-    coinPositions.emplace_back(0.10,0.20);
-    coinPositions.emplace_back(0.15,0.20);
-    coinPositions.emplace_back(0.25,0.20);
-    coinPositions.emplace_back(0.30,0.20);
-    coinPositions.emplace_back(0.35,0.20);
+    coinPositions.emplace_back(-0.45*x,0.20);
+    coinPositions.emplace_back(-0.40*x,0.20);
+    coinPositions.emplace_back(-0.35*x,0.20);
+    coinPositions.emplace_back(-0.30*x,0.20);
+    coinPositions.emplace_back(-0.20*x,0.20);
+    coinPositions.emplace_back(-0.15*x,0.20);
+    coinPositions.emplace_back(-0.10*x,0.20);
+    coinPositions.emplace_back(-0.05*x,0.20);
+    coinPositions.emplace_back(-0.00*x,0.20*x);
+    coinPositions.emplace_back(0.05*x,0.20);
+    coinPositions.emplace_back(0.10*x,0.20);
+    coinPositions.emplace_back(0.15*x,0.20);
+    coinPositions.emplace_back(0.25*x,0.20);
+    coinPositions.emplace_back(0.30*x,0.20);
+    coinPositions.emplace_back(0.35*x,0.20);
 
     for(auto i: coinPositions) {
         shared_ptr<Coin> coin = make_unique<Coin>(Coin(i));
+        if(disableCoins) {
+            coin->isEaten = true;
+        }
         entities.push_back(coin);
     }
 
@@ -302,23 +309,22 @@ World::World() {
     ghost4->moving = "Up";
     entities.push_back(ghost4);
     ghosts.push_back(ghost4);
-
-    score = make_shared<Score>(Score());
-
-    fear = 0;
 }
 
 bool World::update(string direction, bool Check) {
     // update world time (only for begin)
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     worldTime += stopWatch->getDeltaTime().count();
 
     // decrease score overtime
     if(worldTime%50 == 0){
-        score->dec();
+        levelStats->decScore();
     }
 
-    updateGhosts();
+    if(!Check){
+        updateGhosts();
+    }
 
     coinPickUpInterval -= 0.002;
 
@@ -365,14 +371,6 @@ const vector<shared_ptr<Entity>> &World::getEntities() const {
     return entities;
 }
 
-int World::getLives() const {
-    return lives;
-}
-
-const double World::getScore() const {
-    return score->getCurrentScore();
-}
-
 void World::move(string direction, double multiplier) {
     // move pacman using time past
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
@@ -394,28 +392,34 @@ void World::move(string direction, double multiplier) {
     }
 }
 
-void World::ghostMove(int ghost, string direction, double multiplier) {
-// move the ghost using time past
+void World::ghostMove(int ghost, const string& direction, double multiplier) {
+    // move the ghost using time past and difficulty level
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
+    double dsi = pow(1.05, levelStats->getDifficulty());    // difficulty speed increase (+0.5% per level inc)
+    if(ghosts[ghost]->fear != 0){
+        dsi *= 0.8;    // ghosts 20% slower in fear mode
+    }
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
     if(direction == "Up"){
-        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first, ghosts[ghost]->getPosition().second-multiplier*stopWatch->getDeltaTime().count()));
+        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first, ghosts[ghost]->getPosition().second-multiplier*stopWatch->getDeltaTime().count()*dsi));
         ghosts[ghost]->moving = "Up";
     }
     else if(direction == "Left"){
-        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first-multiplier*stopWatch->getDeltaTime().count(), ghosts[ghost]->getPosition().second));
+        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first-multiplier*stopWatch->getDeltaTime().count()*dsi, ghosts[ghost]->getPosition().second));
         ghosts[ghost]->moving = "Left";
     }
     else if(direction == "Down"){
-        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first, ghosts[ghost]->getPosition().second+multiplier*stopWatch->getDeltaTime().count()));
+        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first, ghosts[ghost]->getPosition().second+multiplier*stopWatch->getDeltaTime().count()*dsi));
         ghosts[ghost]->moving = "Down";
     }
     else if(direction == "Right"){
-        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first+multiplier*stopWatch->getDeltaTime().count(), ghosts[ghost]->getPosition().second));
+        ghosts[ghost]->setPosition(make_pair(ghosts[ghost]->getPosition().first+multiplier*stopWatch->getDeltaTime().count()*dsi, ghosts[ghost]->getPosition().second));
         ghosts[ghost]->moving = "Right";
     }
 }
 
 bool World::collisionCheck() {
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     for(auto i: entities){
         // check if collision
         if(i->getType() != "Pacman"){
@@ -429,17 +433,17 @@ bool World::collisionCheck() {
                 }
                 // update entities
                 else if(i->getType() == "Coin" and !i->isEaten){
-                    score->add(lround(coinPickUpInterval*10));
+                    levelStats->addScore(floor(coinPickUpInterval*10));
                     coinPickUpInterval = 1;
                     i->isEaten = true;
                     i->setPosition(make_pair(i->getPosition().first+5, i->getPosition().second));
                 }
                 else if(i->getType() == "Fruit" and !i->isEaten){
-                    score->add(50);
+                    levelStats->addScore(50);
                     i->isEaten = true;
                     i->setPosition(make_pair(i->getPosition().first+5, i->getPosition().second));
                     for(auto i: ghosts){
-                        i->fear = 500;
+                        i->fear = ceil(500 * pow(0.8, levelStats->getDifficulty()));
                     }
                 }
             }
@@ -449,9 +453,11 @@ bool World::collisionCheck() {
 }
 
 bool World::ghostCollision(int ghost) {
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     for(auto i: entities){
         // check if collision
         if(i->getType() != "Ghost"){
+            // check if wall collision
             if (ghosts[ghost]->getHitbox()[0] < i->getHitbox()[2] &&
                     ghosts[ghost]->getHitbox()[2] > i->getHitbox()[0] &&
                     ghosts[ghost]->getHitbox()[1] > i->getHitbox()[3] &&
@@ -460,14 +466,26 @@ bool World::ghostCollision(int ghost) {
                 if(i->getType() == "Wall"){
                     return true;
                 }
-                else if(i->getType() == "Pacman"){
+            }
+            // check if pacman collision
+            if (ghosts[ghost]->getSmallHitbox()[0] < i->getHitbox()[2] &&
+                ghosts[ghost]->getSmallHitbox()[2] > i->getHitbox()[0] &&
+                ghosts[ghost]->getSmallHitbox()[1] > i->getHitbox()[3] &&
+                ghosts[ghost]->getSmallHitbox()[3] < i->getHitbox()[1]){
+
+                if(i->getType() == "Pacman"){
                     if(ghosts[ghost]->fear != 0){
                         ghosts[ghost]->spawn = 0;
+                        cout << "ghost " << ghost << " fear set to 0" << endl;
+                        cout << "ghost " << ghost << " lastdead: " << ghosts[ghost]->lastDead << endl;
                         ghosts[ghost]->fear = 0;
-                        score->add(100);
+                        ghosts[ghost]->lastDead = 0;
+                        levelStats->addScore(100);
                     }
-                    else{
-                        lives--;
+                    else if(ghosts[ghost]->lastDead > 5
+                     ){
+                        levelStats->decLives();
+                        cout << "Dead by ghost " << ghost << endl << endl << endl;
                         pacman->setPosition(make_pair(0.00,0.20));
                         ghosts[0]->setPosition(make_pair(-0.05,-0.05));
                         ghosts[1]->setPosition(make_pair(-0.05,0.00));
@@ -482,6 +500,7 @@ bool World::ghostCollision(int ghost) {
 }
 
 void World::updateGhosts() {
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     shared_ptr<Random> random = Random::getInstance();
     if(worldTime > 5000){
         ghosts[0]->chaseMode = true;
@@ -491,14 +510,27 @@ void World::updateGhosts() {
     }
     // ghost AI
     for(int i = 0; i < ghosts.size(); i++){
+        ghosts[i]->lastDead++;
+        cout << "ghost " << i << " fear: " << ghosts[i]->fear << endl;
+        cout << "ghost " << i << " spawn: " << ghosts[i]->spawn << endl;
         // update fear
         if(ghosts[i]->fear != 0){
+            if(ghosts[i]->fear == ceil(500 * pow(0.8, levelStats->getDifficulty()))){
+                ghosts[i]->moving = reverseDirection(ghosts[i]->moving);
+            }
             ghosts[i]->fear--;
         }
         // help ghost out of cage if necessary
         if(ghosts[i]->getPosition().first < 0.05 and ghosts[i]->getPosition().first > 0.00 and
            ghosts[i]->getPosition().second < 0.05 and ghosts[i]->getPosition().second > 0.00){
             ghosts[i]->moving = "Up";
+        }
+        // make sure ghosts don't get stuck in walls
+        if(worldTime%10 == 0){
+            ghosts[i]->positionSave = ghosts[i]->getPosition();
+        }
+        if(ghostCollision(i)){
+            ghosts[i]->setPosition(ghosts[i]->positionSave);
         }
         if(ghosts[i]->chaseMode){
             // respawn when ghost is dead
@@ -507,22 +539,11 @@ void World::updateGhosts() {
                 ghosts[i]->setPosition(make_pair(-0.05,-0.05));
             }
             ghosts[i]->spawn++;
+            // calculate direction
             pair<float, float> currentPosition = ghosts[i]->getPosition();
             string currentMoving = ghosts[i]->moving;
-            if(ghosts[i]->spawn > 500 and ghosts[i]->lastSwitched > 500) {
-                vector<string> possibleMoves;
-                if (currentMoving == "Up" or currentMoving == "Down" and ghostPossibleMove(i, "Left")) {
-                    possibleMoves.push_back("Left");
-                }
-                if (currentMoving == "Up" or currentMoving == "Down" and ghostPossibleMove(i, "Right")) {
-                    possibleMoves.push_back("Right");
-                }
-                if (currentMoving == "Left" or currentMoving == "Right" and ghostPossibleMove(i, "Up")) {
-                    possibleMoves.push_back("Up");
-                }
-                if (currentMoving == "Left" or currentMoving == "Right" and ghostPossibleMove(i, "Down")) {
-                    possibleMoves.push_back("Down");
-                }
+            if(ghosts[i]->spawn > 500 and ghosts[i]->lastSwitched > 200) {
+                vector<string> possibleMoves = getPossibleMoves(i, currentMoving);
                 if (possibleMoves.size() == 2) {
                     ghosts[i]->lastSwitched = 0;
                     if (random->getRandomNumber() >= 0.5) {
@@ -552,22 +573,10 @@ void World::updateGhosts() {
     }
 }
 
-string World::calculateMove(int ghost, string currentMoving) {
+void World::calculateMove(int ghost, const string& currentMoving) {
     shared_ptr<Random> random = Random::getInstance();
     int i = ghost;
-    vector<string> possibleMoves;
-    if(currentMoving == "Up" or currentMoving == "Down" and ghostPossibleMove(i, "Left")){
-        possibleMoves.push_back("Left");
-    }
-    if(currentMoving == "Up" or currentMoving == "Down" and ghostPossibleMove(i, "Right")){
-        possibleMoves.push_back("Right");
-    }
-    if(currentMoving == "Left" or currentMoving == "Right" and ghostPossibleMove(i, "Up")){
-        possibleMoves.push_back("Up");
-    }
-    if(currentMoving == "Left" or currentMoving == "Right" and ghostPossibleMove(i, "Down")){
-        possibleMoves.push_back("Down");
-    }
+    vector<string> possibleMoves = getPossibleMoves(ghost, currentMoving);
     if(possibleMoves.size() == 2){
         if(random->getRandomNumber() >= 0.5){
             ghostMove(i,possibleMoves[0], 0.0001);
@@ -580,6 +589,7 @@ string World::calculateMove(int ghost, string currentMoving) {
         ghostMove(i,possibleMoves[0], 0.0001);
     }
     else{
+        // ghost chooses shortest Manhattan distance to pacman (reverse when in fear)
         string move = "Up";
         float manhattanDistance = calculateManhattanDistance(i, "Up");
         if(calculateManhattanDistance(i, "Left") < manhattanDistance){
@@ -593,11 +603,32 @@ string World::calculateMove(int ghost, string currentMoving) {
         if(calculateManhattanDistance(i, "Right") < manhattanDistance){
             move = "Right";
         }
+        if(ghosts[ghost]->fear != 0){
+            move = reverseDirection(move);
+        }
         ghostMove(i,move, 0.0001);
     }
 }
 
-bool World::ghostPossibleMove(int ghost, string direction) {
+vector<string> World::getPossibleMoves(int ghost, const string& currentMoving){
+    // get possible moves using current direction
+    vector<string> possibleMoves;
+    if(currentMoving == "Up" or currentMoving == "Down" and ghostPossibleMove(ghost, "Left")){
+        possibleMoves.emplace_back("Left");
+    }
+    if(currentMoving == "Up" or currentMoving == "Down" and ghostPossibleMove(ghost, "Right")){
+        possibleMoves.emplace_back("Right");
+    }
+    if(currentMoving == "Left" or currentMoving == "Right" and ghostPossibleMove(ghost, "Up")){
+        possibleMoves.emplace_back("Up");
+    }
+    if(currentMoving == "Left" or currentMoving == "Right" and ghostPossibleMove(ghost, "Down")){
+        possibleMoves.emplace_back("Down");
+    }
+    return possibleMoves;
+}
+
+bool World::ghostPossibleMove(int ghost, string direction) {    // check if ghost can move in direction
     pair<float, float> currentPosition = ghosts[ghost]->getPosition();
     string currentMoving = ghosts[ghost]->moving;
     ghostMove(ghost, direction, 0.0003);
@@ -612,7 +643,8 @@ bool World::ghostPossibleMove(int ghost, string direction) {
 }
 
 float World::calculateManhattanDistance(int ghost, string direction) {
-    if(ghostPossibleMove(ghost, direction)){
+    // calculate manhattan distance between ghost and pacman
+    if(ghostPossibleMove(ghost, std::move(direction))){
         return abs(pacman->getPosition().first-ghosts[ghost]->getPosition().first) +
                 abs(pacman->getPosition().second-ghosts[ghost]->getPosition().second);
     }
@@ -621,15 +653,24 @@ float World::calculateManhattanDistance(int ghost, string direction) {
     }
 }
 
-void World::setLives(int lives) {
-    World::lives = lives;
-}
-
-void World::setScore(const shared_ptr<Score> &score) {
-    World::score = score;
+string World::reverseDirection(const string& direction) {
+    // return opposite direction
+    if(direction == "Up"){
+        return "Down";
+    }
+    else if(direction == "Left"){
+        return "Right";
+    }
+    else if(direction == "Right"){
+        return "Left";
+    }
+    else{
+        return "Up";
+    }
 }
 
 bool World::levelFinished() {
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     for(auto i: entities){
         if(i->getType() == "Coin" and !i->isEaten){
             return false;
@@ -638,12 +679,10 @@ bool World::levelFinished() {
             return false;
         }
     }
-    // bonus points for level finish
-    score->add(200);
-    return true;
-}
+    levelStats->increaseDifficulty();
 
-bool World::levelDead() {
-    score->addToScoreBoard();
-    return lives == 0;
+    // bonus points for level finish
+    levelStats->addScore(200);
+
+    return true;
 }

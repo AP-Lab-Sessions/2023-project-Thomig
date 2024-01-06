@@ -29,7 +29,6 @@ void Score::addToScoreBoard() {
             smallestValue = scores[i];
         }
     }
-
     if(currentScore > smallestValue){
         scores[smallestValueLoc] = currentScore;
     }

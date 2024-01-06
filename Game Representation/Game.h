@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "iostream"
 #include "../Logic Library/StopWatch.h"
+#include "../Logic Library/LevelStats.h"
 #include "Camera.h"
 
 using namespace std;

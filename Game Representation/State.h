@@ -10,6 +10,7 @@
 #include "../Logic Library/Score.h"
 #include "../Logic Library/World.h"
 #include "../Logic Library/StopWatch.h"
+#include "../Logic Library/LevelStats.h"
 #include "Camera.h"
 #include <SFML/Graphics.hpp>
 
@@ -21,6 +22,8 @@ public:
 
     virtual bool update(const string& direction, bool check);
 
+    virtual void update();
+
     [[nodiscard]] const vector<shared_ptr<sf::Shape>> &getShapes() const;
 
     [[nodiscard]] const vector<shared_ptr<Text>> &getTexts() const;
@@ -28,8 +31,6 @@ public:
     [[nodiscard]] const vector<shared_ptr<Sprite>> &getSprites() const;
 
     virtual bool levelFinished();
-
-    virtual bool levelDead();
 
     vector<shared_ptr<sf::Shape>> shapes;
     vector<shared_ptr<Text>> texts;

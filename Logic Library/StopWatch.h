@@ -17,6 +17,8 @@ public:
 
     [[nodiscard]] const chrono::milliseconds &getDeltaTime() const;
 
+    int k;
+
 private:
     StopWatch(){};
 

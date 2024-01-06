@@ -17,8 +17,6 @@ public:
 
     bool levelFinished() override;
 
-    bool levelDead() override;
-
 private:
     shared_ptr<World> world;
     shared_ptr<Camera> camera;

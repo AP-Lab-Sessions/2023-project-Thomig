@@ -46,7 +46,9 @@ SET(SRC main.cpp
         "Logic Library/Entities/Fruit.h"
         "Logic Library/Entities/Fruit.cpp"
         "Game Representation/Camera.h"
-        "Game Representation/Camera.cpp")
+        "Game Representation/Camera.cpp"
+        "Logic Library/LevelStats.h"
+        "Logic Library/LevelStats.cpp")
 
 # Add include dirs for SFML
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIR})

@@ -13,6 +13,7 @@ public:
 
     MenuState();
 
+    void update() override;
 };
 
 

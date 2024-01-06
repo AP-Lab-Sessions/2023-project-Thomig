@@ -27,7 +27,7 @@ public:
     // change state according to current state and key pressed
     void changeState(sf::Keyboard::Key key);
 
-    void toGameOver(int score);
+    void toGameOver();
 
     void toVictoryState();
 

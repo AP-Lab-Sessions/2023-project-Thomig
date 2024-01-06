@@ -10,8 +10,6 @@ string LevelState::getType() {
 
 LevelState::LevelState() {
     world = make_shared<World>(World());
-    shared_ptr<Score> score1 = make_shared<Score>();
-    world->setScore(score1);
     camera = make_shared<Camera>(Camera());
     shapes = camera->shapeProjection(world);
 }
@@ -24,8 +22,4 @@ bool LevelState::update(const string& direction, bool check) {
 
 bool LevelState::levelFinished() {
     return world->levelFinished();
-}
-
-bool LevelState::levelDead() {
-    return world->levelDead();
 }

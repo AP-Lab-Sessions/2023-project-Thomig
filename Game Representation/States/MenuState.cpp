@@ -10,8 +10,8 @@ string MenuState::getType() {
 
 MenuState::MenuState() {
     // get top 5 scores
-    Score score;
-    vector<int> scores = score.getScoreBoard();
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
+    vector<int> scores = levelStats->getScoreboard();
 
     // set font
     std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
@@ -119,4 +119,7 @@ MenuState::MenuState() {
     shape3->setOutlineColor(sf::Color(32,32,32));
     shape3->setOutlineThickness(10);
     shapes.push_back(shape3);
+}
+
+void MenuState::update() {
 }

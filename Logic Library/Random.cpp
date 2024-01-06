@@ -1,7 +1,8 @@
 #include "Random.h"
 
 shared_ptr<Random> Random::getInstance() {
-    return shared_ptr<Random>(new Random());
+    static shared_ptr<Random> instance(new Random);
+    return instance;
 }
 
 double Random::getRandomNumber() {

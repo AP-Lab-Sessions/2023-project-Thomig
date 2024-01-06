@@ -187,6 +187,7 @@ vector<shared_ptr<sf::Shape>> Camera::shapeProjection(const shared_ptr<World>& w
 }
 
 vector<shared_ptr<Text>> Camera::textProjection(const shared_ptr<World> &world) {
+    shared_ptr<LevelStats> levelStats = LevelStats::getInstance();
     vector<shared_ptr<Text>> texts;
 
     // set font
@@ -199,7 +200,7 @@ vector<shared_ptr<Text>> Camera::textProjection(const shared_ptr<World> &world) 
 
     text1->text.setFont(text1->font);
     string s = "Score: ";
-    s += to_string(int(world->getScore()));
+    s += to_string(levelStats->getScore());
     text1->text.setString(s);
     text1->text.setCharacterSize(50);
     text1->text.setFillColor(sf::Color::Yellow);
@@ -214,7 +215,7 @@ vector<shared_ptr<Text>> Camera::textProjection(const shared_ptr<World> &world) 
     }
 
     text2->text.setFont(text2->font);
-    s = "Lives: " + to_string(world->getLives());
+    s = "Lives: " + to_string(levelStats->getLives());
     text2->text.setString(s);
     text2->text.setCharacterSize(50);
     text2->text.setFillColor(sf::Color::Yellow);

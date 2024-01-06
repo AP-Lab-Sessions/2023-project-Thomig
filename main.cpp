@@ -3,6 +3,7 @@
 #include "Game Representation/Game.h"
 #include "Game Representation/Camera.h"
 #include "memory"
+#include "Logic Library/LevelStats.h"
 
 using namespace std;
 

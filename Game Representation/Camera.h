@@ -2,6 +2,7 @@
 #define PROJECTAP_CAMERA_H
 
 #include "../Logic Library/World.h"
+#include "../Logic Library/LevelStats.h"
 #include "vector"
 #include "memory"
 #include <SFML/Graphics.hpp>

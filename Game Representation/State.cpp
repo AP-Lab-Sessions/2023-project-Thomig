@@ -24,7 +24,6 @@ bool State::levelFinished() {
     return false;
 }
 
-bool State::levelDead() {
-    return false;
-}
+void State::update() {
 
+}

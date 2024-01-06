@@ -11,7 +11,7 @@ class GameOverState: public State{
 public:
     string getType() override;
 
-    GameOverState(int score);
+    GameOverState();
 
 };
 

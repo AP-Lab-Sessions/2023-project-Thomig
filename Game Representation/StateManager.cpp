@@ -20,20 +20,11 @@ StateManager::StateManager() {
 
 void StateManager::changeState(sf::Keyboard::Key key) {
     if(key == sf::Keyboard::Key::Escape){
-        if(getCurrentStateType() == "GameOverState"){
-            stateStack.pop();
-        }
-        else if(getCurrentStateType() == "LevelState"){
+        if(getCurrentStateType() == "LevelState"){
             shared_ptr<PausedState> pausedState = make_shared<PausedState>(PausedState());
             stateStack.push(pausedState);
         }
-        else if(getCurrentStateType() == "MenuState"){
-            stateStack.pop();
-        }
-        else if(getCurrentStateType() == "PausedState"){
-            stateStack.pop();
-        }
-        else if(getCurrentStateType() == "VictoryState"){
+        else{
             stateStack.pop();
         }
     }
@@ -58,7 +49,7 @@ void StateManager::changeState(sf::Keyboard::Key key) {
     }
 }
 
-void StateManager::toGameOver(int score) {
+void StateManager::toGameOver() {
     stateStack.pop();
     shared_ptr<GameOverState> gameOverState = make_shared<GameOverState>(GameOverState());
     stateStack.push(gameOverState);

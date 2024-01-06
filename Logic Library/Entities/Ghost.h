@@ -17,6 +17,8 @@ public:
 
     vector<float> getHitbox() override;
 
+    vector<float> getSmallHitbox();
+
     bool chaseMode = false;
 
 private:
