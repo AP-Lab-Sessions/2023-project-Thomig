@@ -1,13 +1,14 @@
-#include "Game Representation/Game.h"
+//#include "Game Representation/Game.h"
+
 
 int main() {
     // create and start game
 
 
 
-    Game game;
+    //Game game;
 
-    game.start();
+    //game.start();
 
     return 0;
 }
