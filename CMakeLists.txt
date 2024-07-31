@@ -8,7 +8,23 @@ ENDIF()
 FIND_PACKAGE(SFML 2 COMPONENTS system window graphics)
 
 # The source files to compile
-SET(SRC main.cpp)
+SET(SRC main.cpp
+        "Game Representation/Game.h"
+        "Game Representation/Game.cpp"
+        "Game Representation/StateManager.h"
+        "Game Representation/StateManager.cpp"
+        "Game Representation/States/VictoryState.h"
+        "Game Representation/States/VictoryState.cpp"
+        "Game Representation/States/PausedState.h"
+        "Game Representation/States/PausedState.cpp"
+        "Game Representation/States/MenuState.h"
+        "Game Representation/States/MenuState.cpp"
+        "Game Representation/States/LevelState.h"
+        "Game Representation/States/LevelState.cpp"
+        "Game Representation/States/GameOverState.h"
+        "Game Representation/States/GameOverState.cpp"
+        "Game Representation/State.h"
+        "Game Representation/State.cpp")
 
 # Add include dirs for SFML
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIR})
