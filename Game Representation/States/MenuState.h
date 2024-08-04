@@ -11,24 +11,13 @@
 
 class MenuState : public State {
 public:
-    MenuState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
-        cout << "Creating menu state" << endl;
-    }
+    MenuState(std::shared_ptr<StateManager> stateManager);
 
-    void handleEvent(sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
-            stateManager->pushState(std::make_shared<LevelState>(stateManager));
-        }
-    }
+    void handleEvent(sf::Event& event) override;
 
-    void update(float deltaTime) override {
-        // Update menu items
-    }
+    void update(float deltaTime) override;
 
-    void render(sf::RenderWindow& window) override {
-        cout << "Rendering menu state" << endl;
-        // Render menu items
-    }
+    void render(sf::RenderWindow& window) override;
 };
 
 #endif //PROJECTAP_MENUSTATE_H

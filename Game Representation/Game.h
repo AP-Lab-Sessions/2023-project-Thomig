@@ -9,43 +9,24 @@
 #include <memory>
 #include "StateManager.h"
 #include "States/MenuState.h"
+#include "ConcreteFactory.h"
 
 class Game {
 public:
-    Game() : window(sf::VideoMode(800, 600), "Pacman"), stateManager(std::make_shared<StateManager>()) {
-        stateManager->pushState(std::make_shared<MenuState>(stateManager));
-    }
+    Game();
 
-    void start() {
-        while (window.isOpen()) {
-            handleEvents();
-            render();
-        }
-    }
+    void start();
 
 private:
-    void handleEvents() {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-            stateManager->handleEvent(event);
-        }
-    }
+    void handleEvents();
 
-    void update(float deltaTime) {
-        stateManager->update(deltaTime);
-    }
+    void update(float deltaTime);
 
-    void render() {
-        window.clear();
-        stateManager->render(window);
-        window.display();
-    }
+    void render();
 
     sf::RenderWindow window;
-    std::shared_ptr<StateManager> stateManager;
+    shared_ptr<StateManager> stateManager;
+    shared_ptr<AbstractFactory> factory = make_shared<ConcreteFactory>();
 };
 
 

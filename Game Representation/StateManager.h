@@ -12,33 +12,15 @@
 
 class StateManager {
 public:
-    void pushState(std::shared_ptr<State> state) {
-        states.push(state);
-    }
+    void pushState(std::shared_ptr<State> state);
 
-    void popState() {
-        if (!states.empty()) {
-            states.pop();
-        }
-    }
+    void popState();
 
-    void handleEvent(sf::Event& event) {
-        if (!states.empty()) {
-            states.top()->handleEvent(event);
-        }
-    }
+    void handleEvent(sf::Event& event);
 
-    void update(float deltaTime) {
-        if (!states.empty()) {
-            states.top()->update(deltaTime);
-        }
-    }
+    void update(float deltaTime);
 
-    void render(sf::RenderWindow& window) {
-        if (!states.empty()) {
-            states.top()->render(window);
-        }
-    }
+    void render(sf::RenderWindow& window);
 
 private:
     std::stack<std::shared_ptr<State>> states;

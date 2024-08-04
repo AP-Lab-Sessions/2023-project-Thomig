@@ -3,3 +3,5 @@
 //
 
 #include "State.h"
+
+State::State(std::shared_ptr<StateManager> manager) : stateManager(manager) {}

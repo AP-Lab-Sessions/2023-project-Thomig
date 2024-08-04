@@ -11,24 +11,13 @@
 
 class LevelState : public State {
 public:
-    LevelState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
-        // Initialize level (e.g., create World instance)
-    }
+    LevelState(std::shared_ptr<StateManager> stateManager);
 
-    void handleEvent(sf::Event& event) override {
-        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
-            stateManager->pushState(std::make_shared<PausedState>(stateManager));
-        }
-    }
+    void handleEvent(sf::Event& event) override;
 
-    void update(float deltaTime) override {
-        // Update game logic
-    }
+    void update(float deltaTime) override;
 
-    void render(sf::RenderWindow& window) override {
-        cout << "Rendering level state" << endl;
-        // Render game world
-    }
+    void render(sf::RenderWindow& window) override;
 };
 
 

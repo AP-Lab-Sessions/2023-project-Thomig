@@ -15,7 +15,7 @@ class StateManager;
 
 class State {
 public:
-    State(std::shared_ptr<StateManager> manager) : stateManager(manager) {}
+    State(std::shared_ptr<StateManager> manager);
     virtual ~State() = default;
     virtual void handleEvent(sf::Event& event) = 0;
     virtual void update(float deltaTime) = 0;
