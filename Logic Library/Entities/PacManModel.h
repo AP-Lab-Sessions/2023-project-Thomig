@@ -11,6 +11,7 @@ class PacManModel: public EntityModel {
 public:
     PacManModel(double x, double y);
     void update() override;
+    pair<double, double> getPosition() { return position; }
 };
 
 

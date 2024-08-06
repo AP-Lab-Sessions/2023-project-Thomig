@@ -3,3 +3,7 @@
 //
 
 #include "World.h"
+
+World::World(shared_ptr<ConcreteFactory> factory, int level) {
+    createEntities(factory, level);
+}

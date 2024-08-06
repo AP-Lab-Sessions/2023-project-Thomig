@@ -9,6 +9,11 @@
 #include "../Logic Library/Observer.h"
 #include "iostream"
 #include "RenderWindow.h"
+#include "../Logic Library/Entities/PacManModel.h"
+#include "../Logic Library/Entities/GhostModel.h"
+#include "../Logic Library/Entities/WallModel.h"
+#include "../Logic Library/Entities/CoinModel.h"
+#include "../Logic Library/Entities/FruitModel.h"
 
 using namespace std;
 

@@ -7,8 +7,6 @@
 
 #include "../EntityView.h"
 
-class PacManModel;
-
 class PacManView: public EntityView {
 public:
     PacManView(std::shared_ptr<PacManModel> pacManModel) : pacManModel(pacManModel) {

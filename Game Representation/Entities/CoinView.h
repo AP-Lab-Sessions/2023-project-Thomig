@@ -7,8 +7,6 @@
 
 #include "../EntityView.h"
 
-class CoinModel;
-
 class CoinView: public EntityView {
 public:
     CoinView(std::shared_ptr<CoinModel> coinModel) : coinModel(coinModel) {

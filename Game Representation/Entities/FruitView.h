@@ -7,8 +7,6 @@
 
 #include "../EntityView.h"
 
-class FruitModel;
-
 class FruitView: public EntityView {
 public:
     FruitView(std::shared_ptr<FruitModel> fruitModel) : fruitModel(fruitModel) {

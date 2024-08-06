@@ -20,7 +20,7 @@ public:
     State(std::shared_ptr<StateManager> manager);
     virtual ~State() = default;
     virtual void handleEvent(sf::Event& event) = 0;
-    virtual void update(float deltaTime) = 0;
+    virtual void update() = 0;
     virtual void render() = 0;
 
 protected:

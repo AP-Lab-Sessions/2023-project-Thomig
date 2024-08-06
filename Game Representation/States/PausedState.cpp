@@ -12,7 +12,7 @@ void PausedState::handleEvent(sf::Event &event) {
     }
 }
 
-void PausedState::update(float deltaTime) {
+void PausedState::update() {
     // Update game logic
 }
 

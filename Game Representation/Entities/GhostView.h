@@ -7,8 +7,6 @@
 
 #include "../EntityView.h"
 
-class GhostModel;
-
 class GhostView: public EntityView {
 public:
     GhostView(std::shared_ptr<GhostModel> ghostModel) : ghostModel(ghostModel) {

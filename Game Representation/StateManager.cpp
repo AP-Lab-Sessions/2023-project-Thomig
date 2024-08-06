@@ -24,9 +24,9 @@ void StateManager::handleEvent(sf::Event &event) {
     }
 }
 
-void StateManager::update(float deltaTime) {
+void StateManager::update() {
     if (!states.empty()) {
-        states.top()->update(deltaTime);
+        states.top()->update();
     }
 }
 

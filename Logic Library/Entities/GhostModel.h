@@ -11,6 +11,7 @@ class GhostModel: public EntityModel {
 public:
     GhostModel(double x, double y);
     void update() override;
+    pair<double, double> getPosition() { return position; }
 };
 
 

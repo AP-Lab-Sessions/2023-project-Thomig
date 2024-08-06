@@ -21,7 +21,7 @@ public:
 private:
     void handleEvents();
 
-    void update(float deltaTime);
+    void update();
 
     void render();
 

@@ -14,13 +14,21 @@
 
 using namespace std;
 
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right
+};
+
+// Entity Controller
 class World {
 public:
-    World(shared_ptr<ConcreteFactory> factory) {
-        createEntities(factory);
-    }
+    World() = default;
 
-    void createEntities(shared_ptr<ConcreteFactory> factory) {
+    World(shared_ptr<ConcreteFactory> factory, int level);
+
+    void createEntities(shared_ptr<ConcreteFactory> factory, int level) {
         addEntity(factory->createPacMan(0, 0));
         addEntity(factory->createWall(0, 0));
     }
@@ -37,7 +45,7 @@ public:
         return entities;
     }
 
-    void update() {
+    void update(Direction d) {
         for (auto entity : entities) {
             entity->update();
         }
@@ -50,6 +58,7 @@ public:
     }
 private:
     vector<shared_ptr<EntityModel>> entities;
+    Direction direction = Left;
 };
 
 

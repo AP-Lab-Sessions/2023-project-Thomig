@@ -5,8 +5,10 @@
 #include "Game.h"
 
 Game::Game(){
-    // create instance of the singleton class RenderWindow
-    RenderWindow::getInstance().initialize(1920, 1080, "Pacman Game");
+    // Initialize basic game components
+    int width = 1850;
+    int height = 1016;
+    RenderWindow::getInstance().initialize(width, height, "Pacman Game");
     window = RenderWindow::getInstance().getWindow();
     factory = std::make_shared<ConcreteFactory>();
     stateManager = std::make_shared<StateManager>(factory);
@@ -16,6 +18,7 @@ Game::Game(){
 void Game::start() {
     while (window->isOpen()) {
         handleEvents();
+        update();
         render();
     }
 }
@@ -30,12 +33,12 @@ void Game::handleEvents() {
     }
 }
 
-void Game::update(float deltaTime) {
-    stateManager->update(deltaTime);
+void Game::update() {
+    window->clear();
+    stateManager->update();
 }
 
 void Game::render() {
-    window->clear();
     stateManager->render();
     window->display();
 }

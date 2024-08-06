@@ -12,7 +12,7 @@ void MenuState::handleEvent(sf::Event &event) {
     }
 }
 
-void MenuState::update(float deltaTime) {
+void MenuState::update() {
     // Update menu items
 }
 

@@ -15,9 +15,13 @@ public:
 
     void handleEvent(sf::Event& event) override;
 
-    void update(float deltaTime) override;
+    void update() override;
 
     void render() override;
+
+private:
+    World world;
+    Direction direction = Left;  // Starting pacman direction
 };
 
 

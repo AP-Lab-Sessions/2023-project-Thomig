@@ -7,8 +7,6 @@
 
 #include "../EntityView.h"
 
-class WallModel;
-
 class WallView: public EntityView {
 public:
     WallView(std::shared_ptr<WallModel> wallModel) : wallModel(wallModel) {
@@ -20,8 +18,7 @@ public:
     }
 
     void update() override {
-        cout << "WallView update" << endl;
-        // Update Wall's position, animation, etc.
+        window->draw(*wallShape);
     }
 
     //void render() override {
