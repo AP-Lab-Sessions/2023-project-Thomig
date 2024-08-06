@@ -58,6 +58,8 @@ SET(SRC main.cpp
         "Game Representation/ConcreteFactory.cpp"
         "Logic Library/Observer.h"
         "Logic Library/Observer.cpp"
+        "Game Representation/RenderWindow.h"
+        "Game Representation/RenderWindow.cpp"
 )
 
 # Add include dirs for SFML

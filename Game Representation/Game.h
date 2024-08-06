@@ -10,6 +10,7 @@
 #include "StateManager.h"
 #include "States/MenuState.h"
 #include "ConcreteFactory.h"
+#include "RenderWindow.h"
 
 class Game {
 public:
@@ -24,9 +25,9 @@ private:
 
     void render();
 
-    sf::RenderWindow window;
     shared_ptr<StateManager> stateManager;
-    shared_ptr<AbstractFactory> factory = make_shared<ConcreteFactory>();
+    shared_ptr<ConcreteFactory> factory;
+    shared_ptr<sf::RenderWindow> window;
 };
 
 

@@ -12,15 +12,25 @@ class WallModel;
 class WallView: public EntityView {
 public:
     WallView(std::shared_ptr<WallModel> wallModel) : wallModel(wallModel) {
-        // Load Wall shape, set initial position, etc.
+        wallShape = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
+        wallShape->setFillColor(sf::Color::Black);
+        wallShape->setPosition(50, 50);
+        wallShape->setOutlineColor(sf::Color::Red);
+        wallShape->setOutlineThickness(50);
     }
 
     void update() override {
+        cout << "WallView update" << endl;
         // Update Wall's position, animation, etc.
-        // For example: window->draw(pacManSprite);
     }
+
+    //void render() override {
+    //    window->draw(*wallShape);
+    //}
+
 private:
     std::shared_ptr<WallModel> wallModel;
+    shared_ptr<sf::Shape> wallShape;
 };
 
 

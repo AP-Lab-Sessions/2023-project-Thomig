@@ -8,6 +8,7 @@
 #include "SFML/Graphics.hpp"
 #include "../Logic Library/Observer.h"
 #include "iostream"
+#include "RenderWindow.h"
 
 using namespace std;
 
@@ -15,8 +16,9 @@ class EntityView: public Observer {
 public:
     virtual void update() = 0;
     virtual ~EntityView() = default;
+    //virtual void render() = 0;
 protected:
-    shared_ptr<sf::RenderWindow> window;
+    std::shared_ptr<sf::RenderWindow> window = RenderWindow::getInstance().getWindow();
 };
 
 

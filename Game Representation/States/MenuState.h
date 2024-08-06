@@ -17,7 +17,7 @@ public:
 
     void update(float deltaTime) override;
 
-    void render(sf::RenderWindow& window) override;
+    void render() override;
 };
 
 #endif //PROJECTAP_MENUSTATE_H

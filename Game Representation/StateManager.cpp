@@ -4,6 +4,10 @@
 
 #include "StateManager.h"
 
+StateManager::StateManager(shared_ptr<ConcreteFactory> factory) {
+    this->factory = factory;
+}
+
 void StateManager::pushState(std::shared_ptr<State> state) {
     states.push(state);
 }
@@ -26,8 +30,12 @@ void StateManager::update(float deltaTime) {
     }
 }
 
-void StateManager::render(sf::RenderWindow &window) {
+void StateManager::render() {
     if (!states.empty()) {
-        states.top()->render(window);
+        states.top()->render();
     }
+}
+
+shared_ptr<ConcreteFactory> StateManager::getFactory() {
+    return factory;
 }

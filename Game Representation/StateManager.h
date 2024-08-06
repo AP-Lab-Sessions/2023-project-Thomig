@@ -9,9 +9,14 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "State.h"
+#include "ConcreteFactory.h"
+
+using namespace std;
 
 class StateManager {
 public:
+    StateManager(shared_ptr<ConcreteFactory> factory);
+
     void pushState(std::shared_ptr<State> state);
 
     void popState();
@@ -20,10 +25,13 @@ public:
 
     void update(float deltaTime);
 
-    void render(sf::RenderWindow& window);
+    void render();
+
+    shared_ptr<ConcreteFactory> getFactory();
 
 private:
-    std::stack<std::shared_ptr<State>> states;
+    stack<std::shared_ptr<State>> states;
+    shared_ptr<ConcreteFactory> factory = make_shared<ConcreteFactory>();
 };
 
 #endif //PROJECTAP_STATEMANAGER_H

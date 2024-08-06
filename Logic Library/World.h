@@ -10,18 +10,19 @@
 #include "algorithm"
 #include "memory"
 #include "EntityModel.h"
-#include "AbstractFactory.h"
+#include "../Game Representation/ConcreteFactory.h"
 
 using namespace std;
 
 class World {
 public:
-    World(shared_ptr<AbstractFactory> factory) {
+    World(shared_ptr<ConcreteFactory> factory) {
         createEntities(factory);
     }
 
-    void createEntities(shared_ptr<AbstractFactory> factory) {
+    void createEntities(shared_ptr<ConcreteFactory> factory) {
         addEntity(factory->createPacMan(0, 0));
+        addEntity(factory->createWall(0, 0));
     }
 
     void addEntity(shared_ptr<EntityModel> entity) {

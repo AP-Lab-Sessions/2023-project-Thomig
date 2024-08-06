@@ -16,7 +16,7 @@ void PausedState::update(float deltaTime) {
     // Update game logic
 }
 
-void PausedState::render(sf::RenderWindow &window) {
+void PausedState::render() {
     std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
     try {
         // check if file is found
@@ -34,7 +34,7 @@ void PausedState::render(sf::RenderWindow &window) {
     shape1->setPosition(50, 50);
     shape1->setOutlineColor(sf::Color::Blue);
     shape1->setOutlineThickness(50);
-    window.draw(*shape1);
+    window->draw(*shape1);
 
-    window.display();
+    window->display();
 }

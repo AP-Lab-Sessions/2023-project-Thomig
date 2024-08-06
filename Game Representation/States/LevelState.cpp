@@ -5,7 +5,7 @@
 #include "LevelState.h"
 
 LevelState::LevelState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
-    // Initialize level (e.g., create World instance)
+    World world(stateManager->getFactory());
 }
 
 void LevelState::handleEvent(sf::Event &event) {
@@ -18,7 +18,6 @@ void LevelState::update(float deltaTime) {
     // Update game logic
 }
 
-void LevelState::render(sf::RenderWindow &window) {
-    cout << "Rendering level state" << endl;
+void LevelState::render() {
     // Render game world
 }
