@@ -29,8 +29,10 @@ public:
     World(shared_ptr<ConcreteFactory> factory, int level);
 
     void createEntities(shared_ptr<ConcreteFactory> factory, int level) {
-        addEntity(factory->createPacMan(0, 0));
-        addEntity(factory->createWall(0, 0));
+        addEntity(factory->createPacMan(-1, -0.9));
+        addEntity(factory->createWall(-1, -1));
+        addEntity(factory->createWall(-0.9, -0.9));
+        addEntity(factory->createWall(0.9, 0.1));
     }
 
     void addEntity(shared_ptr<EntityModel> entity) {

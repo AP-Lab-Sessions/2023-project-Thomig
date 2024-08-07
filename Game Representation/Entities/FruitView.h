@@ -17,6 +17,10 @@ public:
         // Update Fruit's position, animation, etc.
         // For example: window->draw(fruitSprite);
     }
+
+    void render() override {
+        // Render Fruit
+    }
 private:
     std::shared_ptr<FruitModel> fruitModel;
 };

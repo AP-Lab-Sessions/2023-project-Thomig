@@ -17,6 +17,10 @@ public:
         // Update Coin's position, animation, etc.
         // For example: window->draw(coinSprite);
     }
+
+    void render() override {
+        // Render Coin
+    }
 private:
     std::shared_ptr<CoinModel> coinModel;
 };

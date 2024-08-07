@@ -10,6 +10,7 @@ Game::Game(){
     int height = 1016;
     RenderWindow::getInstance().initialize(width, height, "Pacman Game");
     window = RenderWindow::getInstance().getWindow();
+    Camera::getInstance();
     factory = std::make_shared<ConcreteFactory>();
     stateManager = std::make_shared<StateManager>(factory);
     stateManager->pushState(std::make_shared<MenuState>(stateManager));

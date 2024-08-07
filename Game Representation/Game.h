@@ -11,6 +11,7 @@
 #include "States/MenuState.h"
 #include "ConcreteFactory.h"
 #include "RenderWindow.h"
+#include "Camera.h"
 
 class Game {
 public:

@@ -17,6 +17,10 @@ public:
         // Update Ghost's position, animation, etc.
         // For example: window->draw(ghostSprite);
     }
+
+    void render() override {
+        // Render Ghost
+    }
 private:
     std::shared_ptr<GhostModel> ghostModel;
 };

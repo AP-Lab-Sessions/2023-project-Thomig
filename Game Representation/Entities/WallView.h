@@ -10,20 +10,24 @@
 class WallView: public EntityView {
 public:
     WallView(std::shared_ptr<WallModel> wallModel) : wallModel(wallModel) {
-        wallShape = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
-        wallShape->setFillColor(sf::Color::Black);
-        wallShape->setPosition(50, 50);
-        wallShape->setOutlineColor(sf::Color::Red);
-        wallShape->setOutlineThickness(50);
+        auto& camera = Camera::getInstance();
+        pair<double, double> size = camera.entitySize(50, 50);
+        pair<double, double> position = camera.modelPosition(wallModel->getPosition().first, wallModel->getPosition().second
+                , size.first, size.second);
+        wallShape = make_shared<sf::RectangleShape>(sf::Vector2f(size.first, size.second));
+        wallShape->setOrigin(size.first/2, size.second/2);
+        wallShape->setPosition(position.first, position.second);
+        wallShape->setFillColor(sf::Color::Blue);
     }
 
     void update() override {
-        window->draw(*wallShape);
+        // update position
+        render();
     }
 
-    //void render() override {
-    //    window->draw(*wallShape);
-    //}
+    void render() override {
+        window->draw(*wallShape);
+    }
 
 private:
     std::shared_ptr<WallModel> wallModel;
