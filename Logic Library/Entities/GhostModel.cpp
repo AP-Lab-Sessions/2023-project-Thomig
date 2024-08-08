@@ -6,6 +6,7 @@
 
 GhostModel::GhostModel(double x, double y) {
     position = make_pair(x, y);
+    type = Ghost;
 }
 
 void GhostModel::update() {

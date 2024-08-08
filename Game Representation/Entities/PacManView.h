@@ -7,12 +7,6 @@
 
 #include "../EntityView.h"
 
-struct Sprite {
-    sf::Sprite sprite;
-    sf::Texture texture;
-    sf::Image image;
-};
-
 class PacManView: public EntityView {
 public:
     PacManView(std::shared_ptr<PacManModel> pacManModel) : pacManModel(pacManModel) {
@@ -27,9 +21,9 @@ public:
             auto& camera = Camera::getInstance();
             pair<double, double> scaleFactor = camera.getScaleFactor();
             pacman->sprite.setScale(scaleFactor.first, scaleFactor.second);
-            pacman->sprite.setOrigin((50*scaleFactor.first)*0.4, (50*scaleFactor.second)*0.4);
-            pair<double, double> position = camera.modelPosition(pacManModel->getPosition().first, pacManModel->getPosition().second
-                    , 50*scaleFactor.first, 50*scaleFactor.second);
+            pacman->sprite.setOrigin((50*scaleFactor.first)*0.35, (50*scaleFactor.second)*0.4);
+            pair<double, double> position = camera.modelPosition(pacManModel->getPosition().first,
+                pacManModel->getPosition().second, 50*scaleFactor.first, 50*scaleFactor.second);
             pacman->sprite.setPosition(position.first, position.second);
             pacManSprites.push_back(pacman);
         }
@@ -40,7 +34,18 @@ public:
     }
 
     void render() override {
-        window->draw(pacManSprites[0]->sprite);
+        int s = 0;
+        cout << pacManModel->getDirection() << endl;
+        if (pacManModel->getDirection() == Right) {
+            s = 3;
+        } else if (pacManModel->getDirection() == Left) {
+            s = 1;
+        } else if (pacManModel->getDirection() == Up) {
+            s = 0;
+        } else if (pacManModel->getDirection() == Down) {
+            s = 2;
+        }
+        window->draw(pacManSprites[s]->sprite); // up left down right 0 1 2 3
     }
 private:
     std::shared_ptr<PacManModel> pacManModel;

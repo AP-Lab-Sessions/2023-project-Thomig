@@ -6,6 +6,7 @@
 
 CoinModel::CoinModel(double x, double y) {
     position = make_pair(x, y);
+    type = Coin;
 }
 
 void CoinModel::update() {

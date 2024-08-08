@@ -12,15 +12,32 @@
 
 using namespace std;
 
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right
+};
+
+enum Type {
+    PacMan,
+    Ghost,
+    Wall,
+    Coin,
+    Fruit
+};
+
 class EntityModel {
 public:
     void attachView(shared_ptr<Observer> observer);
     void notify();
     virtual ~EntityModel() = default;
     virtual void update() = 0;
-
+    pair<double, double> getPosition() { return position; }
+    Type getType() { return type; }
 protected:
     pair<double , double> position;
+    Type type;
 private:
     vector<shared_ptr<Observer>> observers;
 };

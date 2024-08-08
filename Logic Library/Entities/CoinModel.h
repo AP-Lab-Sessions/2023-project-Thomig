@@ -11,7 +11,6 @@ class CoinModel: public EntityModel {
 public:
     CoinModel(double x, double y);
     void update() override;
-    pair<double, double> getPosition() { return position; }
 };
 
 

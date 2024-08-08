@@ -18,6 +18,12 @@
 
 using namespace std;
 
+struct Sprite {
+    sf::Sprite sprite;
+    sf::Texture texture;
+    sf::Image image;
+};
+
 class EntityView: public Observer {
 public:
     virtual void update() = 0;

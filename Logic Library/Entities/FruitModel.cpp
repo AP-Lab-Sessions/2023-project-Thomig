@@ -6,6 +6,7 @@
 
 FruitModel::FruitModel(double x, double y) {
     position = make_pair(x, y);
+    type = Fruit;
 }
 
 void FruitModel::update() {

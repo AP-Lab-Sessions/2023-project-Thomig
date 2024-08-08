@@ -11,7 +11,10 @@ class GhostModel: public EntityModel {
 public:
     GhostModel(double x, double y);
     void update() override;
-    pair<double, double> getPosition() { return position; }
+    void setPosition(double x, double y) { position = make_pair(x, y); }
+    Direction getDirection() { return direction; }
+private:
+    Direction direction = Left;
 };
 
 

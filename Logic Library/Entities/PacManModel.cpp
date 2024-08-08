@@ -6,6 +6,7 @@
 
 PacManModel::PacManModel(double x, double y) {
     position = make_pair(x, y);
+    type = PacMan;
 }
 
 void PacManModel::update() {

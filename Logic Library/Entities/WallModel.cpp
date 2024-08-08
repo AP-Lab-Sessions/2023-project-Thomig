@@ -6,6 +6,7 @@
 
 WallModel::WallModel(double x, double y) {
     position = make_pair(x, y);
+    type = Wall;
 }
 
 void WallModel::update() {

@@ -11,7 +11,6 @@ class WallModel: public EntityModel {
 public:
     WallModel(double x, double y);
     void update() override;
-    pair<double, double> getPosition() { return position; }
 };
 
 

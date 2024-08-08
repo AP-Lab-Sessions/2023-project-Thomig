@@ -11,7 +11,11 @@ class PacManModel: public EntityModel {
 public:
     PacManModel(double x, double y);
     void update() override;
-    pair<double, double> getPosition() { return position; }
+    void setPosition(double x, double y) { position = make_pair(x, y); }
+    Direction getDirection() { return direction; }
+    void setDirection(Direction d) { direction = d; }
+private:
+    Direction direction;
 };
 
 

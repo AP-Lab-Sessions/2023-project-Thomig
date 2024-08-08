@@ -35,6 +35,5 @@ void LevelState::update() {
 }
 
 void LevelState::render() {
-    // Render game
-    world.render();
+    // Happens through observer pattern
 }

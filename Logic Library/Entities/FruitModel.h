@@ -11,7 +11,6 @@ class FruitModel: public EntityModel {
 public:
     FruitModel(double x, double y);
     void update() override;
-    pair<double, double> getPosition() { return position; }
 };
 
 
