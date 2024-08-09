@@ -12,7 +12,9 @@ public:
     GhostModel(double x, double y);
     void update() override;
     void setPosition(double x, double y) { position = make_pair(x, y); }
-    Direction getDirection() { return direction; }
+    Direction getDirection();
+    void setDirection(Direction d);
+    Rectangle getHitBox() override;
 private:
     Direction direction = Left;
 };

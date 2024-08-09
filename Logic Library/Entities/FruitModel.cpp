@@ -12,3 +12,12 @@ FruitModel::FruitModel(double x, double y) {
 void FruitModel::update() {
     notify();
 }
+
+Rectangle FruitModel::getHitBox() {
+    Rectangle hitBox;
+    hitBox.x = position.first-0.01+1;
+    hitBox.y = position.second-0.01+1;
+    hitBox.width = 0.02;
+    hitBox.height = 0.02;
+    return hitBox;
+}

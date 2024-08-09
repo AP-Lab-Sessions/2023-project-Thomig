@@ -11,6 +11,7 @@
 #include "memory"
 #include "fstream"
 #include "string"
+#include "cmath"
 #include "EntityModel.h"
 #include "../Game Representation/ConcreteFactory.h"
 #include "StopWatch.h"
@@ -35,10 +36,14 @@ private:
 
     vector<shared_ptr<EntityModel>> getEntities();
 
-    bool movePacMan(shared_ptr<PacManModel> pacman, Direction d);
+    bool movePacMan(Direction d, double distance);
+
+    bool areRectanglesIntersecting(const Rectangle& rectA, const Rectangle& rectB);
 
     vector<shared_ptr<EntityModel>> entities;
+    shared_ptr<PacManModel> pacman;
     Direction currentDirection = Left;
+    double worldTime = 0;
 };
 
 

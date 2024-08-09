@@ -9,8 +9,6 @@ World::World(shared_ptr<ConcreteFactory> factory, int level) {
 }
 
 void World::createEntities(shared_ptr<ConcreteFactory> factory, int level) {
-    addEntity(factory->createPacMan(-1, -0.9));
-
     ifstream file("../Levels/Level" + to_string(level) + ".txt");
     vector<string> lines;
     if (file.is_open()) {
@@ -29,6 +27,7 @@ void World::createEntities(shared_ptr<ConcreteFactory> factory, int level) {
                 addEntity(factory->createWall(width, height));
             } else if (ch == 'P') {
                 addEntity(factory->createPacMan(width, height));
+                pacman = static_pointer_cast<PacManModel>(entities.back());
             } else if (ch == 'F') {
                 addEntity(factory->createFruit(width, height));
             } else if (ch == 'C') {
@@ -41,6 +40,7 @@ void World::createEntities(shared_ptr<ConcreteFactory> factory, int level) {
         width = -1;
         height += 0.1;
     }
+    StopWatch::getInstance()->start();
 }
 
 void World::addEntity(shared_ptr<EntityModel> entity) {
@@ -57,30 +57,94 @@ vector<shared_ptr<EntityModel>> World::getEntities() {
 
 void World::update(Direction d) {
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
-    // get the pacman entity
-    shared_ptr<PacManModel> pacMan;
-    for (auto entity : entities) {
-        if (entity->getType() == PacMan) {
-            pacMan = dynamic_pointer_cast<PacManModel>(entity);
+    worldTime += stopWatch->getDeltaTime().count();
+    double distance = stopWatch->getDeltaTime().count() * 0.005;
+    stopWatch->update();
+
+    if (movePacMan(d, 0.0001)) {
+        /*
+        if (currentDirection != d){
+            // Make sure pacman is in the middle of the lane
+            if (d == Up || d == Down){
+                double x = lround(pacman->getPosition().first*10)/10.0;
+                pacman->setPosition(x, pacman->getPosition().second);
+            }
+            else if (d == Left || d == Right){
+                double y = lround(pacman->getPosition().second*10)/10.0;
+                pacman->setPosition(pacman->getPosition().first, y);
+            }
+            else{
+                double x = lround(pacman->getPosition().first*10)/10.0;
+                double y = lround(pacman->getPosition().second*10)/10.0;
+                pacman->setPosition(x, y);
+            }
         }
+        */
+        currentDirection = d;
     }
-    pacMan->setDirection(d);
-    //if (!movePacMan(pacMan, d)){
-    //
-    //}
-    //else{
-    //    movePacMan(pacMan, currentDirection);
-    //}
+    else{
+        movePacMan(currentDirection, 0.0001);
+    }
+    //pacman->setPosition(pacman->getPosition().first-0.00005, pacman->getPosition().second);
+    //cout << pacman->getPosition().first << " " << pacman->getPosition().second << endl;
+
     for (auto entity : entities) {
         entity->update();
     }
 }
 
-bool World::movePacMan(shared_ptr<PacManModel> pacman, Direction d) {
-    if (d == Up){
-        if (currentDirection == Up or currentDirection == Down){
+bool World::movePacMan(Direction d, double distance) {  // move pacman if no collision
+    double x = pacman->getPosition().first;
+    double y = pacman->getPosition().second;
+    switch (d) {
+        case Up:
+            y -= 0.04;
+            break;
+        case Down:
+            y += 0.04;
+            break;
+        case Left:
+            x -= 0.04;
+            break;
+        case Right:
+            x += 0.04;
+            break;
+    }
+    Rectangle pacmanHitBox = pacman->getHitBox();
+    pacmanHitBox.x = x+1;
+    pacmanHitBox.y = y+1;
 
+    for (auto entity : entities) {
+        if (entity->getType() == Wall) {
+            Rectangle wallHitBox = entity->getHitBox();
+            if (areRectanglesIntersecting(pacmanHitBox, wallHitBox)) {
+                return false;
+            }
         }
     }
-    return false;
+    x = pacman->getPosition().first;
+    y = pacman->getPosition().second;
+    switch (d) {
+        case Up:
+            y -= distance;
+            break;
+        case Down:
+            y += distance;
+            break;
+        case Left:
+            x -= distance;
+            break;
+        case Right:
+            x += distance;
+            break;
+    }
+    pacman->setPosition(x, y);
+    return true;
+}
+
+bool World::areRectanglesIntersecting(const Rectangle &rectA, const Rectangle &rectB) {
+    return (rectA.x < rectB.x + rectB.width &&
+            rectA.x + rectA.width > rectB.x &&
+            rectA.y < rectB.y + rectB.height &&
+            rectA.y + rectA.height > rectB.y);
 }

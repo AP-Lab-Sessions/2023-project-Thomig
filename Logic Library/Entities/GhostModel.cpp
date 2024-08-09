@@ -12,3 +12,20 @@ GhostModel::GhostModel(double x, double y) {
 void GhostModel::update() {
     notify();
 }
+
+Direction GhostModel::getDirection() {
+    return direction;
+}
+
+void GhostModel::setDirection(Direction d) {
+    direction = d;
+}
+
+Rectangle GhostModel::getHitBox() {
+    Rectangle hitBox;
+    hitBox.x = position.first-0.01+1;
+    hitBox.y = position.second-0.01+1;
+    hitBox.width = 0.02;
+    hitBox.height = 0.02;
+    return hitBox;
+}

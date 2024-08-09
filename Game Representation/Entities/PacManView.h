@@ -30,20 +30,27 @@ public:
     }
 
     void update() override {
+        auto& camera = Camera::getInstance();
+        pair<double, double> position = camera.modelPosition(pacManModel->getPosition().first,
+                                                             pacManModel->getPosition().second,
+                                                             50*camera.getScaleFactor().first,
+                                                             50*camera.getScaleFactor().second);
+        for (int i = 0; i < pacManSprites.size(); i++) {
+            pacManSprites[i]->sprite.setPosition(position.first, position.second);
+        }
         render();
     }
 
     void render() override {
         int s = 0;
-        cout << pacManModel->getDirection() << endl;
-        if (pacManModel->getDirection() == Right) {
-            s = 3;
+        if (pacManModel->getDirection() == Up) {
+            s = 0;
         } else if (pacManModel->getDirection() == Left) {
             s = 1;
-        } else if (pacManModel->getDirection() == Up) {
-            s = 0;
         } else if (pacManModel->getDirection() == Down) {
             s = 2;
+        } else if (pacManModel->getDirection() == Right) {
+            s = 3;
         }
         window->draw(pacManSprites[s]->sprite); // up left down right 0 1 2 3
     }
