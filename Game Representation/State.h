@@ -9,6 +9,7 @@
 #include <memory>
 #include "iostream"
 #include "../Logic Library/World.h"
+#include "../Logic Library/Stats.h"
 #include "RenderWindow.h"
 
 using namespace std;

@@ -6,12 +6,18 @@
 
 GhostModel::GhostModel(double x, double y) {
     position = make_pair(x, y);
+    startingPosition = make_pair(x, y);
     type = Ghost;
 }
 
 void GhostModel::update() {
+    if (fearTimer > 0) {
+        fearTimer--;
+    }
     notify();
 }
+
+void GhostModel::setPosition(double x, double y) { position = make_pair(x, y); }
 
 Direction GhostModel::getDirection() {
     return direction;
@@ -22,6 +28,15 @@ void GhostModel::setDirection(Direction d) {
 }
 
 Rectangle GhostModel::getHitBox() {
+    Rectangle hitBox;
+    hitBox.x = position.first-0.04+1;
+    hitBox.y = position.second-0.04+1;
+    hitBox.width = 0.08;
+    hitBox.height = 0.08;
+    return hitBox;
+}
+
+Rectangle GhostModel::getHitBox1() {
     Rectangle hitBox;
     hitBox.x = position.first-0.01+1;
     hitBox.y = position.second-0.01+1;
@@ -38,9 +53,30 @@ void GhostModel::incrementSpriteTimer() {
     }
 }
 
+ghostState GhostModel::getState() {
+    if (state == Setup) {  // Ghost out of setup state when leaving starting position
+        if (abs((position.first+1)-(startingPosition.first+1)) > 0.3) {
+            state = Chase;
+        }
+    }
+    else if (state == Fear) {
+        if (fearTimer == 0) {
+            state = Chase;
+        }
+    }
+    return state;
+}
+
+int GhostModel::getSpriteTimer() { return spriteTimer; }
+
 bool GhostModel::changeDirection() {
     if (changeDirectionTimer > 500) {
         return true;
     }
     return false;
+}
+
+void GhostModel::enableFear() {
+    state = Fear;
+    fearTimer = 50000;
 }

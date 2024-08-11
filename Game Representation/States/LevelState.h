@@ -22,6 +22,10 @@ public:
 private:
     World world;
     Direction direction = Left;  // Starting pacman direction
+    shared_ptr<sf::Font> font;
+    shared_ptr<sf::Text> scoreText;
+    shared_ptr<sf::Text> difficultyText;
+    shared_ptr<sf::Text> LivesText;
 };
 
 

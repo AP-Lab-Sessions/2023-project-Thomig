@@ -5,9 +5,17 @@
 #ifndef PROJECTAP_SCORE_H
 #define PROJECTAP_SCORE_H
 
+#include "Observer.h"
 
-class Score {
-
+class Score: public Observer {
+public:
+    Score();
+    void update() override;
+    void increaseScore(int s);
+    int getScore();
+    ~Score() override = default;
+private:
+    int score = 0;
 };
 
 

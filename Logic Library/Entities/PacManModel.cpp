@@ -7,6 +7,7 @@
 PacManModel::PacManModel(double x, double y) {
     position = make_pair(x, y);
     type = PacMan;
+    startingPosition = make_pair(x, y);
 }
 
 void PacManModel::update() {
@@ -32,4 +33,9 @@ void PacManModel::incrementSpriteTimer() {
     } else {
         spriteTimer++;
     }
+}
+
+void PacManModel::resetPosition() {
+    position = startingPosition;
+    direction = Left;
 }

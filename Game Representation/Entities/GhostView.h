@@ -61,25 +61,27 @@ public:
     }
 
     void render() override {
-        // Render Ghost
+        // Get the correct sprite
         int spriteIndex = 0;
-        if (ghostModel->getDirection() == Right) {
-            spriteIndex = 0;
-        } else if (ghostModel->getDirection() == Down) {
-            spriteIndex = 2;
-        } else if (ghostModel->getDirection() == Left) {
-            spriteIndex = 4;
-        } else if (ghostModel->getDirection() == Up) {
-            spriteIndex = 6;
+        if (ghostModel->getState() != Fear) {
+            if (ghostModel->getDirection() == Right) {
+                spriteIndex = 0;
+            } else if (ghostModel->getDirection() == Down) {
+                spriteIndex = 2;
+            } else if (ghostModel->getDirection() == Left) {
+                spriteIndex = 4;
+            } else if (ghostModel->getDirection() == Up) {
+                spriteIndex = 6;
+            }
         }
-        if (ghostModel->getColor() == Pink) {
+        if (ghostModel->getState() == Fear) {
+            spriteIndex += 32;
+        } else if (ghostModel->getColor() == Pink) {
             spriteIndex += 8;
         } else if (ghostModel->getColor() == Blue) {
             spriteIndex += 16;
         } else if (ghostModel->getColor() == Orange) {
             spriteIndex += 24;
-        } else if (ghostModel->getState() == Fear) {
-            spriteIndex += 32;
         }
         spriteIndex += ghostModel->getSpriteTimer();
         window->draw(ghostSprites[spriteIndex]->sprite);

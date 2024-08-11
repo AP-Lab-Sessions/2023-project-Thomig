@@ -4,7 +4,9 @@
 
 #include "World.h"
 
-World::World(shared_ptr<ConcreteFactory> factory, int level) {
+World::World(shared_ptr<ConcreteFactory> factory) {
+    //shared_ptr<Stats> stats = Stats::getInstance();
+    int level = 1;
     createEntities(factory, level);
 }
 
@@ -85,12 +87,19 @@ void World::update(Direction newDirection) {
     }
 
     // Move ghosts
-    for (auto ghost : ghosts) {
-        if (ghost->changeDirection()) {
-            moveGhosts(ghost, distance);
+    int movingGhosts = 2;
+    if (worldTime >= 5) {
+        movingGhosts = 3;
+    }
+    if (worldTime >= 10) {
+        movingGhosts = 4;
+    }
+    for (int i = 0; i < movingGhosts; i++) {
+        if (ghosts[i]->changeDirection()) {
+            moveGhosts(ghosts[i], distance);
         }
         else {
-            moveGhost(ghost, ghost->getDirection(), distance);
+            moveGhost(ghosts[i], ghosts[i]->getDirection(), distance);
         }
     }
 
@@ -102,6 +111,17 @@ void World::update(Direction newDirection) {
             ghost->incrementSpriteTimer();
         }
         spriteUpdateTime = 0;
+    }
+
+    // Check if dead
+    pacman->getHitBox();
+    for (auto ghost : ghosts) {
+        if (areRectanglesIntersecting(pacman->getHitBox(), ghost->getHitBox())) {
+            shared_ptr<Stats> stats = Stats::getInstance();
+            stats->decreaseLives();
+            pacman->resetPosition();
+            currentDirection = Left;
+        }
     }
 
     // Update all entities
@@ -132,10 +152,25 @@ bool World::movePacMan(Direction newDirection, double distance) {  // move pacma
     pacmanHitBox.y = y+1;
 
     for (auto entity : entities) {
-        if (entity->getType() == Wall) {
-            Rectangle wallHitBox = entity->getHitBox();
-            if (areRectanglesIntersecting(pacmanHitBox, wallHitBox)) {
+        Rectangle hitBox = entity->getHitBox();
+        if (areRectanglesIntersecting(pacmanHitBox, hitBox)) {
+            if (entity->getType() == Wall) {
                 return false;
+            }
+            else if (entity->getType() == Coin) {
+                removeEntity(entity);
+                shared_ptr<Stats> stats = Stats::getInstance();
+                stats->increaseScore(10);
+                return true;
+            }
+            else if (entity->getType() == Fruit) {
+                removeEntity(entity);
+                shared_ptr<Stats> stats = Stats::getInstance();
+                stats->increaseScore(50);
+                for (auto ghost : ghosts) {
+                    ghost->enableFear();
+                }
+                return true;
             }
         }
     }
@@ -194,7 +229,7 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
                 x += 0.04;
                 break;
         }
-        Rectangle ghostHitBox = ghost->getHitBox();
+        Rectangle ghostHitBox = ghost->getHitBox1();
         ghostHitBox.x = x+1;
         ghostHitBox.y = y+1;
 
@@ -214,14 +249,34 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
     }
 
     if (possibleDirections.empty()) {
-        cout << "Ghost is stuck" << endl;
+        switch (ghost->getDirection()) {
+            case Up:
+                moveGhost(ghost, Down, distance);
+                return;
+            case Down:
+                moveGhost(ghost, Up, distance);
+                return;
+            case Left:
+                moveGhost(ghost, Right, distance);
+                return;
+            case Right:
+                moveGhost(ghost, Left, distance);
+                return;
+        }
     }
     else if (possibleDirections.size() == 1) {
         moveGhost(ghost, possibleDirections[0], distance);
     }
     else {
+        // Setup mode
+        if (ghost->getState() == Setup) {
+            if(find(possibleDirections.begin(), possibleDirections.end(), Up) != possibleDirections.end()) {
+                moveGhost(ghost, Up, distance);
+            }
+        }
+        // Random direction
         double randomNumber = Random::getInstance()->getRandomNumber();
-        if (randomNumber <= 1){
+        if (randomNumber <= 0.5){
             int index = 0;
             double randomIndex = Random::getInstance()->getRandomNumber();
             if (possibleDirections.size() == 2) {
@@ -248,6 +303,20 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
             moveGhost(ghost, possibleDirections[index], distance);
         } else {
             // Manhattan distance
+            vector<double> manhattanDistances;
+            for (auto direction : possibleDirections) {
+                manhattanDistances.push_back(calculateManhattanDistance(ghost, direction, distance));
+            }
+            int index = 0;
+            if (ghost->getState() == Fear) {
+                index = max_element(manhattanDistances.begin(), manhattanDistances.end())
+                        - manhattanDistances.begin();
+            } else {
+                index = min_element(manhattanDistances.begin(), manhattanDistances.end())
+                        - manhattanDistances.begin();
+            }
+            ghost->resetChangeDirectionTimer();
+            moveGhost(ghost, possibleDirections[index], distance);
         }
     }
 }
@@ -281,12 +350,26 @@ bool World::areRectanglesIntersecting(const Rectangle &rectA, const Rectangle &r
             rectA.y + rectA.height > rectB.y);
 }
 
-double World::calculateManhattanDistance(shared_ptr<GhostModel> ghost, double distance) {
-    double ghostx = ghost->getPosition().first+1;
-    double ghostY = ghost->getPosition().second+1;
+double World::calculateManhattanDistance(shared_ptr<GhostModel> ghost, Direction d, double distance) {
+    double x = ghost->getPosition().first;
+    double y = ghost->getPosition().second;
+    switch (d) {
+        case Up:
+            y -= distance;
+            break;
+        case Down:
+            y += distance;
+            break;
+        case Left:
+            x -= distance;
+            break;
+        case Right:
+            x += distance;
+            break;
+    }
     double pacmanX = pacman->getPosition().first+1;
     double pacmanY = pacman->getPosition().second+1;
-    double manhattanDistance = ghostx - pacmanX + ghostY - pacmanY;
+    double manhattanDistance = x - pacmanX + y - pacmanY;
     return manhattanDistance;
 }
 

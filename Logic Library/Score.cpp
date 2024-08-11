@@ -3,3 +3,15 @@
 //
 
 #include "Score.h"
+
+Score::Score() {}
+
+void Score::update() {}
+
+void Score::increaseScore(int s) {
+    this->score += s;
+}
+
+int Score::getScore() {
+    return score;
+}

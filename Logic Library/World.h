@@ -16,6 +16,7 @@
 #include "../Game Representation/ConcreteFactory.h"
 #include "StopWatch.h"
 #include "Random.h"
+#include "Stats.h"
 
 using namespace std;
 
@@ -24,7 +25,7 @@ class World {
 public:
     World() = default;
 
-    World(shared_ptr<ConcreteFactory> factory, int level);
+    World(shared_ptr<ConcreteFactory> factory);
 
     void update(Direction d);
 
@@ -45,7 +46,7 @@ private:
 
     bool areRectanglesIntersecting(const Rectangle& rectA, const Rectangle& rectB);
 
-    double calculateManhattanDistance(shared_ptr<GhostModel> ghost, double distance);
+    double calculateManhattanDistance(shared_ptr<GhostModel> ghost, Direction d, double distance);
 
     vector<shared_ptr<EntityModel>> entities;
     shared_ptr<PacManModel> pacman;

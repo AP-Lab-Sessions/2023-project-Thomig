@@ -17,9 +17,11 @@ public:
     Rectangle getHitBox() override;
     void incrementSpriteTimer();
     int getSpriteTimer() { return spriteTimer; }
+    void resetPosition();
 private:
     Direction direction = Right;
     int spriteTimer = 0;
+    pair<double, double> startingPosition;
 };
 
 

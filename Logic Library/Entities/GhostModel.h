@@ -11,26 +11,30 @@ class GhostModel: public EntityModel {
 public:
     GhostModel(double x, double y);
     void update() override;
-    void setPosition(double x, double y) { position = make_pair(x, y); }
+    void setPosition(double x, double y);
     Direction getDirection();
     void setDirection(Direction d);
     Rectangle getHitBox() override;
+    Rectangle getHitBox1();
     void incrementSpriteTimer();
-    int getSpriteTimer() { return spriteTimer; }
+    int getSpriteTimer();
     Color getColor() { return color; }
     void setColor(Color c) { color = c; }
-    ghostState getState() { return state; }
+    ghostState getState();
     void setState(ghostState s) { state = s; }
     void resetChangeDirectionTimer() { changeDirectionTimer = 0; }
     void updateChangeDirectionTimer() { changeDirectionTimer++; }
     bool changeDirection();
+    void enableFear();
 
 private:
-    Direction direction = Left;
+    Direction direction = Up;
     int spriteTimer = 0;
     Color color;
     ghostState state = Setup;
     int changeDirectionTimer = 0;
+    pair<double, double> startingPosition;
+    int fearTimer = 0;
 };
 
 
