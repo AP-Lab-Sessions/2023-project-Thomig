@@ -15,8 +15,22 @@ public:
     Direction getDirection();
     void setDirection(Direction d);
     Rectangle getHitBox() override;
+    void incrementSpriteTimer();
+    int getSpriteTimer() { return spriteTimer; }
+    Color getColor() { return color; }
+    void setColor(Color c) { color = c; }
+    ghostState getState() { return state; }
+    void setState(ghostState s) { state = s; }
+    void resetChangeDirectionTimer() { changeDirectionTimer = 0; }
+    void updateChangeDirectionTimer() { changeDirectionTimer++; }
+    bool changeDirection();
+
 private:
     Direction direction = Left;
+    int spriteTimer = 0;
+    Color color;
+    ghostState state = Setup;
+    int changeDirectionTimer = 0;
 };
 
 

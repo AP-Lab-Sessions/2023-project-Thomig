@@ -19,13 +19,13 @@ public:
 
     void update();
 
-    [[nodiscard]] const chrono::milliseconds &getDeltaTime() const; // gives time past since last frame
+    [[nodiscard]] const chrono::microseconds &getDeltaTime() const; // gives time past since last frame
 
 private:
     StopWatch() {};
 
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
-    chrono::milliseconds deltaTime;
+    chrono::microseconds deltaTime;
 };
 
 

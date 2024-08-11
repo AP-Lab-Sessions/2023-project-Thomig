@@ -42,17 +42,18 @@ public:
     }
 
     void render() override {
-        int s = 0;
+        int spriteIndex = 0;
         if (pacManModel->getDirection() == Up) {
-            s = 0;
+            spriteIndex = 0;
         } else if (pacManModel->getDirection() == Left) {
-            s = 1;
+            spriteIndex = 1;
         } else if (pacManModel->getDirection() == Down) {
-            s = 2;
+            spriteIndex = 2;
         } else if (pacManModel->getDirection() == Right) {
-            s = 3;
+            spriteIndex = 3;
         }
-        window->draw(pacManSprites[s]->sprite); // up left down right 0 1 2 3
+        spriteIndex += pacManModel->getSpriteTimer()*4;
+        window->draw(pacManSprites[spriteIndex]->sprite); // up left down right 0 1 2 3
     }
 private:
     std::shared_ptr<PacManModel> pacManModel;

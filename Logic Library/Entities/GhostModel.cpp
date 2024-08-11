@@ -29,3 +29,18 @@ Rectangle GhostModel::getHitBox() {
     hitBox.height = 0.02;
     return hitBox;
 }
+
+void GhostModel::incrementSpriteTimer() {
+    if (spriteTimer == 1) {
+        spriteTimer = 0;
+    } else {
+        spriteTimer++;
+    }
+}
+
+bool GhostModel::changeDirection() {
+    if (changeDirectionTimer > 500) {
+        return true;
+    }
+    return false;
+}

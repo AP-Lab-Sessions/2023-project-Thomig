@@ -25,3 +25,11 @@ Rectangle PacManModel::getHitBox() {
     hitBox.height = 0.02;
     return hitBox;
 }
+
+void PacManModel::incrementSpriteTimer() {
+    if (spriteTimer == 3) {
+        spriteTimer = 0;
+    } else {
+        spriteTimer++;
+    }
+}

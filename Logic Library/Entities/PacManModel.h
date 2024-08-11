@@ -15,8 +15,11 @@ public:
     Direction getDirection();
     void setDirection(Direction d);
     Rectangle getHitBox() override;
+    void incrementSpriteTimer();
+    int getSpriteTimer() { return spriteTimer; }
 private:
     Direction direction = Right;
+    int spriteTimer = 0;
 };
 
 

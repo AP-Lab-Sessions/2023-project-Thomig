@@ -64,6 +64,8 @@ SET(SRC main.cpp
         "Logic Library/StopWatch.cpp"
         "Logic Library/Score.h"
         "Logic Library/Score.cpp"
+        "Logic Library/Random.h"
+        "Logic Library/Random.cpp"
 )
 
 # Add include dirs for SFML

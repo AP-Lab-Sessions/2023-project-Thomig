@@ -15,11 +15,11 @@ void StopWatch::start() {
 
 void StopWatch::update() {
     auto currentTime = chrono::high_resolution_clock::now();
-    auto elapsedTime = chrono::duration_cast<chrono::milliseconds>(currentTime - startTime);
+    auto elapsedTime = chrono::duration_cast<chrono::microseconds>(currentTime - startTime);
     startTime = currentTime;
     deltaTime = elapsedTime;
 }
 
-const chrono::milliseconds &StopWatch::getDeltaTime() const {
+const chrono::microseconds &StopWatch::getDeltaTime() const {
     return deltaTime;
 }

@@ -15,6 +15,7 @@
 #include "EntityModel.h"
 #include "../Game Representation/ConcreteFactory.h"
 #include "StopWatch.h"
+#include "Random.h"
 
 using namespace std;
 
@@ -38,12 +39,20 @@ private:
 
     bool movePacMan(Direction d, double distance);
 
+    void moveGhosts(shared_ptr<GhostModel> ghost, double distance);
+
+    void moveGhost(shared_ptr<GhostModel> ghost, Direction d, double distance);
+
     bool areRectanglesIntersecting(const Rectangle& rectA, const Rectangle& rectB);
+
+    double calculateManhattanDistance(shared_ptr<GhostModel> ghost, double distance);
 
     vector<shared_ptr<EntityModel>> entities;
     shared_ptr<PacManModel> pacman;
+    vector<shared_ptr<GhostModel>> ghosts;
     Direction currentDirection = Left;
     double worldTime = 0;
+    double spriteUpdateTime = 0;
 };
 
 

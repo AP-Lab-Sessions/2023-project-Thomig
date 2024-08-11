@@ -12,6 +12,8 @@
 
 using namespace std;
 
+//todo group enums using namespace
+
 enum Direction {
     Up,
     Left,
@@ -25,6 +27,19 @@ enum Type {
     Wall,
     Coin,
     Fruit
+};
+
+enum Color {
+    Red,
+    Pink,
+    Blue,
+    Orange
+};
+
+enum ghostState {
+    Setup,
+    Chase,
+    Fear
 };
 
 struct Rectangle {

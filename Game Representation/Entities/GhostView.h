@@ -49,12 +49,40 @@ public:
 
     void update() override {
         // Update Ghost's position, animation, etc.
+        auto& camera = Camera::getInstance();
+        pair<double, double> position = camera.modelPosition(ghostModel->getPosition().first,
+                                                             ghostModel->getPosition().second,
+                                                             50*camera.getScaleFactor().first,
+                                                             50*camera.getScaleFactor().second);
+        for (int i = 0; i < ghostSprites.size(); i++) {
+            ghostSprites[i]->sprite.setPosition(position.first, position.second);
+        }
         render();
     }
 
     void render() override {
         // Render Ghost
-        window->draw(ghostSprites[0]->sprite);
+        int spriteIndex = 0;
+        if (ghostModel->getDirection() == Right) {
+            spriteIndex = 0;
+        } else if (ghostModel->getDirection() == Down) {
+            spriteIndex = 2;
+        } else if (ghostModel->getDirection() == Left) {
+            spriteIndex = 4;
+        } else if (ghostModel->getDirection() == Up) {
+            spriteIndex = 6;
+        }
+        if (ghostModel->getColor() == Pink) {
+            spriteIndex += 8;
+        } else if (ghostModel->getColor() == Blue) {
+            spriteIndex += 16;
+        } else if (ghostModel->getColor() == Orange) {
+            spriteIndex += 24;
+        } else if (ghostModel->getState() == Fear) {
+            spriteIndex += 32;
+        }
+        spriteIndex += ghostModel->getSpriteTimer();
+        window->draw(ghostSprites[spriteIndex]->sprite);
     }
 private:
     std::shared_ptr<GhostModel> ghostModel;
