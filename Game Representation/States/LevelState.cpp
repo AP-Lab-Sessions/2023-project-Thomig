@@ -5,18 +5,6 @@
 #include "LevelState.h"
 
 LevelState::LevelState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
-    // Load font
-    font = std::make_shared<sf::Font>();
-    try {
-        // check if file is found
-        if (!font->loadFromFile("../Arial.ttf")) {
-            throw runtime_error("File Arial.ttf is not found or unable to open");
-        }
-    }
-    catch (const exception &e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
     // Load texts
     scoreText = make_shared<sf::Text>();
     scoreText->setFont(*font);
@@ -37,10 +25,12 @@ LevelState::LevelState(std::shared_ptr<StateManager> stateManager) : State(state
     LivesText->setPosition(1200 - LivesText->getGlobalBounds().width / 2, 820 - LivesText->getGlobalBounds().height / 2);
 
     // Create world
-    world = World(stateManager->getFactory());
+    world = make_shared<World>(stateManager->getFactory());
 }
 
 void LevelState::handleEvent(sf::Event &event) {
+    shared_ptr<Stats> stats = Stats::getInstance();
+
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         stateManager->pushState(std::make_shared<PausedState>(stateManager));
     }
@@ -64,16 +54,26 @@ void LevelState::handleEvent(sf::Event &event) {
 
 void LevelState::update() {
     shared_ptr<Stats> stats = Stats::getInstance();
+    if (stats.get()->getLives() == 0) {
+        stateManager->pushState(make_shared<GameOverState>(stateManager));
+        return;
+    }
+    else if (stats->isLevelCompleted()) {
+        stateManager->pushState(make_shared<VictoryState>(stateManager));
+        stats->changeLevelCompleted();
+        return;
+    }
+
     string s = "Score: " + to_string(stats->getScore());
     scoreText->setString(s);
-    world.update(direction);
 
     string d = "Difficulty: " + to_string(stats->getDifficulty());
     difficultyText->setString(d);
-    world.update(direction);
 
     string l = "Lives: " + to_string(stats->getLives());
     LivesText->setString(l);
+
+    world->update(direction);
 }
 
 void LevelState::render() {

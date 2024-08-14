@@ -55,7 +55,7 @@ void GhostModel::incrementSpriteTimer() {
 
 ghostState GhostModel::getState() {
     if (state == Setup) {  // Ghost out of setup state when leaving starting position
-        if (abs((position.first+1)-(startingPosition.first+1)) > 0.3) {
+        if (abs((position.first+1)-(startingPosition.first+1)) > 0.2) {
             state = Chase;
         }
     }
@@ -70,7 +70,7 @@ ghostState GhostModel::getState() {
 int GhostModel::getSpriteTimer() { return spriteTimer; }
 
 bool GhostModel::changeDirection() {
-    if (changeDirectionTimer > 500) {
+    if (changeDirectionTimer > 1500) {
         return true;
     }
     return false;
@@ -79,4 +79,20 @@ bool GhostModel::changeDirection() {
 void GhostModel::enableFear() {
     state = Fear;
     fearTimer = 50000;
+}
+
+void GhostModel::resetPosition() {
+    position = startingPosition;
+    direction = Up;
+    state = Setup;
+    changeDirectionTimer = 0;
+    fearTimer = 0;
+}
+
+void GhostModel::savePosition() {
+    savedPosition = position;
+}
+
+void GhostModel::restorePosition() {
+    position = savedPosition;
 }

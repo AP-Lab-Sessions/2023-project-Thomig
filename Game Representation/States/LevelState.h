@@ -8,6 +8,8 @@
 #include "../State.h"
 #include "../StateManager.h"
 #include "PausedState.h"
+#include "GameOverState.h"
+#include "VictoryState.h"
 
 class LevelState : public State {
 public:
@@ -20,9 +22,8 @@ public:
     void render() override;
 
 private:
-    World world;
+    shared_ptr<World> world;
     Direction direction = Left;  // Starting pacman direction
-    shared_ptr<sf::Font> font;
     shared_ptr<sf::Text> scoreText;
     shared_ptr<sf::Text> difficultyText;
     shared_ptr<sf::Text> LivesText;

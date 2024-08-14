@@ -20,6 +20,11 @@ void StopWatch::update() {
     deltaTime = elapsedTime;
 }
 
+void StopWatch::reset() {
+    startTime = chrono::high_resolution_clock::now();
+    deltaTime = chrono::microseconds(0);
+}
+
 const chrono::microseconds &StopWatch::getDeltaTime() const {
     return deltaTime;
 }

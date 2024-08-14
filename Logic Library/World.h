@@ -30,7 +30,7 @@ public:
     void update(Direction d);
 
 private:
-    void createEntities(shared_ptr<ConcreteFactory> factory, int level);
+    void createEntities(shared_ptr<ConcreteFactory> factory);
 
     void addEntity(shared_ptr<EntityModel> entity);
 
@@ -48,12 +48,14 @@ private:
 
     double calculateManhattanDistance(shared_ptr<GhostModel> ghost, Direction d, double distance);
 
+    bool levelCompleted();
+
     vector<shared_ptr<EntityModel>> entities;
     shared_ptr<PacManModel> pacman;
     vector<shared_ptr<GhostModel>> ghosts;
     Direction currentDirection = Left;
-    double worldTime = 0;
     double spriteUpdateTime = 0;
+    double worldTime = 0;
 };
 
 

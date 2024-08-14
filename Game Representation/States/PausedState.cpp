@@ -4,37 +4,39 @@
 
 #include "PausedState.h"
 
-PausedState::PausedState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {}
+PausedState::PausedState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
+    // Blue outline
+    background = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
+    background->setFillColor(sf::Color::Black);
+    background->setPosition(50, 50);
+    background->setOutlineColor(sf::Color::Blue);
+    background->setOutlineThickness(50);
+
+    // Paused text
+    pausedText = make_shared<sf::Text>();
+    pausedText->setFont(*font);
+    pausedText->setString("Paused");
+    pausedText->setCharacterSize(100);
+    pausedText->setFillColor(sf::Color::Yellow);
+    pausedText->setPosition(1920 / 2 - pausedText->getGlobalBounds().width / 2, 1080 / 2 - pausedText->getGlobalBounds().height / 2);
+}
 
 void PausedState::handleEvent(sf::Event &event) {
+    shared_ptr<Stats> stats = Stats::getInstance();
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         stateManager->popState();
+        stats->switchResetWorldClock();
     }
 }
 
 void PausedState::update() {
-    // Update game logic
+
 }
 
 void PausedState::render() {
-    std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
-    try {
-        // check if file is found
-        if (!font->loadFromFile("../Arial.ttf")) {
-            throw runtime_error("File Arial.ttf is not found or unable to open");
-        }
-    }
-    catch (const exception &e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
-    // blue outline
-    shared_ptr<sf::Shape> shape1 = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
-    shape1->setFillColor(sf::Color::Black);
-    shape1->setPosition(50, 50);
-    shape1->setOutlineColor(sf::Color::Blue);
-    shape1->setOutlineThickness(50);
-    window->draw(*shape1);
+    // Render
+    window->draw(*background);
+    window->draw(*pausedText);
 
     window->display();
 }

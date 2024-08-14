@@ -15,7 +15,6 @@ public:
     static shared_ptr<Stats> getInstance();
 
     void increaseLevel();
-    void resetLevel();
     int getLevel() const;
     void increaseScore(int s);
     int getScore() const;
@@ -23,6 +22,11 @@ public:
     int getDifficulty() const;
     void decreaseLives();
     int getLives() const;
+    void changeLevelCompleted();
+    bool isLevelCompleted() const;
+    void resetStats();
+    bool getResetWorldClock() const;
+    void switchResetWorldClock();
 
 private:
     Stats() {};
@@ -31,6 +35,8 @@ private:
     shared_ptr<Score> score = make_shared<Score>();
     int difficulty = 0;    // per difficulty increase: fear duration -20% and ghost speed +5%
     int lives = 3;
+    bool levelCompleted = false;
+    bool resetWorldClock = false;
 };
 
 #endif //PROJECTAP_STATS_H

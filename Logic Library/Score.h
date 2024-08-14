@@ -12,7 +12,9 @@ public:
     Score();
     void update() override;
     void increaseScore(int s);
+    void decreaseScore();
     int getScore();
+    void resetScore();
     ~Score() override = default;
 private:
     int score = 0;

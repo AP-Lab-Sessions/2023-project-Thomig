@@ -6,11 +6,11 @@
 
 World::World(shared_ptr<ConcreteFactory> factory) {
     //shared_ptr<Stats> stats = Stats::getInstance();
-    int level = 1;
-    createEntities(factory, level);
+    createEntities(factory);
 }
 
-void World::createEntities(shared_ptr<ConcreteFactory> factory, int level) {
+void World::createEntities(shared_ptr<ConcreteFactory> factory) {
+    int level = Stats::getInstance()->getLevel();
     ifstream file("../Levels/Level" + to_string(level) + ".txt");
     vector<string> lines;
     if (file.is_open()) {
@@ -70,14 +70,22 @@ vector<shared_ptr<EntityModel>> World::getEntities() {
 
 void World::update(Direction newDirection) {
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
+    shared_ptr<Stats> stats = Stats::getInstance();
+    if (stats->getResetWorldClock()) {
+        // Reset stopwatch after pause
+        stopWatch->reset();
+        stats->switchResetWorldClock();
+    }
     double deltaTime = stopWatch->getDeltaTime().count();
     worldTime += deltaTime/1000000.0;
 
     // Calculate distance to move based on time
     double distance = deltaTime * 0.0000002;
+
     stopWatch->update();
 
     // Move pacman
+
     if (movePacMan(newDirection, distance)) {
         currentDirection = newDirection;
         pacman->setDirection(newDirection);
@@ -117,11 +125,28 @@ void World::update(Direction newDirection) {
     pacman->getHitBox();
     for (auto ghost : ghosts) {
         if (areRectanglesIntersecting(pacman->getHitBox(), ghost->getHitBox())) {
-            shared_ptr<Stats> stats = Stats::getInstance();
-            stats->decreaseLives();
-            pacman->resetPosition();
-            currentDirection = Left;
+            if (ghost->getState() == Fear) {
+                ghost->resetPosition();
+                stats->increaseScore(200);
+            }
+            else {
+                stats->decreaseLives();
+                pacman->resetPosition();
+                currentDirection = Left;
+                for (auto g : ghosts) {
+                    g->resetPosition();
+                }
+            }
         }
+    }
+
+    // Check if won
+    if (levelCompleted()) {
+        entities.clear();
+        stats->increaseLevel();
+        stats->increaseDifficulty();
+        stats->changeLevelCompleted();
+        return;
     }
 
     // Update all entities
@@ -251,16 +276,20 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
     if (possibleDirections.empty()) {
         switch (ghost->getDirection()) {
             case Up:
-                moveGhost(ghost, Down, distance);
+                moveGhost(ghost, Down, distance*100);
+                ghost->setDirection(Down);
                 return;
             case Down:
-                moveGhost(ghost, Up, distance);
+                moveGhost(ghost, Up, distance*100);
+                ghost->setDirection(Up);
                 return;
             case Left:
-                moveGhost(ghost, Right, distance);
+                moveGhost(ghost, Right, distance*100);
+                ghost->setDirection(Right);
                 return;
             case Right:
-                moveGhost(ghost, Left, distance);
+                moveGhost(ghost, Left, distance*100);
+                ghost->setDirection(Left);
                 return;
         }
     }
@@ -373,3 +402,11 @@ double World::calculateManhattanDistance(shared_ptr<GhostModel> ghost, Direction
     return manhattanDistance;
 }
 
+bool World::levelCompleted() {
+    for (auto entity : entities) {
+        if (entity->getType() == Coin or entity->getType() == Fruit) {
+            return false;
+        }
+    }
+    return true;
+}

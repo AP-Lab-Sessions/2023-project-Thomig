@@ -10,11 +10,12 @@ shared_ptr<Stats> Stats::getInstance() {
 }
 
 void Stats::increaseLevel() {
-    level++;
-}
-
-void Stats::resetLevel() {
-    level = 1;
+    if (level < 3) {
+        level++;
+    }
+    else {
+        level = 1;
+    }
 }
 
 int Stats::getLevel() const {
@@ -43,4 +44,28 @@ void Stats::decreaseLives() {
 
 int Stats::getLives() const {
     return lives;
+}
+
+void Stats::changeLevelCompleted() {
+    levelCompleted = !levelCompleted;
+}
+
+bool Stats::isLevelCompleted() const {
+    return levelCompleted;
+}
+
+void Stats::resetStats() {
+    level = 1;
+    score->resetScore();
+    difficulty = 0;
+    lives = 1;
+    levelCompleted = false;
+}
+
+bool Stats::getResetWorldClock() const {
+    return resetWorldClock;
+}
+
+void Stats::switchResetWorldClock() {
+    resetWorldClock = !resetWorldClock;
 }

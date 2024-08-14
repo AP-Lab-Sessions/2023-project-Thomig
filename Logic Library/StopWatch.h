@@ -19,6 +19,8 @@ public:
 
     void update();
 
+    void reset();
+
     [[nodiscard]] const chrono::microseconds &getDeltaTime() const; // gives time past since last frame
 
 private:

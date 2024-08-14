@@ -18,19 +18,6 @@ void MenuState::update() {
 
 void MenuState::render() {
     // Render menu items
-    // generate a menu
-    // set font
-    std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
-    try {
-        // check if file is found
-        if (!font->loadFromFile("../Arial.ttf")) {
-            throw runtime_error("File Arial.ttf is not found or unable to open");
-        }
-    }
-    catch (const exception &e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
     sf::Text text;
     text.setFont(*font);
     text.setString("Play");

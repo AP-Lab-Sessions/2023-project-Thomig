@@ -26,6 +26,9 @@ public:
     void updateChangeDirectionTimer() { changeDirectionTimer++; }
     bool changeDirection();
     void enableFear();
+    void resetPosition();
+    void savePosition();
+    void restorePosition();
 
 private:
     Direction direction = Up;
@@ -34,6 +37,7 @@ private:
     ghostState state = Setup;
     int changeDirectionTimer = 0;
     pair<double, double> startingPosition;
+    pair<double, double> savedPosition;
     int fearTimer = 0;
 };
 

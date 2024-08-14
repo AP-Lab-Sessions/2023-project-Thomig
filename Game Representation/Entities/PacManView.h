@@ -30,6 +30,7 @@ public:
     }
 
     void update() override {
+        // Update Position
         auto& camera = Camera::getInstance();
         pair<double, double> position = camera.modelPosition(pacManModel->getPosition().first,
                                                              pacManModel->getPosition().second,
@@ -42,6 +43,7 @@ public:
     }
 
     void render() override {
+        // Render correct sprite
         int spriteIndex = 0;
         if (pacManModel->getDirection() == Up) {
             spriteIndex = 0;

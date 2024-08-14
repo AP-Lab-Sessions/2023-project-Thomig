@@ -27,6 +27,7 @@ public:
 protected:
     shared_ptr<StateManager> stateManager;
     shared_ptr<sf::RenderWindow> window = RenderWindow::getInstance().getWindow();
+    shared_ptr<sf::Font> font;
 };
 
 

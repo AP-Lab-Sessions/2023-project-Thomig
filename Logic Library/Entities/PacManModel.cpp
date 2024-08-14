@@ -14,6 +14,8 @@ void PacManModel::update() {
     notify();
 }
 
+void PacManModel::setPosition(double x, double y) { position = make_pair(x, y); }
+
 Direction PacManModel::getDirection() {return direction; }
 
 void PacManModel::setDirection(Direction d) { direction = d; }

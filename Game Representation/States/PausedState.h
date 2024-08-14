@@ -17,6 +17,10 @@ public:
     void update() override;
 
     void render() override;
+
+private:
+    shared_ptr<sf::Shape> background;
+    shared_ptr<sf::Text> pausedText;
 };
 
 
