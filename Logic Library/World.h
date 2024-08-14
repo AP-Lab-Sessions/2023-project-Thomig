@@ -20,7 +20,6 @@
 
 using namespace std;
 
-// Entity Controller
 class World {
 public:
     World() = default;
@@ -30,13 +29,12 @@ public:
     void update(Direction d);
 
 private:
-    void createEntities(shared_ptr<ConcreteFactory> factory);
+    // Entity Controller
+    void createEntities();
 
     void addEntity(shared_ptr<EntityModel> entity);
 
     void removeEntity(shared_ptr<EntityModel> entity);
-
-    vector<shared_ptr<EntityModel>> getEntities();
 
     bool movePacMan(Direction d, double distance);
 
@@ -50,12 +48,16 @@ private:
 
     bool levelCompleted();
 
+    shared_ptr<ConcreteFactory> factory;
     vector<shared_ptr<EntityModel>> entities;
     shared_ptr<PacManModel> pacman;
     vector<shared_ptr<GhostModel>> ghosts;
     Direction currentDirection = Left;
     double spriteUpdateTime = 0;
     double worldTime = 0;
+    vector<pair<double, double>> bananaPositions;
+    int bananaTimer = 0;
+    double coinPickupInterval = 0;
 };
 
 

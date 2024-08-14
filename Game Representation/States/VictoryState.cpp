@@ -5,15 +5,18 @@
 #include "VictoryState.h"
 
 VictoryState::VictoryState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
-    background = std::make_shared<sf::RectangleShape>(sf::Vector2f(800, 600));
-    background->setFillColor(sf::Color::Green);
+    background = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
+    background->setFillColor(sf::Color::Black);
+    background->setPosition(50, 50);
+    background->setOutlineColor(sf::Color::Green);
+    background->setOutlineThickness(50);
 
     victoryText = std::make_shared<sf::Text>("Victory!", *font, 50);
-    victoryText->setFillColor(sf::Color::Black);
+    victoryText->setFillColor(sf::Color::Yellow);
     victoryText->setPosition(300, 200);
 
     scoreText = std::make_shared<sf::Text>("Score: 0", *font, 30);
-    scoreText->setFillColor(sf::Color::Black);
+    scoreText->setFillColor(sf::Color::Yellow);
     scoreText->setPosition(300, 300);
 }
 
@@ -26,7 +29,7 @@ void VictoryState::handleEvent(sf::Event &event) {
 }
 
 void VictoryState::update() {
-
+    scoreText->setString("Score: " + to_string(Stats::getInstance()->getScore()));
 }
 
 void VictoryState::render() {

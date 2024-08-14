@@ -34,6 +34,7 @@ void GameOverState::handleEvent(sf::Event &event) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         stateManager->popState();
         stateManager->popState();
+        stats->addToScoreBoard();
         stats->resetStats();
     }
 }

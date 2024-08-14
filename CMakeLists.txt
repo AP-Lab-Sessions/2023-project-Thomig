@@ -68,6 +68,10 @@ SET(SRC main.cpp
         "Logic Library/Random.cpp"
         "Logic Library/Stats.h"
         "Logic Library/Stats.cpp"
+        "Logic Library/Entities/BananaModel.h"
+        "Logic Library/Entities/BananaModel.cpp"
+        "Game Representation/Entities/BananaView.h"
+        "Game Representation/Entities/BananaView.cpp"
 )
 
 # Add include dirs for SFML

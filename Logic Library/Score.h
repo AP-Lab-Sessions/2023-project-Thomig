@@ -6,6 +6,13 @@
 #define PROJECTAP_SCORE_H
 
 #include "Observer.h"
+#include "vector"
+#include "algorithm"
+#include "fstream"
+#include "sstream"
+#include "iostream"
+
+using namespace std;
 
 class Score: public Observer {
 public:
@@ -15,6 +22,8 @@ public:
     void decreaseScore();
     int getScore();
     void resetScore();
+    void addToScoreBoard();
+    vector<int> getScoreBoard();
     ~Score() override = default;
 private:
     int score = 0;

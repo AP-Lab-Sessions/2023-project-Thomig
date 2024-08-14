@@ -16,6 +16,8 @@
 #include "Entities/CoinView.h"
 #include "../Logic Library/Entities/FruitModel.h"
 #include "Entities/FruitView.h"
+#include "../Logic Library/Entities/BananaModel.h"
+#include "Entities/BananaView.h"
 
 class ConcreteFactory: public AbstractFactory {
 public:
@@ -53,6 +55,13 @@ public:
         auto fruitView = make_shared<FruitView>(fruitModel);
         fruitModel->attachView(fruitView);
         return fruitModel;
+    }
+
+    shared_ptr<EntityModel> createBanana(double x, double y) override {
+        auto bananaModel = make_shared<BananaModel>(x, y);
+        auto bananaView = make_shared<BananaView>(bananaModel);
+        bananaModel->attachView(bananaView);
+        return bananaModel;
     }
 };
 

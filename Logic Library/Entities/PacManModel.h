@@ -18,10 +18,15 @@ public:
     void incrementSpriteTimer();
     int getSpriteTimer() { return spriteTimer; }
     void resetPosition();
+    double isSlipped();
+    void slip();
+    void decreaseSlipped();
+
 private:
     Direction direction = Right;
     int spriteTimer = 0;
     pair<double, double> startingPosition;
+    double slipped = 0;
 };
 
 

@@ -41,3 +41,22 @@ void PacManModel::resetPosition() {
     position = startingPosition;
     direction = Left;
 }
+
+void PacManModel::decreaseSlipped() {
+    if (slipped > 0) {
+        slipped -= 0.001;
+    }
+}
+
+void PacManModel::slip() {
+    slipped = 1;
+
+}
+
+double PacManModel::isSlipped() {
+    if (slipped > 0) {
+        return slipped;
+    } else {
+        return 0;
+    }
+}

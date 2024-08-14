@@ -57,5 +57,15 @@ void MenuState::render() {
     text1->setPosition(878, 738);
     window->draw(*text1);
 
+    for (int i = 0; i < 5; i++) {
+        shared_ptr<sf::Text> text2 = make_shared<sf::Text>();
+        text2->setFont(*font);
+        text2->setString(to_string(i + 1) + ". " + to_string(Stats::getInstance()->getScoreBoard()[i]));
+        text2->setCharacterSize(40);
+        text2->setFillColor(sf::Color::Yellow);
+        text2->setPosition(830, 260 + i * 80);
+        window->draw(*text2);
+    }
+
     window->display();
 }

@@ -69,3 +69,15 @@ bool Stats::getResetWorldClock() const {
 void Stats::switchResetWorldClock() {
     resetWorldClock = !resetWorldClock;
 }
+
+void Stats::decreaseScore() {
+    score->decreaseScore();
+}
+
+vector<int> Stats::getScoreBoard() {
+    return score->getScoreBoard();
+}
+
+void Stats::addToScoreBoard() {
+    score->addToScoreBoard();
+}

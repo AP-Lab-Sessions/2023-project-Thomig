@@ -4,12 +4,12 @@
 
 #include "World.h"
 
-World::World(shared_ptr<ConcreteFactory> factory) {
-    //shared_ptr<Stats> stats = Stats::getInstance();
-    createEntities(factory);
+World::World(shared_ptr<ConcreteFactory> f) {
+    factory = f;
+    createEntities();
 }
 
-void World::createEntities(shared_ptr<ConcreteFactory> factory) {
+void World::createEntities() {
     int level = Stats::getInstance()->getLevel();
     ifstream file("../Levels/Level" + to_string(level) + ".txt");
     vector<string> lines;
@@ -64,10 +64,6 @@ void World::removeEntity(shared_ptr<EntityModel> entity) {
     entities.erase(remove(entities.begin(), entities.end(), entity), entities.end());
 }
 
-vector<shared_ptr<EntityModel>> World::getEntities() {
-    return entities;
-}
-
 void World::update(Direction newDirection) {
     shared_ptr<StopWatch> stopWatch = StopWatch::getInstance();
     shared_ptr<Stats> stats = Stats::getInstance();
@@ -84,15 +80,27 @@ void World::update(Direction newDirection) {
 
     stopWatch->update();
 
-    // Move pacman
+    // Coins
+    double randomNumber = Random::getInstance()->getRandomNumber();
+    coinPickupInterval += deltaTime/500000.0;
+    if (coinPickupInterval > 9) {
+        coinPickupInterval = 9;
+    }
+    // Decrease score over time
+    if (randomNumber < 0.0002) {
+        stats->decreaseScore();
+    }
 
-    if (movePacMan(newDirection, distance)) {
-        currentDirection = newDirection;
-        pacman->setDirection(newDirection);
+    // Move pacman
+    if (!pacman->isSlipped()) {
+        if (movePacMan(newDirection, distance)) {
+            currentDirection = newDirection;
+            pacman->setDirection(newDirection);
+        } else {
+            movePacMan(currentDirection, distance);
+        }
     }
-    else{
-        movePacMan(currentDirection, distance);
-    }
+    pacman->decreaseSlipped();
 
     // Move ghosts
     int movingGhosts = 2;
@@ -119,6 +127,19 @@ void World::update(Direction newDirection) {
             ghost->incrementSpriteTimer();
         }
         spriteUpdateTime = 0;
+    }
+
+    // Add random banana
+    if (randomNumber <= 0.00003 and bananaTimer == 0) {
+        double randomIndex = lround(Random::getInstance()->getRandomNumber()*bananaPositions.size()-1);
+        if (randomIndex > 0 and randomIndex < bananaPositions.size()-1) {
+            factory = make_shared<ConcreteFactory>();
+            addEntity(factory->createBanana(bananaPositions[randomIndex].first, bananaPositions[randomIndex].second));
+            bananaTimer = 50000;
+        }
+    }
+    else if (bananaTimer != 0) {
+        bananaTimer--;
     }
 
     // Check if dead
@@ -183,9 +204,14 @@ bool World::movePacMan(Direction newDirection, double distance) {  // move pacma
                 return false;
             }
             else if (entity->getType() == Coin) {
+                bananaPositions.push_back(entity->getPosition());
                 removeEntity(entity);
                 shared_ptr<Stats> stats = Stats::getInstance();
-                stats->increaseScore(10);
+                stats->increaseScore(10 - coinPickupInterval);
+                // Picking up coins faster is more score
+                if (coinPickupInterval > 2) {
+                    coinPickupInterval -= 2;
+                }
                 return true;
             }
             else if (entity->getType() == Fruit) {
@@ -195,6 +221,13 @@ bool World::movePacMan(Direction newDirection, double distance) {  // move pacma
                 for (auto ghost : ghosts) {
                     ghost->enableFear();
                 }
+                return true;
+            }
+            else if (entity->getType() == Banana) {
+                removeEntity(entity);
+                shared_ptr<Stats> stats = Stats::getInstance();
+                pacman->slip();
+                bananaTimer = 0;
                 return true;
             }
         }
@@ -355,16 +388,16 @@ void World::moveGhost(shared_ptr<GhostModel> ghost, Direction d, double distance
     double y = ghost->getPosition().second;
     switch (d) {
         case Up:
-            y -= distance;
+            y -= distance * ghost->getSpeed();
             break;
         case Down:
-            y += distance;
+            y += distance * ghost->getSpeed();
             break;
         case Left:
-            x -= distance;
+            x -= distance * ghost->getSpeed();
             break;
         case Right:
-            x += distance;
+            x += distance * ghost->getSpeed();
             break;
     }
     ghost->setPosition(x, y);

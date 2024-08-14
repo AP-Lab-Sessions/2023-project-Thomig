@@ -78,7 +78,11 @@ bool GhostModel::changeDirection() {
 
 void GhostModel::enableFear() {
     state = Fear;
-    fearTimer = 50000;
+    fearTimer = 20000;
+    shared_ptr<Stats> stats = Stats::getInstance();
+    for (int i = 0; i < stats->getDifficulty(); i++) {
+        fearTimer *= 0.8;
+    }
 }
 
 void GhostModel::resetPosition() {
@@ -89,10 +93,11 @@ void GhostModel::resetPosition() {
     fearTimer = 0;
 }
 
-void GhostModel::savePosition() {
-    savedPosition = position;
-}
-
-void GhostModel::restorePosition() {
-    position = savedPosition;
+double GhostModel::getSpeed() {
+    double speed = 1;
+    shared_ptr<Stats> stats = Stats::getInstance();
+    for (int i = 0; i < stats->getDifficulty(); i++) {
+        speed *= 1.05;
+    }
+    return speed;
 }

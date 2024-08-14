@@ -10,6 +10,7 @@
 #include "vector"
 #include "Observer.h"
 #include "cmath"
+#include "Stats.h"
 
 using namespace std;
 
@@ -27,7 +28,8 @@ enum Type {
     Ghost,
     Wall,
     Coin,
-    Fruit
+    Fruit,
+    Banana
 };
 
 enum Color {

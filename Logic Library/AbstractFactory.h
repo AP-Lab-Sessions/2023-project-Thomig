@@ -17,6 +17,7 @@ public:
     virtual shared_ptr<EntityModel> createWall(double x, double y) = 0;
     virtual shared_ptr<EntityModel> createCoin(double x, double y) = 0;
     virtual shared_ptr<EntityModel> createFruit(double x, double y) = 0;
+    virtual shared_ptr<EntityModel> createBanana(double x, double y) = 0;
     virtual ~AbstractFactory() = default;
 };
 

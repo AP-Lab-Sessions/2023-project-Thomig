@@ -14,6 +14,7 @@
 #include "../Logic Library/Entities/WallModel.h"
 #include "../Logic Library/Entities/CoinModel.h"
 #include "../Logic Library/Entities/FruitModel.h"
+#include "../Logic Library/Entities/BananaModel.h"
 #include "Camera.h"
 
 using namespace std;
