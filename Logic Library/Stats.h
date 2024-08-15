@@ -37,7 +37,7 @@ private:
     int level = 1;
     shared_ptr<Score> score = make_shared<Score>();
     int difficulty = 0;    // per difficulty increase: fear duration -20% and ghost speed +5%
-    int lives = 1;
+    int lives = 3;
     bool levelCompleted = false;
     bool resetWorldClock = false;
 };

@@ -58,7 +58,7 @@ void Stats::resetStats() {
     level = 1;
     score->resetScore();
     difficulty = 0;
-    lives = 1;
+    lives = 3;
     levelCompleted = false;
 }
 
