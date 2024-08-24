@@ -7,10 +7,12 @@
 
 #include "../EntityModel.h"
 
-class BananaModel: public EntityModel {
+class BananaModel : public EntityModel {
 public:
     BananaModel(double x, double y);
+
     void update() override;
+
     Rectangle getHitBox() override;
 };
 

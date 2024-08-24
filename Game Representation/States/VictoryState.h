@@ -9,11 +9,13 @@
 #include "../StateManager.h"
 #include "LevelState.h"
 
-class VictoryState: public State {
+class VictoryState : public State {
 public:
     VictoryState(std::shared_ptr<StateManager> stateManager);
 
-    void handleEvent(sf::Event& event) override;
+    void handleEvent(sf::Event &event) override;
+
+    void handleMouseClick(string button) override;
 
     void update() override;
 

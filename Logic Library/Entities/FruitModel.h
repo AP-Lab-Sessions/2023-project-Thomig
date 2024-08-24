@@ -7,10 +7,12 @@
 
 #include "../EntityModel.h"
 
-class FruitModel: public EntityModel {
+class FruitModel : public EntityModel {
 public:
     FruitModel(double x, double y);
+
     void update() override;
+
     Rectangle getHitBox() override;
 };
 

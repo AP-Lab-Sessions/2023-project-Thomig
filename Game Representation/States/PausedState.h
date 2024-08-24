@@ -12,7 +12,9 @@ class PausedState : public State {
 public:
     PausedState(std::shared_ptr<StateManager> stateManager);
 
-    void handleEvent(sf::Event& event) override;
+    void handleEvent(sf::Event &event) override;
+
+    void handleMouseClick(string button) override;
 
     void update() override;
 
@@ -21,6 +23,10 @@ public:
 private:
     shared_ptr<sf::Shape> background;
     shared_ptr<sf::Text> pausedText;
+    shared_ptr<sf::Shape> homeButton;
+    shared_ptr<sf::Text> homeText;
+    shared_ptr<sf::Shape> continueButton;
+    shared_ptr<sf::Text> continueText;
 };
 
 

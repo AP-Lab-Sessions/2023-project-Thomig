@@ -19,9 +19,15 @@ class StateManager;
 class State {
 public:
     State(std::shared_ptr<StateManager> manager);
+
     virtual ~State() = default;
-    virtual void handleEvent(sf::Event& event) = 0;
+
+    virtual void handleEvent(sf::Event &event) = 0;
+
+    virtual void handleMouseClick(string button) = 0;
+
     virtual void update() = 0;
+
     virtual void render() = 0;
 
 protected:
@@ -29,7 +35,6 @@ protected:
     shared_ptr<sf::RenderWindow> window = RenderWindow::getInstance().getWindow();
     shared_ptr<sf::Font> font;
 };
-
 
 
 #endif //PROJECTAP_STATE_H

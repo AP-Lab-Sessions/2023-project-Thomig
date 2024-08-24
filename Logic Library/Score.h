@@ -14,17 +14,26 @@
 
 using namespace std;
 
-class Score: public Observer {
+class Score : public Observer {
 public:
     Score();
+
     void update() override;
+
     void increaseScore(int s);
+
     void decreaseScore();
+
     int getScore();
+
     void resetScore();
+
     void addToScoreBoard();
+
     vector<int> getScoreBoard();
+
     ~Score() override = default;
+
 private:
     int score = 0;
 };

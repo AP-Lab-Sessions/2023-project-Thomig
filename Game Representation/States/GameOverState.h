@@ -8,11 +8,13 @@
 #include "../State.h"
 #include "../StateManager.h"
 
-class GameOverState: public State {
+class GameOverState : public State {
 public:
     GameOverState(shared_ptr<StateManager> stateManager);
 
-    void handleEvent(sf::Event& event) override;
+    void handleEvent(sf::Event &event) override;
+
+    void handleMouseClick(string button) override;
 
     void update() override;
 

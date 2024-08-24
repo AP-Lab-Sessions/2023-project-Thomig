@@ -7,26 +7,13 @@
 
 #include "../EntityView.h"
 
-class WallView: public EntityView {
+class WallView : public EntityView {
 public:
-    WallView(std::shared_ptr<WallModel> wallModel) : wallModel(wallModel) {
-        auto& camera = Camera::getInstance();
-        pair<double, double> size = camera.entitySize(50, 50);
-        pair<double, double> position = camera.modelPosition(wallModel->getPosition().first, wallModel->getPosition().second
-                , size.first, size.second);
-        wallShape = make_shared<sf::RectangleShape>(sf::Vector2f(size.first, size.second));
-        wallShape->setOrigin(size.first/2, size.second/2);
-        wallShape->setPosition(position.first, position.second);
-        wallShape->setFillColor(sf::Color::Blue);
-    }
+    WallView(std::shared_ptr<WallModel> wallModel);
 
-    void update() override {
-        render();
-    }
+    void update() override;
 
-    void render() override {
-        window->draw(*wallShape);
-    }
+    void render() override;
 
 private:
     std::shared_ptr<WallModel> wallModel;

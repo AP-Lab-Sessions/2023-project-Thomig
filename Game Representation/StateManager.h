@@ -21,7 +21,9 @@ public:
 
     void popState();
 
-    void handleEvent(sf::Event& event);
+    void handleEvent(sf::Event &event);
+
+    void handleMouseClick(string button);
 
     void update();
 

@@ -7,10 +7,12 @@
 
 #include "../EntityModel.h"
 
-class WallModel: public EntityModel {
+class WallModel : public EntityModel {
 public:
     WallModel(double x, double y);
+
     void update() override;
+
     Rectangle getHitBox() override;
 };
 

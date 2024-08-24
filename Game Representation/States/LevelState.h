@@ -15,7 +15,9 @@ class LevelState : public State {
 public:
     LevelState(std::shared_ptr<StateManager> stateManager);
 
-    void handleEvent(sf::Event& event) override;
+    void handleEvent(sf::Event &event) override;
+
+    void handleMouseClick(string button) override;
 
     void update() override;
 
@@ -27,8 +29,8 @@ private:
     shared_ptr<sf::Text> scoreText;
     shared_ptr<sf::Text> difficultyText;
     shared_ptr<sf::Text> LivesText;
+    shared_ptr<sf::Text> fpsText;
 };
-
 
 
 #endif //PROJECTAP_LEVELSTATE_H

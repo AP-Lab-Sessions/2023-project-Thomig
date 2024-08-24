@@ -23,8 +23,8 @@ void World::createEntities() {
 
     double width = -1;
     double height = -1;
-    for (const auto& line : lines) {
-        for (const auto& ch : line) {
+    for (const auto &line: lines) {
+        for (const auto &ch: line) {
             if (ch == 'W') {
                 addEntity(factory->createWall(width, height));
             } else if (ch == 'P') {
@@ -46,14 +46,14 @@ void World::createEntities() {
     // if more than 4 ghosts error
     if (ghosts.size() > 4) {
         throw runtime_error("Too many ghosts");
-    }
-    else{
+    } else {
         vector<Color> colors = {Red, Pink, Blue, Orange};
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts[i]->setColor(colors[i]);
         }
     }
     StopWatch::getInstance()->start();
+    StopWatch::getInstance()->update();
 }
 
 void World::addEntity(shared_ptr<EntityModel> entity) {
@@ -73,7 +73,8 @@ void World::update(Direction newDirection) {
         stats->switchResetWorldClock();
     }
     double deltaTime = stopWatch->getDeltaTime().count();
-    worldTime += deltaTime/1000000.0;
+    stats->setFps(1000000 / deltaTime);
+    worldTime += deltaTime / 1000000.0;
 
     // Calculate distance to move based on time
     double distance = deltaTime * 0.0000002;
@@ -82,7 +83,7 @@ void World::update(Direction newDirection) {
 
     // Coins
     double randomNumber = Random::getInstance()->getRandomNumber();
-    coinPickupInterval += deltaTime/500000.0;
+    coinPickupInterval += deltaTime / 500000.0;
     if (coinPickupInterval > 9) {
         coinPickupInterval = 9;
     }
@@ -113,17 +114,16 @@ void World::update(Direction newDirection) {
     for (int i = 0; i < movingGhosts; i++) {
         if (ghosts[i]->changeDirection()) {
             moveGhosts(ghosts[i], distance);
-        }
-        else {
+        } else {
             moveGhost(ghosts[i], ghosts[i]->getDirection(), distance);
         }
     }
 
     // Update sprite timers
-    spriteUpdateTime += deltaTime/1000000.0;
+    spriteUpdateTime += deltaTime / 1000000.0;
     if (spriteUpdateTime >= 0.1) {
         pacman->incrementSpriteTimer();
-        for (auto ghost : ghosts) {
+        for (auto ghost: ghosts) {
             ghost->incrementSpriteTimer();
         }
         spriteUpdateTime = 0;
@@ -131,30 +131,28 @@ void World::update(Direction newDirection) {
 
     // Add random banana
     if (randomNumber <= 0.00003 and bananaTimer == 0) {
-        double randomIndex = lround(Random::getInstance()->getRandomNumber()*bananaPositions.size()-1);
-        if (randomIndex > 0 and randomIndex < bananaPositions.size()-1) {
+        double randomIndex = lround(Random::getInstance()->getRandomNumber() * bananaPositions.size() - 1);
+        if (randomIndex > 0 and randomIndex < bananaPositions.size() - 1) {
             factory = make_shared<ConcreteFactory>();
             addEntity(factory->createBanana(bananaPositions[randomIndex].first, bananaPositions[randomIndex].second));
             bananaTimer = 50000;
         }
-    }
-    else if (bananaTimer != 0) {
+    } else if (bananaTimer != 0) {
         bananaTimer--;
     }
 
     // Check if dead
     pacman->getHitBox();
-    for (auto ghost : ghosts) {
+    for (auto ghost: ghosts) {
         if (areRectanglesIntersecting(pacman->getHitBox(), ghost->getHitBox())) {
             if (ghost->getState() == Fear) {
                 ghost->resetPosition();
                 stats->increaseScore(200);
-            }
-            else {
+            } else {
                 stats->decreaseLives();
                 pacman->resetPosition();
                 currentDirection = Left;
-                for (auto g : ghosts) {
+                for (auto g: ghosts) {
                     g->resetPosition();
                 }
             }
@@ -167,11 +165,12 @@ void World::update(Direction newDirection) {
         stats->increaseLevel();
         stats->increaseDifficulty();
         stats->changeLevelCompleted();
+        stats->increaseScore(250);
         return;
     }
 
     // Update all entities
-    for (auto entity : entities) {
+    for (auto entity: entities) {
         entity->update();
     }
 }
@@ -194,16 +193,15 @@ bool World::movePacMan(Direction newDirection, double distance) {  // move pacma
             break;
     }
     Rectangle pacmanHitBox = pacman->getHitBox();
-    pacmanHitBox.x = x+1;
-    pacmanHitBox.y = y+1;
+    pacmanHitBox.x = x + 1;
+    pacmanHitBox.y = y + 1;
 
-    for (auto entity : entities) {
+    for (auto entity: entities) {
         Rectangle hitBox = entity->getHitBox();
         if (areRectanglesIntersecting(pacmanHitBox, hitBox)) {
             if (entity->getType() == Wall) {
                 return false;
-            }
-            else if (entity->getType() == Coin) {
+            } else if (entity->getType() == Coin) {
                 bananaPositions.push_back(entity->getPosition());
                 removeEntity(entity);
                 shared_ptr<Stats> stats = Stats::getInstance();
@@ -213,17 +211,15 @@ bool World::movePacMan(Direction newDirection, double distance) {  // move pacma
                     coinPickupInterval -= 2;
                 }
                 return true;
-            }
-            else if (entity->getType() == Fruit) {
+            } else if (entity->getType() == Fruit) {
                 removeEntity(entity);
                 shared_ptr<Stats> stats = Stats::getInstance();
                 stats->increaseScore(50);
-                for (auto ghost : ghosts) {
+                for (auto ghost: ghosts) {
                     ghost->enableFear();
                 }
                 return true;
-            }
-            else if (entity->getType() == Banana) {
+            } else if (entity->getType() == Banana) {
                 removeEntity(entity);
                 shared_ptr<Stats> stats = Stats::getInstance();
                 pacman->slip();
@@ -270,7 +266,7 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
             break;
     }
 
-    for (auto direction : possibleDirections) {
+    for (auto direction: possibleDirections) {
         double x = ghost->getPosition().first;
         double y = ghost->getPosition().second;
         switch (direction) {
@@ -288,10 +284,10 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
                 break;
         }
         Rectangle ghostHitBox = ghost->getHitBox1();
-        ghostHitBox.x = x+1;
-        ghostHitBox.y = y+1;
+        ghostHitBox.x = x + 1;
+        ghostHitBox.y = y + 1;
 
-        for (auto entity : entities) {
+        for (auto entity: entities) {
             if (entity->getType() == Wall) {
                 Rectangle wallHitBox = entity->getHitBox();
                 if (areRectanglesIntersecting(ghostHitBox, wallHitBox)) {
@@ -300,63 +296,58 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
             }
         }
     }
-    
+
     // Remove impossible directions from possible directions
-    for (auto direction : imPossibleDirections) {
-        possibleDirections.erase(remove(possibleDirections.begin(), possibleDirections.end(), direction), possibleDirections.end());
+    for (auto direction: imPossibleDirections) {
+        possibleDirections.erase(remove(possibleDirections.begin(), possibleDirections.end(), direction),
+                                 possibleDirections.end());
     }
 
     if (possibleDirections.empty()) {
         switch (ghost->getDirection()) {
             case Up:
-                moveGhost(ghost, Down, distance*100);
+                moveGhost(ghost, Down, distance * 100);
                 ghost->setDirection(Down);
                 return;
             case Down:
-                moveGhost(ghost, Up, distance*100);
+                moveGhost(ghost, Up, distance * 100);
                 ghost->setDirection(Up);
                 return;
             case Left:
-                moveGhost(ghost, Right, distance*100);
+                moveGhost(ghost, Right, distance * 100);
                 ghost->setDirection(Right);
                 return;
             case Right:
-                moveGhost(ghost, Left, distance*100);
+                moveGhost(ghost, Left, distance * 100);
                 ghost->setDirection(Left);
                 return;
         }
-    }
-    else if (possibleDirections.size() == 1) {
+    } else if (possibleDirections.size() == 1) {
         moveGhost(ghost, possibleDirections[0], distance);
-    }
-    else {
+    } else {
         // Setup mode
         if (ghost->getState() == Setup) {
-            if(find(possibleDirections.begin(), possibleDirections.end(), Up) != possibleDirections.end()) {
+            if (find(possibleDirections.begin(), possibleDirections.end(), Up) != possibleDirections.end()) {
                 moveGhost(ghost, Up, distance);
             }
         }
         // Random direction
         double randomNumber = Random::getInstance()->getRandomNumber();
-        if (randomNumber <= 0.5){
+        if (randomNumber <= 0.5) {
             int index = 0;
             double randomIndex = Random::getInstance()->getRandomNumber();
             if (possibleDirections.size() == 2) {
                 if (randomIndex < 0.5) {
                     index = 0;
-                }
-                else {
+                } else {
                     index = 1;
                 }
-            }
-            else {
+            } else {
                 if (randomIndex < 0.33) {
                     index = 0;
-                }
-                else if (randomIndex < 0.66) {
+                } else if (randomIndex < 0.66) {
                     index = 1;
-                }
-                else {
+                } else {
                     index = 2;
                 }
             }
@@ -366,7 +357,7 @@ void World::moveGhosts(shared_ptr<GhostModel> ghost, double distance) {
         } else {
             // Manhattan distance
             vector<double> manhattanDistances;
-            for (auto direction : possibleDirections) {
+            for (auto direction: possibleDirections) {
                 manhattanDistances.push_back(calculateManhattanDistance(ghost, direction, distance));
             }
             int index = 0;
@@ -429,14 +420,14 @@ double World::calculateManhattanDistance(shared_ptr<GhostModel> ghost, Direction
             x += distance;
             break;
     }
-    double pacmanX = pacman->getPosition().first+1;
-    double pacmanY = pacman->getPosition().second+1;
+    double pacmanX = pacman->getPosition().first + 1;
+    double pacmanY = pacman->getPosition().second + 1;
     double manhattanDistance = x - pacmanX + y - pacmanY;
     return manhattanDistance;
 }
 
 bool World::levelCompleted() {
-    for (auto entity : entities) {
+    for (auto entity: entities) {
         if (entity->getType() == Coin or entity->getType() == Fruit) {
             return false;
         }

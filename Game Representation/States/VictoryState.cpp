@@ -5,19 +5,29 @@
 #include "VictoryState.h"
 
 VictoryState::VictoryState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
-    background = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
+    auto &camera = Camera::getInstance();
+    int thickness = camera.modelThickness(50);
+
+    background = make_shared<sf::RectangleShape>(
+            sf::Vector2f(window->getSize().x - 2 * thickness, window->getSize().y - 2 * thickness));
     background->setFillColor(sf::Color::Black);
-    background->setPosition(50, 50);
+    background->setPosition(thickness, thickness);
     background->setOutlineColor(sf::Color::Green);
-    background->setOutlineThickness(50);
+    background->setOutlineThickness(thickness);
 
-    victoryText = std::make_shared<sf::Text>("Victory!", *font, 50);
+    victoryText = make_shared<sf::Text>();
+    victoryText->setFont(*font);
+    victoryText->setString("Victory!");
+    victoryText->setCharacterSize(thickness * 2);
     victoryText->setFillColor(sf::Color::Yellow);
-    victoryText->setPosition(300, 200);
+    victoryText->setPosition(camera.modelWidth(760), camera.modelHeight(90));
 
-    scoreText = std::make_shared<sf::Text>("Score: 0", *font, 30);
+    scoreText = make_shared<sf::Text>();
+    scoreText->setFont(*font);
+    scoreText->setCharacterSize(thickness);
+    scoreText->setString("Score: " + to_string(Stats::getInstance()->getScore()));
     scoreText->setFillColor(sf::Color::Yellow);
-    scoreText->setPosition(300, 300);
+    scoreText->setPosition(camera.modelWidth(805), camera.modelHeight(450));
 }
 
 void VictoryState::handleEvent(sf::Event &event) {
@@ -27,6 +37,8 @@ void VictoryState::handleEvent(sf::Event &event) {
         stateManager->pushState(std::make_shared<LevelState>(stateManager));
     }
 }
+
+void VictoryState::handleMouseClick(string button) {}
 
 void VictoryState::update() {
     scoreText->setString("Score: " + to_string(Stats::getInstance()->getScore()));

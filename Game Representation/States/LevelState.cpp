@@ -5,24 +5,33 @@
 #include "LevelState.h"
 
 LevelState::LevelState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
+    Camera &camera = Camera::getInstance();
+    int thickness = camera.modelThickness(50);
+
     // Load texts
     scoreText = make_shared<sf::Text>();
     scoreText->setFont(*font);
-    scoreText->setCharacterSize(48);
+    scoreText->setCharacterSize(thickness);
     scoreText->setFillColor(sf::Color::Yellow);
-    scoreText->setPosition(450 - scoreText->getGlobalBounds().width / 2, 820 - scoreText->getGlobalBounds().height / 2);
+    scoreText->setPosition(camera.modelWidth(380), camera.modelHeight(800));
 
     difficultyText = make_shared<sf::Text>();
     difficultyText->setFont(*font);
-    difficultyText->setCharacterSize(48);
+    difficultyText->setCharacterSize(thickness);
     difficultyText->setFillColor(sf::Color::Yellow);
-    difficultyText->setPosition(800 - difficultyText->getGlobalBounds().width / 2, 820 - difficultyText->getGlobalBounds().height / 2);
+    difficultyText->setPosition(camera.modelWidth(800), camera.modelHeight(800));
 
     LivesText = make_shared<sf::Text>();
     LivesText->setFont(*font);
-    LivesText->setCharacterSize(48);
+    LivesText->setCharacterSize(thickness);
     LivesText->setFillColor(sf::Color::Yellow);
-    LivesText->setPosition(1200 - LivesText->getGlobalBounds().width / 2, 820 - LivesText->getGlobalBounds().height / 2);
+    LivesText->setPosition(camera.modelWidth(1250), camera.modelHeight(800));
+
+    fpsText = make_shared<sf::Text>();
+    fpsText->setFont(*font);
+    fpsText->setCharacterSize(thickness * 0.5);
+    fpsText->setFillColor(sf::Color::Green);
+    fpsText->setPosition(camera.modelWidth(1720), camera.modelHeight(10));
 
     // Create world
     world = make_shared<World>(stateManager->getFactory());
@@ -33,32 +42,33 @@ void LevelState::handleEvent(sf::Event &event) {
 
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
         stateManager->pushState(std::make_shared<PausedState>(stateManager));
-    }
-    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left or
-             event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left or
+                                                      event.type == sf::Event::KeyPressed &&
+               event.key.code == sf::Keyboard::A) {
         direction = Left;
-    }
-    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right or
-             event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::D) {
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right or
+                                                      event.type == sf::Event::KeyPressed &&
+               event.key.code == sf::Keyboard::D) {
         direction = Right;
-    }
-    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up or
-             event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::W) {
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up or
+                                                      event.type == sf::Event::KeyPressed &&
+               event.key.code == sf::Keyboard::W) {
         direction = Up;
-    }
-    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down or
-             event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::S) {
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down or
+                                                      event.type == sf::Event::KeyPressed &&
+               event.key.code == sf::Keyboard::S) {
         direction = Down;
     }
 }
+
+void LevelState::handleMouseClick(string button) {}
 
 void LevelState::update() {
     shared_ptr<Stats> stats = Stats::getInstance();
     if (stats.get()->getLives() == 0) {
         stateManager->pushState(make_shared<GameOverState>(stateManager));
         return;
-    }
-    else if (stats->isLevelCompleted()) {
+    } else if (stats->isLevelCompleted()) {
         stateManager->pushState(make_shared<VictoryState>(stateManager));
         stats->changeLevelCompleted();
         return;
@@ -73,6 +83,9 @@ void LevelState::update() {
     string l = "Lives: " + to_string(stats->getLives());
     LivesText->setString(l);
 
+    string fps = "FPS: " + to_string(stats->getFps());
+    fpsText->setString(fps);
+
     world->update(direction);
 }
 
@@ -80,4 +93,5 @@ void LevelState::render() {
     window->draw(*scoreText);
     window->draw(*difficultyText);
     window->draw(*LivesText);
+    window->draw(*fpsText);
 }

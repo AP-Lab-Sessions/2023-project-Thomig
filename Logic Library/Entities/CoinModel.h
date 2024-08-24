@@ -7,10 +7,12 @@
 
 #include "../EntityModel.h"
 
-class CoinModel: public EntityModel {
+class CoinModel : public EntityModel {
 public:
     CoinModel(double x, double y);
+
     void update() override;
+
     Rectangle getHitBox() override;
 };
 

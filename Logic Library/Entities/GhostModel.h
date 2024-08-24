@@ -7,25 +7,42 @@
 
 #include "../EntityModel.h"
 
-class GhostModel: public EntityModel {
+class GhostModel : public EntityModel {
 public:
     GhostModel(double x, double y);
+
     void update() override;
+
     void setPosition(double x, double y);
+
     Direction getDirection();
+
     void setDirection(Direction d);
+
     Rectangle getHitBox() override;
+
     Rectangle getHitBox1();
+
     void incrementSpriteTimer();
+
     int getSpriteTimer();
+
     Color getColor() { return color; }
+
     void setColor(Color c) { color = c; }
+
     ghostState getState();
+
     void resetChangeDirectionTimer() { changeDirectionTimer = 0; }
+
     void updateChangeDirectionTimer() { changeDirectionTimer++; }
+
     bool changeDirection();
+
     void enableFear();
+
     void resetPosition();
+
     double getSpeed();
 
 private:

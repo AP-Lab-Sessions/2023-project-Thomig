@@ -28,7 +28,7 @@ void Score::resetScore() {
 
 void Score::addToScoreBoard() {
     vector<int> scores = getScoreBoard();
-    for(int i = 0; i < 5-scores.size(); i++){
+    for (int i = 0; i < 5 - scores.size(); i++) {
         scores.push_back(0);
     }
 
@@ -41,7 +41,7 @@ void Score::addToScoreBoard() {
             smallestValue = scores[i];
         }
     }
-    if(score > smallestValue){
+    if (score > smallestValue) {
         scores[smallestValueLoc] = score;
     }
 
@@ -60,7 +60,7 @@ void Score::addToScoreBoard() {
 
         myFile.close();
     }
-    catch (const exception& e) {
+    catch (const exception &e) {
         cout << "Error: " << e.what() << endl;
     }
 }
@@ -90,7 +90,7 @@ vector<int> Score::getScoreBoard() {
 
         inputFile.close();
     }
-    catch (const exception& e) {
+    catch (const exception &e) {
         cerr << e.what() << endl;
     }
     return scores;

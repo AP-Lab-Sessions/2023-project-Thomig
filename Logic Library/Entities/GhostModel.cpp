@@ -29,8 +29,8 @@ void GhostModel::setDirection(Direction d) {
 
 Rectangle GhostModel::getHitBox() {
     Rectangle hitBox;
-    hitBox.x = position.first-0.04+1;
-    hitBox.y = position.second-0.04+1;
+    hitBox.x = position.first - 0.04 + 1;
+    hitBox.y = position.second - 0.04 + 1;
     hitBox.width = 0.08;
     hitBox.height = 0.08;
     return hitBox;
@@ -38,8 +38,8 @@ Rectangle GhostModel::getHitBox() {
 
 Rectangle GhostModel::getHitBox1() {
     Rectangle hitBox;
-    hitBox.x = position.first-0.01+1;
-    hitBox.y = position.second-0.01+1;
+    hitBox.x = position.first - 0.01 + 1;
+    hitBox.y = position.second - 0.01 + 1;
     hitBox.width = 0.02;
     hitBox.height = 0.02;
     return hitBox;
@@ -55,11 +55,10 @@ void GhostModel::incrementSpriteTimer() {
 
 ghostState GhostModel::getState() {
     if (state == Setup) {  // Ghost out of setup state when leaving starting position
-        if (abs((position.first+1)-(startingPosition.first+1)) > 0.2) {
+        if (abs((position.first + 1) - (startingPosition.first + 1)) > 0.2) {
             state = Chase;
         }
-    }
-    else if (state == Fear) {
+    } else if (state == Fear) {
         if (fearTimer == 0) {
             state = Chase;
         }
@@ -83,6 +82,15 @@ void GhostModel::enableFear() {
     for (int i = 0; i < stats->getDifficulty(); i++) {
         fearTimer *= 0.8;
     }
+    if (direction == Up) {
+        direction = Down;
+    } else if (direction == Down) {
+        direction = Up;
+    } else if (direction == Left) {
+        direction = Right;
+    } else if (direction == Right) {
+        direction = Left;
+    }
 }
 
 void GhostModel::resetPosition() {
@@ -98,6 +106,9 @@ double GhostModel::getSpeed() {
     shared_ptr<Stats> stats = Stats::getInstance();
     for (int i = 0; i < stats->getDifficulty(); i++) {
         speed *= 1.05;
+    }
+    if (state == Fear) {
+        speed *= 0.8;
     }
     return speed;
 }

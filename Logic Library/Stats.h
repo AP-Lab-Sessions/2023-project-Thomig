@@ -15,21 +15,40 @@ public:
     static shared_ptr<Stats> getInstance();
 
     void increaseLevel();
+
     int getLevel() const;
+
     void increaseScore(int s);
+
     int getScore() const;
+
     void increaseDifficulty();
+
     int getDifficulty() const;
+
     void decreaseLives();
+
     int getLives() const;
+
     void changeLevelCompleted();
+
     bool isLevelCompleted() const;
+
     void resetStats();
+
     bool getResetWorldClock() const;
+
     void switchResetWorldClock();
+
     void decreaseScore();
+
     vector<int> getScoreBoard();
+
     void addToScoreBoard();
+
+    void setFps(int f);
+
+    int getFps() const;
 
 private:
     Stats() {};
@@ -40,6 +59,7 @@ private:
     int lives = 3;
     bool levelCompleted = false;
     bool resetWorldClock = false;
+    int fps = 0;
 };
 
 #endif //PROJECTAP_STATS_H

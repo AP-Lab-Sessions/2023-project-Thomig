@@ -11,12 +11,12 @@
 // singleton class to keep an instance of the render window
 class RenderWindow {
 public:
-    static RenderWindow& getInstance() {
+    static RenderWindow &getInstance() {
         static RenderWindow instance;
         return instance;
     }
 
-    void initialize(unsigned int width, unsigned int height, const std::string& title) {
+    void initialize(unsigned int width, unsigned int height, const std::string &title) {
         window = std::make_shared<sf::RenderWindow>(sf::VideoMode(width, height), title);
     }
 
@@ -26,9 +26,12 @@ public:
 
 private:
     RenderWindow() = default;
+
     ~RenderWindow() = default;
-    RenderWindow(const RenderWindow&) = delete;
-    RenderWindow& operator=(const RenderWindow&) = delete;
+
+    RenderWindow(const RenderWindow &) = delete;
+
+    RenderWindow &operator=(const RenderWindow &) = delete;
 
     std::shared_ptr<sf::RenderWindow> window;
 };

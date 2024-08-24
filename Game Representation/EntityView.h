@@ -19,17 +19,22 @@
 
 using namespace std;
 
-struct Sprite {
-    sf::Sprite sprite;
-    sf::Texture texture;
-    sf::Image image;
-};
+namespace Sprite {
+    struct Sprite {
+        sf::Sprite sprite;
+        sf::Texture texture;
+        sf::Image image;
+    };
+}
 
-class EntityView: public Observer {
+class EntityView : public Observer {
 public:
     virtual void update() = 0;
+
     virtual ~EntityView() = default;
+
     virtual void render() = 0;
+
 protected:
     std::shared_ptr<sf::RenderWindow> window = RenderWindow::getInstance().getWindow();
 };

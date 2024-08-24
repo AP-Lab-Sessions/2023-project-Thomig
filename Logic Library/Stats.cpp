@@ -12,8 +12,7 @@ shared_ptr<Stats> Stats::getInstance() {
 void Stats::increaseLevel() {
     if (level < 3) {
         level++;
-    }
-    else {
+    } else {
         level = 1;
     }
 }
@@ -56,6 +55,7 @@ bool Stats::isLevelCompleted() const {
 
 void Stats::resetStats() {
     level = 1;
+    addToScoreBoard();
     score->resetScore();
     difficulty = 0;
     lives = 3;
@@ -80,4 +80,12 @@ vector<int> Stats::getScoreBoard() {
 
 void Stats::addToScoreBoard() {
     score->addToScoreBoard();
+}
+
+void Stats::setFps(int f) {
+    fps = f;
+}
+
+int Stats::getFps() const {
+    return fps;
 }

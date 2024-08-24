@@ -15,19 +15,30 @@ using namespace std;
 // Singleton class to model positions of entities and calculate their size
 class Camera {
 public:
-    static Camera& getInstance();
+    static Camera &getInstance();
 
-    pair<double, double> modelPosition(double x, double y, double entityWidth, double entityHeight);
+    pair<double, double> modelEntityPosition(double x, double y, double entityWidth, double entityHeight);
 
     pair<double, double> entitySize(double x, double y);
 
     pair<double, double> getScaleFactor();
 
+    pair<double, double> modelEntityPosition(double x, double y);
+
+    int modelWidth(int w);
+
+    int modelHeight(int h);
+
+    int modelThickness(int thickness);
+
 private:
     Camera() = default;
+
     ~Camera() = default;
-    Camera(const Camera&) = delete;
-    Camera& operator=(const Camera&) = delete;
+
+    Camera(const Camera &) = delete;
+
+    Camera &operator=(const Camera &) = delete;
 
     int width = RenderWindow::getInstance().getWindow()->getSize().x;
     int height = RenderWindow::getInstance().getWindow()->getSize().y;

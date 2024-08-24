@@ -24,6 +24,12 @@ void StateManager::handleEvent(sf::Event &event) {
     }
 }
 
+void StateManager::handleMouseClick(string button) {
+    if (!states.empty()) {
+        states.top()->handleMouseClick(button);
+    }
+}
+
 void StateManager::update() {
     if (!states.empty()) {
         states.top()->update();

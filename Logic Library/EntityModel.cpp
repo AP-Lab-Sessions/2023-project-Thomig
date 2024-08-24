@@ -4,12 +4,12 @@
 
 #include "EntityModel.h"
 
-void EntityModel::attachView(shared_ptr <Observer> observer) {
+void EntityModel::attachView(shared_ptr<Observer> observer) {
     observers.push_back(observer);
 }
 
 void EntityModel::notify() {
-    for (auto observer : observers) {
+    for (auto observer: observers) {
         observer->update();
     }
 }

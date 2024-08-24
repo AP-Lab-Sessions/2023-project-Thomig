@@ -15,8 +15,8 @@ void BananaModel::update() {
 
 Rectangle BananaModel::getHitBox() {
     Rectangle hitBox;
-    hitBox.x = position.first-0.03+1;
-    hitBox.y = position.second-0.03+1;
+    hitBox.x = position.first - 0.03 + 1;
+    hitBox.y = position.second - 0.03 + 1;
     hitBox.width = 0.06;
     hitBox.height = 0.06;
     return hitBox;

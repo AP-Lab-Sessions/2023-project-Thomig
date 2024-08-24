@@ -4,7 +4,62 @@
 
 #include "MenuState.h"
 
-MenuState::MenuState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {}
+MenuState::MenuState(std::shared_ptr<StateManager> stateManager) : State(stateManager) {
+    auto &camera = Camera::getInstance();
+
+    // blue outline
+    int thickness = camera.modelThickness(50);
+    background = make_shared<sf::RectangleShape>(
+            sf::Vector2f(window->getSize().x - 2 * thickness, window->getSize().y - 2 * thickness));
+    background->setFillColor(sf::Color::Black);
+    background->setPosition(thickness, thickness);
+    background->setOutlineColor(sf::Color::Blue);
+    background->setOutlineThickness(thickness);
+
+    // text boxes
+    scoreBox = make_shared<sf::RectangleShape>(sf::Vector2f(camera.modelWidth(300), camera.modelHeight(400)));
+    scoreBox->setFillColor(sf::Color(64, 64, 64));
+    scoreBox->setPosition(camera.modelWidth(780), camera.modelHeight(250));
+    scoreBox->setOutlineColor(sf::Color(32, 32, 32));
+    scoreBox->setOutlineThickness(camera.modelThickness(10));
+
+    playButton = make_shared<sf::RectangleShape>(sf::Vector2f(camera.modelWidth(300), camera.modelHeight(100)));
+    playButton->setFillColor(sf::Color(64, 64, 64));
+    playButton->setPosition(camera.modelWidth(780), camera.modelHeight(725));
+    playButton->setOutlineColor(sf::Color(32, 32, 32));
+    playButton->setOutlineThickness(camera.modelThickness(10));
+
+    playText = make_shared<sf::Text>();
+    playText->setFont(*font);
+    playText->setString("Play");
+    playText->setCharacterSize(thickness);
+    playText->setFillColor(sf::Color::Green);
+    playText->setPosition(camera.modelWidth(880), camera.modelHeight(740));
+
+    titleText = make_shared<sf::Text>();
+    titleText->setFont(*font);
+    titleText->setString("Pacman");
+    titleText->setCharacterSize(thickness * 2);
+    titleText->setFillColor(sf::Color::Yellow);
+    titleText->setPosition(camera.modelWidth(740), camera.modelHeight(90));
+
+    creditText = make_shared<sf::Text>();
+    creditText->setFont(*font);
+    creditText->setString("By Thomas Urkens");
+    creditText->setCharacterSize(thickness * 0.5);
+    creditText->setFillColor(sf::Color::White);
+    creditText->setPosition(camera.modelWidth(1570), camera.modelHeight(920));
+
+    for (int i = 0; i < 5; i++) {
+        shared_ptr<sf::Text> text3 = make_shared<sf::Text>();
+        text3->setFont(*font);
+        text3->setString(to_string(i + 1) + ". " + to_string(Stats::getInstance()->getScoreBoard()[i]));
+        text3->setCharacterSize(camera.modelThickness(40));
+        text3->setFillColor(sf::Color::Yellow);
+        text3->setPosition(camera.modelWidth(860), camera.modelHeight(260) + i * camera.modelHeight(80));
+        scoreTexts.push_back(text3);
+    }
+}
 
 void MenuState::handleEvent(sf::Event &event) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
@@ -12,60 +67,30 @@ void MenuState::handleEvent(sf::Event &event) {
     }
 }
 
+void MenuState::handleMouseClick(string button) {
+    if (button == "Play") {
+        stateManager->pushState(std::make_shared<LevelState>(stateManager));
+    }
+}
+
 void MenuState::update() {
     // Update menu items
+    for (int i = 0; i < 5; i++) {
+        scoreTexts[i]->setString(to_string(i + 1) + ". " + to_string(Stats::getInstance()->getScoreBoard()[i]));
+    }
 }
 
 void MenuState::render() {
     // Render menu items
-    sf::Text text;
-    text.setFont(*font);
-    text.setString("Play");
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::White);
-    text.setPosition(1920 / 2 - text.getGlobalBounds().width / 2, 1080 / 2 - text.getGlobalBounds().height / 2);
-    window->draw(text);
-
-    // blue outline
-    shared_ptr<sf::Shape> shape1 = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
-    shape1->setFillColor(sf::Color::Black);
-    shape1->setPosition(50, 50);
-    shape1->setOutlineColor(sf::Color::Blue);
-    shape1->setOutlineThickness(50);
-    window->draw(*shape1);
-
-    // text boxes
-    shared_ptr<sf::Shape> shape2 = make_shared<sf::RectangleShape>(sf::Vector2f(300.0f, 400.0f));
-    shape2->setFillColor(sf::Color(64, 64, 64));
-    shape2->setPosition(780, 250);
-    shape2->setOutlineColor(sf::Color(32, 32, 32));
-    shape2->setOutlineThickness(10);
-    window->draw(*shape2);
-
-    shared_ptr<sf::Shape> shape3 = make_shared<sf::RectangleShape>(sf::Vector2f(300.0f, 100.0f));
-    shape3->setFillColor(sf::Color(64, 64, 64));
-    shape3->setPosition(780, 725);
-    shape3->setOutlineColor(sf::Color(32, 32, 32));
-    shape3->setOutlineThickness(10);
-    window->draw(*shape3);
-
-    shared_ptr<sf::Text> text1 = make_shared<sf::Text>();
-    text1->setFont(*font);
-    text1->setString("Play");
-    text1->setCharacterSize(50);
-    text1->setFillColor(sf::Color::Green);
-    text1->setPosition(878, 738);
-    window->draw(*text1);
-
-    for (int i = 0; i < 5; i++) {
-        shared_ptr<sf::Text> text2 = make_shared<sf::Text>();
-        text2->setFont(*font);
-        text2->setString(to_string(i + 1) + ". " + to_string(Stats::getInstance()->getScoreBoard()[i]));
-        text2->setCharacterSize(40);
-        text2->setFillColor(sf::Color::Yellow);
-        text2->setPosition(830, 260 + i * 80);
-        window->draw(*text2);
+    window->draw(*background);
+    window->draw(*scoreBox);
+    window->draw(*playButton);
+    window->draw(*titleText);
+    window->draw(*playText);
+    for (auto &text: scoreTexts) {
+        window->draw(*text);
     }
+    window->draw(*creditText);
 
     window->display();
 }

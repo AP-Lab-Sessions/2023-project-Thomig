@@ -7,19 +7,30 @@
 
 #include "../EntityModel.h"
 
-class PacManModel: public EntityModel {
+class PacManModel : public EntityModel {
 public:
     PacManModel(double x, double y);
+
     void update() override;
+
     void setPosition(double x, double y);
+
     Direction getDirection();
+
     void setDirection(Direction d);
+
     Rectangle getHitBox() override;
+
     void incrementSpriteTimer();
+
     int getSpriteTimer() { return spriteTimer; }
+
     void resetPosition();
+
     double isSlipped();
+
     void slip();
+
     void decreaseSlipped();
 
 private:

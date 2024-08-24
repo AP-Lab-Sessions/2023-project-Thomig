@@ -53,16 +53,21 @@ struct Rectangle {
 class EntityModel {
 public:
     void attachView(shared_ptr<Observer> observer);
+
     void notify();
+
     pair<double, double> getPosition() { return position; }
+
     Type getType() { return type; }
 
     virtual ~EntityModel() = default;
+
     virtual void update() = 0;
+
     virtual Rectangle getHitBox() = 0;
 
 protected:
-    pair<double , double> position;
+    pair<double, double> position;
     Type type;
 
 private:

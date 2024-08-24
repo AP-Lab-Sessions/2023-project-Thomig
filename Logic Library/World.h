@@ -42,7 +42,7 @@ private:
 
     void moveGhost(shared_ptr<GhostModel> ghost, Direction d, double distance);
 
-    bool areRectanglesIntersecting(const Rectangle& rectA, const Rectangle& rectB);
+    bool areRectanglesIntersecting(const Rectangle &rectA, const Rectangle &rectB);
 
     double calculateManhattanDistance(shared_ptr<GhostModel> ghost, Direction d, double distance);
 

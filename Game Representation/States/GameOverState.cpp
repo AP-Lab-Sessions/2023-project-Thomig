@@ -5,28 +5,32 @@
 #include "GameOverState.h"
 
 GameOverState::GameOverState(shared_ptr<StateManager> stateManager) : State(stateManager) {
-    // Blue outline
-    background = make_shared<sf::RectangleShape>(sf::Vector2f(1750.0f, 920.0f));
-    background->setFillColor(sf::Color::Black);
-    background->setPosition(50, 50);
-    background->setOutlineColor(sf::Color::Red);
-    background->setOutlineThickness(50);
+    Camera &camera = Camera::getInstance();
+    int thickness = camera.modelThickness(50);
 
-    // Paused text
+    // Red outline
+    background = make_shared<sf::RectangleShape>(
+            sf::Vector2f(window->getSize().x - 2 * thickness, window->getSize().y - 2 * thickness));
+    background->setFillColor(sf::Color::Black);
+    background->setPosition(thickness, thickness);
+    background->setOutlineColor(sf::Color::Red);
+    background->setOutlineThickness(thickness);
+
+    // Game over text
     gameOverText = make_shared<sf::Text>();
     gameOverText->setFont(*font);
     gameOverText->setString("Game Over");
-    gameOverText->setCharacterSize(100);
-    gameOverText->setFillColor(sf::Color::Yellow);
-    gameOverText->setPosition(1920 / 2 - gameOverText->getGlobalBounds().width / 2, 1080 / 2 - gameOverText->getGlobalBounds().height / 2);
+    gameOverText->setCharacterSize(thickness * 2);
+    gameOverText->setFillColor(sf::Color::Red);
+    gameOverText->setPosition(camera.modelWidth(675), camera.modelHeight(150));
 
     // Score text
     scoreText = make_shared<sf::Text>();
     scoreText->setFont(*font);
-    scoreText->setCharacterSize(48);
+    scoreText->setCharacterSize(thickness);
     scoreText->setString("Score: " + to_string(Stats::getInstance()->getScore()));
     scoreText->setFillColor(sf::Color::Yellow);
-    scoreText->setPosition(450 - scoreText->getGlobalBounds().width / 2, 820 - scoreText->getGlobalBounds().height / 2);
+    scoreText->setPosition(camera.modelWidth(835), camera.modelHeight(450));
 }
 
 void GameOverState::handleEvent(sf::Event &event) {
@@ -34,10 +38,11 @@ void GameOverState::handleEvent(sf::Event &event) {
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         stateManager->popState();
         stateManager->popState();
-        stats->addToScoreBoard();
         stats->resetStats();
     }
 }
+
+void GameOverState::handleMouseClick(string button) {}
 
 void GameOverState::update() {
 
